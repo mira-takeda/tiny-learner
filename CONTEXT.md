@@ -97,7 +97,7 @@ protects old skills during sequential training.
 - [x] B-modified experiment plan specified (15 points)
 - [x] Adversarial review (held-out combos, forgetting framing, matched control, red-team, ES)
 - [x] Plan approved with 2 clarifications → PREREG.md FROZEN (2026-10-26)
-- [ ] Implementation (in progress — no registered runs yet)
+- [x] Learner + training system implemented and FROZEN (2026-10-26, no runs yet)
 - [x] Optimizer formal sanity check: ES PASS → optimizer frozen (2026-10-26)
 - [x] Curriculum snapshot (Meta) + control schedule + test battery, audits PASS (2026-10-26)
 - [ ] Registered training + evaluation
@@ -121,3 +121,4 @@ protects old skills during sequential training.
 - 2026-10-26: formal optimizer sanity PASS (ES, sr=1.00, 10 gens, 8s wall); optimizer frozen as ES.
 - 2026-10-26: registered datasets frozen + audits PASS (leakage 0, counts/seeds/subranges verified);
   chance baselines measured (A .40, B .00, C .045, D .405, I1/H1/H2 .00, H3 .095).
+- 2026-10-26: training system frozen (22/22 toy selftests, freeze-check PASS, hashes in RUNLOG).

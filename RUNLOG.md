@@ -48,3 +48,32 @@ this file appends facts only. Never edit past entries — append new ones.
   CONTACT_R=5.0; G1-train beacon-haz>=35; H2 hazard-agent min-sep 10;
   shared train manifests per arm with streams SeedSequence(6000/6001)
   (seeds 101-105 govern ES + episode sampling).
+
+## 2026-10-26 — TRAINING CODE FREEZE (no registered runs yet)
+
+- Implemented: modular skills + gate, mono arm, 4-arm ES driver, retention,
+  reacquisition, ablations (single-skill / gate-shuffle / hazard-mask),
+  curriculum handling, seed handling, result logging.
+- Params: modular 7944 (4x1833 + 612), monolith 8043 (+1.25%, within 5%).
+- Toy-only selftest: 22/22 PASS. Freeze-check: PASS (datasets unaltered,
+  PREREG unaltered, seeds/hypers/curricula verified, no-net imports).
+- Gap-fills (PREREG silent): gate phase runs fixed 400 gens (no registered
+  gate threshold); A2 gate phase keeps all params plastic; A1/A4 assert
+  bit-identical frozen retention after gate phase (evals are deterministic);
+  budgets = equal caps + equal data (actuals logged per run).
+- Executable hashes (sha256, src/):
+  audit.py a88efe2f750d436f9e247826fb7378e1a117b07d88f4178da9e4c5167123aa20
+  env.py 390b82f74778e00e0d437c91ed1e24e75f5dbeae85a4cb4478e6eb8e5bb4d968
+  es.py 3778e1070beef5140454941844431660c87ce986d098654e870ced0f1a5c91a0
+  evaluate.py ebc2ee94bf688f67bcfd64aacbfc8d93b38d56f47336f9fbfde0aa3d60cb99a0
+  freeze_check.py f3ce3421e27a88e803ab4f2f34f907fd94b3cc38ea84bcb0eefa145bfdba64ee
+  gen.py b78df222de6950563c5dbedf3ccf0992c3ef733e2fcf838564be66423c1223b5
+  mkdata.py a1b58eb32a802fcb93a4f534ae0f14e53c078d66894043b0ec7ebbb82af5be58
+  models.py 5801ff8e47fb66ff7fb2ccf710b52bae94400d8add66b7d5911349a51f31bb55
+  policies.py 13ac7f7af80af9d9ddcd0303ebd68b23dc566e757f38f4f2dea49a819ac2c7e4
+  reinforce.py 2fb977f4923c378b9ce6b3b14967eafb24348ffc53042ae725492826712750c8
+  sanity.py 033786bde869cb3a7a62cebf076c2f2bf4a876b7878959e578736a9608575848
+  selftest.py 4dd9a2d0da52b151a917ab0baddb438abf34ee3c1d09f0f1c9b31e9d72152377
+  tasks.py 4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495
+  train.py 7425dbbfe08fb8fc63eaaebad38dc9cc05b207a2367bfcc36ba1b90fbd8237fd
+- From here: any implementation change = logged deviation + rerun affected runs.
