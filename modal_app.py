@@ -235,6 +235,68 @@ def vecdiag():
     return rep
 
 
+@app.function(**BASE, timeout=1800)
+def run_selftest_twice():
+    """Toy-only: full selftest.main() twice, same process, unchanged code.
+
+    Resets only the module-level PASS accumulator between runs (harness-side;
+    selftest.py itself is untouched) so each run's verdict is independent.
+    Run 0 replicates the original verify conditions exactly; run 1 tests
+    in-process repeatability.
+    """
+    import io
+    import sys
+    from contextlib import redirect_stdout
+
+    sys.path.insert(0, "/root/tl/src")
+    import selftest
+
+    runs = []
+    for i in range(2):
+        selftest.PASS.clear()
+        buf = io.StringIO()
+        try:
+            with redirect_stdout(buf):
+                code = selftest.main()
+        except SystemExit as e:
+            code = e.code
+        out = buf.getvalue()
+        checks = [ln for ln in out.splitlines()
+                  if ln.startswith("[PASS]") or ln.startswith("[FAIL]")]
+        runs.append({
+            "run": i,
+            "exit": code,
+            "n_pass": sum(ln.startswith("[PASS]") for ln in checks),
+            "n_fail": sum(ln.startswith("[FAIL]") for ln in checks),
+            "fails": [ln[7:] for ln in checks if ln.startswith("[FAIL]")],
+            "checks": checks,
+        })
+    return {"runs": runs}
+
+
+@app.function(**BASE, timeout=1800)
+def vecdiag2():
+    """Toy-only: exact selftest-vec repro x3 + lockstep on first mismatch."""
+    import sys
+
+    sys.path.insert(0, "/root/tl/src")
+    from diag import exact_vec_pass, lockstep_first_div, build_thetas
+    from selftest import TOY_CFGS
+
+    rep = {"isolated_passes": []}
+    for p in range(3):
+        ok, mm = exact_vec_pass()
+        entry = {"pass": p, "ok": bool(ok)}
+        if not ok:
+            entry["mismatch"] = mm
+            th = build_thetas()[mm["arch"]]
+            entry["lockstep"] = lockstep_first_div(
+                mm["family"], mm["arch"], TOY_CFGS[mm["family"]],
+                mm["seed"], th)
+        rep["isolated_passes"].append(entry)
+    return rep
+
+
 @app.function(image=image, volumes={"/vol": vol}, cpu=1.0, memory=1024,
              timeout=300)
 def persistence_write(tag):
@@ -333,5 +395,13 @@ def main(action="env", n_eps=64, seed_base=5000, tag="probe"):
         import json as _j
 
         print(_j.dumps(vecdiag.remote(), indent=1))
+    elif action == "vecdiag2":
+        import json as _j
+
+        print(_j.dumps(vecdiag2.remote(), indent=1))
+    elif action == "selftest2x":
+        import json as _j
+
+        print(_j.dumps(run_selftest_twice.remote(), indent=1))
     else:
         raise SystemExit(f"unknown action: {action}")

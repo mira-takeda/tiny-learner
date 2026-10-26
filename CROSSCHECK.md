@@ -37,13 +37,17 @@ RUNLOG.md / PREREG.md — this file never replaces them.
   record-only checks, FAIL at gen 400 (supersedes PREREG early-stop/800-extension);
   (2) absorbing padding to exact 41.28M steps/phase. Gap-fills: CONTACT_R=5.0,
   G1-train beacon–haz≥35, H2 haz–agent sep≥10, shared train manifests, gate fixed 400.
-- **Unresolved:** runtime amendment decision (shrink budget and/or tolerate batched
-  divergence?) — must be made pre-result with explicit authorization. B-phase
-  acquisition difficulty still unknown (N/A rules ready).
+- **Unresolved:** isolated exact-vec repro PASSED 3/3 remotely — the vec FAIL is not
+  reproducible in isolation. selftest2x (full suite ×2, same process, unchanged)
+  ready, local 27/27+27/27; awaiting host run to test full-suite reproducibility
+  vs transient. Runtime amendment decision — must be made pre-result with
+  explicit authorization. B-phase acquisition difficulty still unknown (N/A
+  rules ready).
 - **NOT run yet:** everything registered (launched 15:06, aborted ~15:35 pre-result,
   zero outputs). Relaunch requires hygiene (clear runs/*.json+*.npz) + explicit GO.
-- **Next authorized step:** USER runs host vecdiag (toy-only) and pastes output;
-  then GO decision on registered Modal runs (dead-vec cleanup first). No training yet.
+- **Next authorized step:** USER runs host selftest2x (toy-only) and pastes output;
+  then cause/transient classification and GO decision on registered Modal runs.
+  No training yet.
 - **Canonical paths (all under `/Users/satoru/Documents/hackathon/tiny-learner/`):**
   `PREREG.md`, `RUNLOG.md`, `CONTEXT.md`, `CROSSCHECK.md`, `src/train.py`,
   `src/{models,tasks,gen,evaluate,audit,es}.py`, `data/MANIFEST.json`,

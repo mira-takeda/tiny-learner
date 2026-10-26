@@ -291,3 +291,45 @@ this file appends facts only. Never edit past entries — append new ones.
   selftest.py 14ab22e176da77f12c0711ca779b8dfa61293cf97346b58ce62a20c66ecdb475
   tasks.py 4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495
   train.py 7f2bf51eec7c02001f6e6e92c9f5599ae7e3a9b91fb299e3617c98ec47d49fc4
+
+## 2026-10-26 — NORM HYPOTHESIS FALSIFIED; vecdiag2 READY (pre-GO)
+
+- Remote vecdiag (user-pasted): norm_micro 0 mismatches/max_abs_diff 0.0;
+  all tested families A/B/C/D/G1/G2/H1/H2/H3/I1 matched scalar vs vec exactly;
+  all lockstep diverged=false. The norm/ULP mechanism is FALSIFIED; its
+  prediction did not hold. That explanation is dropped.
+- New candidate causes: (a) value-dependent divergence elsewhere in vec path
+  (the failing case uses DIFFERENT theta/rng-seeds/family/cfgs than vecdiag's
+  replication); (b) in-process order dependence (earlier full self-test ran 27
+  tests before vec; standalone broadband/harness code paths may set state);
+  (c) transient remote non-determinism/flake (check: does the full-suite FAIL
+  reproduce at all?).
+- vecdiag2 prepared (toy-only): new src/diag.py = exact replica of selftest's
+  vec check (same theta seeds 31/32, fams A/B/H1, ep seeds 200-203, max 200
+  steps, counters [0]), run 3x in the same Modal container, each failure
+  followed by SAME-container first-divergence lockstep. NOT imported by
+  train.py/other src (verified: diag unreferenced outside itself); selftest.py
+  and vec code UNCHANGED.
+- Local validation: exact_vec_pass 3/3 green; modal_app imports with vecdiag2
+  action. No registered run launched. Awaiting host vecdiag2 output to decide:
+  value-dependent (lockstep names quantity) vs context-dependent (isolated pass
+  but full suite fails) vs flake (neither reproduces).
+
+## 2026-10-26 — ISOLATED VEC REPRO PASSED 3/3; selftest2x READY (pre-GO)
+
+- Remote vecdiag2 (user-pasted): exact selftest-vec replica passed 3/3 in one
+  Modal container. The original vec-exact-vs-scalar FAIL is NOT reproducible in
+  isolation. Value-dependent divergence is RULED OUT for the exact failing
+  inputs. Remaining: full-suite context dependence vs transient.
+- selftest2x prepared (toy-only): runs UNCHANGED selftest.main() twice in the
+  same Modal process; only the harness resets the module-level PASS accumulator
+  between runs (selftest.py, vec, train.py, budgets, seeds, thresholds all
+  untouched). Run 0 replicates original verify conditions exactly; run 1 tests
+  in-process repeatability. Full per-check lines captured per run.
+- Local validation of the twice-harness: 27/27 + 27/27, single-run wall ~1m54s
+  (remote expected similar or faster; 1800s timeout). Wrapper imports with the
+  selftest2x action. No registered run launched.
+- Decision rule: both runs 27/27 => original FAIL classified transient /
+  non-reproducible, documented as such; vec FAIL in run 0 and/or run 1 =>
+  context-dependent, next step is bisection over preceding tests (not yet
+  authorized). GO assessment follows the pasted output.f5599ae7e3a9b91fb299e3617c98ec47d49fc4
