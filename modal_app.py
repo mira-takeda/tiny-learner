@@ -81,6 +81,24 @@ TOY_CFGS = {
 }
 TOY_FAMS = ("A", "B", "C", "D")
 
+DIAG_CFGS = dict(TOY_CFGS, **{
+    "G1": {"agent": [50, 50], "goal": {"pos": [70, 60]},
+           "hazard": {"pos": [20, 20], "speed": 3.2}},
+    "G2": {"agent": [30, 30], "obj": {"pos": [40, 40]},
+           "zone": {"center": [50, 92]}},
+    "H1": {"agent": [30, 30], "obj": {"pos": [40, 40]},
+           "zone": {"center": [50, 92]},
+           "hazard": {"pos": [80, 80], "speed": 4.5}},
+    "H2": {"agent": [30, 30], "obj": {"pos": [40, 40]},
+           "zone": {"center": [50, 92]},
+           "hazard": {"pos": [45, 50], "speed": 4.5}},
+    "H3": {"agent": [30, 30], "obj": {"pos": [40, 35]},
+           "zone": {"center": [50, 92]},
+           "wall": {"y": 55, "gap_x": 45, "gap_w": 11}},
+    "I1": {"agent": [50, 50], "goal": {"pos": [70, 60]},
+           "hazard": {"pos": [62, 55], "speed": 3.2}},
+})
+
 
 @app.function(**BASE, timeout=1800)
 def toy_episodes(n_eps=64, seed_base=5000):
@@ -120,6 +138,101 @@ def toy_episodes(n_eps=64, seed_base=5000):
     peak_kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024
     return {"episodes": out, "steps": steps, "wall_s": wall,
             "steps_per_s": steps / wall, "peak_rss_mb": peak_kb}
+
+
+@app.function(**BASE, timeout=1800)
+def vecdiag():
+    """Toy-only: pinpoint scalar-vs-vec first divergence + norm kernels."""
+    import sys
+
+    import numpy as np
+
+    sys.path.insert(0, "/root/tl/src")
+    from models import (N_SKILLS, SKILL_SHAPES, GATE_SHAPES, MONO_SHAPES,
+                        ModularNet)
+    from policies import xavier_init
+    from tasks import TaskRunner, VecTaskRunner
+    from train import rollout
+    from vec import run_batch
+
+    rep = {}
+    rng = np.random.default_rng(0)
+    D = rng.normal(size=(50000, 2)) * 50
+    s = np.array([np.linalg.norm(d) for d in D])
+    b = np.sqrt((D * D).sum(axis=1))
+    rep["norm_micro"] = {"n": 50000,
+                         "mismatches": int((s != b).sum()),
+                         "max_abs_diff": float(np.abs(s - b).max())}
+
+    rng = np.random.default_rng(0)
+    mtheta = np.concatenate(
+        [xavier_init(rng, SKILL_SHAPES) for _ in range(N_SKILLS)]
+        + [xavier_init(rng, GATE_SHAPES)])
+    tmono = xavier_init(rng, MONO_SHAPES)
+    net = ModularNet(mtheta)
+    fams = {}
+    for fam, cfg in DIAG_CFGS.items():
+        fe = {"full": {}, "lockstep": {}}
+        for arch, th in (("modular", mtheta), ("mono", tmono)):
+            items = [(cfg, 300 + k) for k in range(4)]
+            vr, vs = run_batch(th, arch, fam, items, backend="scalar")
+            det = []
+            for k, (c, sd) in enumerate(items):
+                r0, s0 = rollout(th, arch, fam, c, sd, [0])
+                det.append({"ep": k, "seed": sd,
+                            "ret_equal": bool(r0 == vr[k]),
+                            "suc_equal": bool(s0 == vs[k]),
+                            "ret_scalar": float(r0), "ret_vec": float(vr[k]),
+                            "ret_abs_diff": float(abs(r0 - vr[k]))})
+            fe["full"][arch] = det
+        d = {"diverged": False}
+        for k in range(3):
+            seed = 300 + k
+            s_tr, v_tr = TaskRunner(), VecTaskRunner(1)
+            r2 = np.random.default_rng(seed)
+            o1 = s_tr.reset(fam, cfg, seed)
+            o2 = v_tr.reset(fam, [cfg], [seed])
+            t = 0
+            first = None
+            while first is None and t < 200:
+                p, _ = net.probs(o1)
+                a = int(r2.choice(len(p), p=p))
+                o1, r1, done1, i1 = s_tr.step(a)
+                oo, rr, dd, ss = v_tr.step(np.array([a]))
+                t += 1
+                cands = [("obs", o1, oo[0]),
+                         ("agent_pos", s_tr.env.agent_pos,
+                          v_tr.env.agent_pos[0]),
+                         ("agent_vel", s_tr.env.agent_vel,
+                          v_tr.env.agent_vel[0]),
+                         ("reward", np.array(r1), np.array(float(rr[0])))]
+                if s_tr.env.haz_pos is not None:
+                    cands.append(("haz_pos", s_tr.env.haz_pos,
+                                  v_tr.env.haz_pos[0]))
+                if s_tr.env.obj_pos is not None:
+                    cands.append(("obj_pos", s_tr.env.obj_pos,
+                                  v_tr.env.obj_pos[0]))
+                    cands.append(("obj_vel", s_tr.env.obj_vel,
+                                  v_tr.env.obj_vel[0]))
+                for name, x, y in cands:
+                    if not np.array_equal(x, y):
+                        first = {"step": t, "quantity": name,
+                                 "max_abs_diff": float(np.abs(x - y).max())}
+                        break
+                if first is None and (done1 != bool(dd[0])
+                                      or i1["success"] != bool(ss[0])):
+                    first = {"step": t, "quantity": "done/success",
+                             "max_abs_diff": 1.0}
+                if done1:
+                    break
+            if first is not None:
+                first.update({"ep": k, "seed": seed})
+                d = {"diverged": True, "first": first}
+                break
+        fe["lockstep"] = d
+        fams[fam] = fe
+    rep["families"] = fams
+    return rep
 
 
 @app.function(image=image, volumes={"/vol": vol}, cpu=1.0, memory=1024,
@@ -216,5 +329,9 @@ def main(action="env", n_eps=64, seed_base=5000, tag="probe"):
         print(persistence_write.remote("verify1"))
         print(persistence_read.remote("verify1"))
         print("### VERIFY-DONE")
+    elif action == "vecdiag":
+        import json as _j
+
+        print(_j.dumps(vecdiag.remote(), indent=1))
     else:
         raise SystemExit(f"unknown action: {action}")

@@ -141,3 +141,7 @@ protects old skills during sequential training.
   pre-stated verify interpretation rules in RUNLOG; awaiting host verify paste.
 - 2026-10-26: host image build failed (py3.11 base vs numpy 2.5.4); fixed base to
   Python 3.14 (matches frozen local interpreter). No workload ran; no budget touched.
+- 2026-10-26: Modal verify healthy except vec-exact (26/27; determinism/throughput/
+  persist pass). Isolation proven by import grep (registered driver cannot reach vec
+  code). Mechanism: BLAS-dependent norm kernels vs exact-equality test (pre-stated
+  prediction in RUNLOG). vecdiag toy action ready for remote confirmation.

@@ -27,8 +27,8 @@ RUNLOG.md / PREREG.md — this file never replaces them.
 - **Thresholds:** acq ≥80%/skill; I1 ≥70% (else H UNINTERPRETABLE); each H ≥60% AND
   H-mean ≥15pp over monolith AND ≥40pp over best single skill; frozen drop ≤10pp;
   savings ≥2×; Meta ≥10pp over control. 5 seeds, 95% CI.
-- **Latest milestone:** Modal image build FAILED (py3.11 vs numpy 2.5.4); fixed to
-  Python 3.14 base. Awaiting user rerun of host verify + pasted output.
+- **Latest milestone:** Modal verify HEALTHY except vec-exact (26/27 remote;
+  determinism+throughput+persist pass). Isolation proven; vecdiag ready.
 - **Active caveats:** shared masked obs schema supplies factorization (modularity claim,
   not emergence); frozen retention is structural (3-arm comparison carries the claim);
   skill ontology is experimenter-carved; gate saw compositeness (only combos are novel);
@@ -42,9 +42,8 @@ RUNLOG.md / PREREG.md — this file never replaces them.
   acquisition difficulty still unknown (N/A rules ready).
 - **NOT run yet:** everything registered (launched 15:06, aborted ~15:35 pre-result,
   zero outputs). Relaunch requires hygiene (clear runs/*.json+*.npz) + explicit GO.
-- **Next authorized step:** USER runs the single host verify command and pastes ALL
-  output back. Then I assess (packaging/determinism/persist/throughput/cost) and
-  report. Do NOT resume local training or change budgets.
+- **Next authorized step:** USER runs host vecdiag (toy-only) and pastes output;
+  then GO decision on registered Modal runs (dead-vec cleanup first). No training yet.
 - **Canonical paths (all under `/Users/satoru/Documents/hackathon/tiny-learner/`):**
   `PREREG.md`, `RUNLOG.md`, `CONTEXT.md`, `CROSSCHECK.md`, `src/train.py`,
   `src/{models,tasks,gen,evaluate,audit,es}.py`, `data/MANIFEST.json`,

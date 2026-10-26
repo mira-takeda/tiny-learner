@@ -198,6 +198,41 @@ this file appends facts only. Never edit past entries — append new ones.
   Everything else unchanged. Import-validated locally (pin accepted).
 - No registered workload has run anywhere. No budgets/seeds/thresholds touched.
 
+## 2026-10-26 — MODAL VERIFY RESULTS + vec-exact DIAGNOSIS (pre-GO)
+
+- Remote results (user-pasted summary): Python 3.14.2, NumPy 2.5.4, toy
+  run1==run2 EXACTLY (Modal determinism HOLDS), 7218.4 steps/s, peak RSS
+  103 MB, persistence round-trip passed, nothing registered launched.
+  Remote selftest: 26/27 (ONLY vec-exact-vs-scalar FAILS; all scalar-path
+  checks pass remotely).
+- ISOLATION PROVEN (local grep): vec.py/VecArena/VecTaskRunner/run_batch/
+  batched_* referenced ONLY in vec.py, class definitions, and selftest.
+  train.py/evaluate.py/sanity.py/gen/mkdata/audit contain ZERO references:
+  the registered driver CANNOT execute vec code.
+- MECHANISM (local analysis): the ONLY batched-vs-scalar kernel-sensitive op
+  in the vec path is norms (scalar np.linalg.norm vs vec sqrt(sum)). All else
+  is elementwise-identical or shared scalar calls. Locally both agree (20k/20k
+  micro-test); on Modal's BLAS they can differ ~1 ulp. The test asserts EXACT
+  return equality, so ~1e-16 reward diffs fail it with NO flips/trajectory
+  divergence needed (local probe: 1-ulp obs noise flips 0/20000 choices).
+- PREDICTION (pre-stated, falsifiable): remote norm micro-test shows
+  mismatches ~1e-16; lockstep first divergence at step 1 in obs/reward at
+  ~1e-16 with identical actions/success. If norms are clean on Modal yet vec
+  diverges, mechanism is elsewhere (tanh/libm?) and gets fresh diagnosis.
+- vecdiag toy action added (per-family first-divergence + norm micro-test);
+  lockstep logic validated locally (CLEAN). Host command below.
+- PROJECTIONS from 7218.4 steps/s (1 CPU): per phase ~1.2h central [0.8-1.6h
+  for 100-200-step mean episodes]; per job ~6h [4-8h]; 20 concurrent wall
+  ~= one job ~6h [4-8h] + overhead. Cost: 432,000 CPU-s x ($0.00000655 CPU
+  [ASSUMES 1 vCPU = 0.5 billed core — flag] + $0.00000222 mem) ~= $3.79
+  central [$2.5-$5.1]; storage negligible. Keep 1 CPU + 1 GiB as-verified
+  (103 MB peak = 10x headroom). Timeout 86400s >> 6h job.
+- RECOMMENDATION (not executed): delete dead vec path (vec.py + VecArena/
+  VecTaskRunner/batched fns + vec test) — documented dead-code removal, not
+  test deletion (test expectation of cross-BLAS bit-identity is what's wrong);
+  vec work stays in git history. Alternative: keep code, scope test local-only
+  (weaker). Awaiting vecdiag confirmation + GO.
+
 ## 2026-10-26 ~15:35 — REGISTERED TRAINING ABORTED PRE-RESULT (runtime feasibility)
 
 - Master session terminated; completion monitor stopped. runs/ contains ZERO
