@@ -53,8 +53,8 @@ protects old skills during sequential training.
 - Env: 2D continuous arena, NumPy physics, seeded. Obs: fixed 14-dim (velocity + egocentric
   vectors/distances to target/hazard/object/destination, absent = zero-masked).
 - Actions: DISCRETE, 9 actions (8 compass accel impulses at fixed magnitude + coast).
-- Algorithm: Evolution Strategies primary; discrete REINFORCE fallback per PREREG §6.
-  Optimizer choice frozen by formal sanity run BEFORE registered training begins.
+- Algorithm: Evolution Strategies — FROZEN 2026-10-26 (formal LineWorld sanity PASS:
+  sr 1.00, 10/150 gens, 8s wall). Discrete REINFORCE implemented as fallback, unused.
 - Skills: 4 MLP modules (14→32→32→9 softmax, ~1833 each) + softmax gate MLP (~612).
   Total ≈ 7944 params. Gate is observation-only (no task ID). Action = gate-weighted blend.
 - Atomic families: A=approach beacon; B=avoid PURSUING hazard + net-displacement requirement
@@ -98,7 +98,7 @@ protects old skills during sequential training.
 - [x] Adversarial review (held-out combos, forgetting framing, matched control, red-team, ES)
 - [x] Plan approved with 2 clarifications → PREREG.md FROZEN (2026-10-26)
 - [ ] Implementation (in progress — no registered runs yet)
-- [ ] Optimizer formal sanity check (gates registered training)
+- [x] Optimizer formal sanity check: ES PASS → optimizer frozen (2026-10-26)
 - [ ] Curriculum snapshot (Meta) + control schedule + test battery (in that order)
 - [ ] Registered training + evaluation
 - [ ] Results + demo
@@ -118,3 +118,4 @@ protects old skills during sequential training.
   3-arm forgetting design; matched no-Meta control; reward red-team fixes; N/A rules.
 - 2026-10-26: approval clarifications recorded; PREREG.md frozen (hash in RUNLOG at freeze).
   Optimizer gated on formal LineWorld sanity; forgetting-sensitivity demoted to validity-only.
+- 2026-10-26: formal optimizer sanity PASS (ES, sr=1.00, 10 gens, 8s wall); optimizer frozen as ES.
