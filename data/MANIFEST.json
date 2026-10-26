@@ -1,0 +1,8 @@
+{
+ "scenario_space_v1.json": "2bd1ff6284e152ba54d49e9b77f94aa131b9f656d1210385b9b562ad0a60f07b",
+ "curriculum_meta_v1.json": "c0debbd2cd3eadb4d72d5956085daa45612e4acf14cd2dffde57decd7cc0b254",
+ "curriculum_control_v1.json": "12bb1aaa362f2250aab8aaf4d916d2f7868a77b3fe09bb7137efe328b1ed75dd",
+ "train_meta_v1.json": "7ebd5b9bd50b49dd8692080dfa294941cde652588da187914b04800f470aae85",
+ "train_control_v1.json": "d4d773d91a951de2273f435c5e49f99437c192169f7f01570c2e95299cfb8576",
+ "test_battery_v1.json": "543ec81829b0dbc23cbc809b6a60d85c175ca5651ef4922c063ef369d9c51f23"
+}

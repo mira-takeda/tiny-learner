@@ -99,7 +99,7 @@ protects old skills during sequential training.
 - [x] Plan approved with 2 clarifications → PREREG.md FROZEN (2026-10-26)
 - [ ] Implementation (in progress — no registered runs yet)
 - [x] Optimizer formal sanity check: ES PASS → optimizer frozen (2026-10-26)
-- [ ] Curriculum snapshot (Meta) + control schedule + test battery (in that order)
+- [x] Curriculum snapshot (Meta) + control schedule + test battery, audits PASS (2026-10-26)
 - [ ] Registered training + evaluation
 - [ ] Results + demo
 
@@ -119,3 +119,5 @@ protects old skills during sequential training.
 - 2026-10-26: approval clarifications recorded; PREREG.md frozen (hash in RUNLOG at freeze).
   Optimizer gated on formal LineWorld sanity; forgetting-sensitivity demoted to validity-only.
 - 2026-10-26: formal optimizer sanity PASS (ES, sr=1.00, 10 gens, 8s wall); optimizer frozen as ES.
+- 2026-10-26: registered datasets frozen + audits PASS (leakage 0, counts/seeds/subranges verified);
+  chance baselines measured (A .40, B .00, C .045, D .405, I1/H1/H2 .00, H3 .095).

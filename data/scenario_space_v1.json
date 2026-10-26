@@ -1,0 +1,158 @@
+{
+ "version": "gen-v1",
+ "regions": {
+  "A": {
+   "A1": {
+    "kind": "beacon_dist",
+    "lo": 15.0,
+    "hi": 40.0
+   },
+   "A2": {
+    "kind": "beacon_dist",
+    "lo": 40.0,
+    "hi": 70.0
+   },
+   "A3": {
+    "kind": "beacon_dist",
+    "lo": 70.0,
+    "hi": 110.0
+   },
+   "Aadv": {
+    "kind": "beacon_near_wall",
+    "wall_margin": 12.0,
+    "lo": 50.0,
+    "hi": 110.0
+   }
+  },
+  "B": {
+   "B1": {
+    "kind": "pursuit",
+    "speed_lo": 3.0,
+    "speed_hi": 3.3,
+    "spawn_lo": 50.0,
+    "spawn_hi": 70.0
+   },
+   "B2": {
+    "kind": "pursuit",
+    "speed_lo": 3.3,
+    "speed_hi": 3.7,
+    "spawn_lo": 40.0,
+    "spawn_hi": 60.0
+   },
+   "B3": {
+    "kind": "pursuit",
+    "speed_lo": 3.7,
+    "speed_hi": 4.0,
+    "spawn_lo": 40.0,
+    "spawn_hi": 55.0
+   },
+   "Badv": {
+    "kind": "pursuit",
+    "speed_lo": 4.0,
+    "speed_hi": 4.0,
+    "spawn_lo": 35.0,
+    "spawn_hi": 45.0
+   }
+  },
+  "C": {
+   "C1": {
+    "kind": "obj_zone_dist",
+    "lo": 15.0,
+    "hi": 45.0
+   },
+   "C2": {
+    "kind": "obj_zone_dist",
+    "lo": 45.0,
+    "hi": 75.0
+   },
+   "C3": {
+    "kind": "obj_zone_dist",
+    "lo": 75.0,
+    "hi": 105.0
+   },
+   "Cadv": {
+    "kind": "obj_zone_dist",
+    "lo": 90.0,
+    "hi": 110.0
+   }
+  },
+  "D": {
+   "D1": {
+    "kind": "gap",
+    "gap_lo": 18.0,
+    "gap_hi": 20.0,
+    "wy_lo": 40.0,
+    "wy_hi": 60.0
+   },
+   "D2": {
+    "kind": "gap",
+    "gap_lo": 16.0,
+    "gap_hi": 18.0,
+    "wy_lo": 40.0,
+    "wy_hi": 60.0
+   },
+   "D3": {
+    "kind": "gap",
+    "gap_lo": 14.0,
+    "gap_hi": 16.0,
+    "wy_lo": 40.0,
+    "wy_hi": 60.0
+   },
+   "Dadv": {
+    "kind": "gap",
+    "gap_lo": 14.0,
+    "gap_hi": 14.0,
+    "wy_lo": 56.0,
+    "wy_hi": 60.0
+   }
+  },
+  "G1": {
+   "G1a": {
+    "kind": "guarded",
+    "speed_lo": 3.0,
+    "speed_hi": 3.2,
+    "spawn_lo": 55.0,
+    "spawn_hi": 70.0,
+    "beacon_haz_min": 35.0
+   },
+   "G1b": {
+    "kind": "guarded",
+    "speed_lo": 3.2,
+    "speed_hi": 3.5,
+    "spawn_lo": 50.0,
+    "spawn_hi": 60.0,
+    "beacon_haz_min": 35.0
+   },
+   "G1adv": {
+    "kind": "guarded",
+    "speed_lo": 3.5,
+    "speed_hi": 3.5,
+    "spawn_lo": 50.0,
+    "spawn_hi": 52.0,
+    "beacon_haz_min": 35.0
+   }
+  },
+  "G2": {
+   "G2a": {
+    "kind": "fetch",
+    "lo": 15.0,
+    "hi": 45.0
+   },
+   "G2b": {
+    "kind": "fetch",
+    "lo": 45.0,
+    "hi": 75.0
+   },
+   "G2c": {
+    "kind": "fetch",
+    "lo": 75.0,
+    "hi": 105.0
+   }
+  }
+ },
+ "constants": {
+  "arena": 100.0,
+  "min_sep": 10.0,
+  "train_per_phase": 400
+ }
+}

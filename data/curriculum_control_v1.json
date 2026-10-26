@@ -1,0 +1,106 @@
+{
+ "version": "curriculum-control-v1",
+ "schedule": "stratified-uniform, order seed 31337",
+ "stages": {
+  "A": [
+   {
+    "region": "A1",
+    "n": 100
+   },
+   {
+    "region": "A2",
+    "n": 100
+   },
+   {
+    "region": "A3",
+    "n": 100
+   },
+   {
+    "region": "Aadv",
+    "n": 100
+   }
+  ],
+  "B": [
+   {
+    "region": "B1",
+    "n": 100
+   },
+   {
+    "region": "B2",
+    "n": 100
+   },
+   {
+    "region": "B3",
+    "n": 100
+   },
+   {
+    "region": "Badv",
+    "n": 100
+   }
+  ],
+  "C": [
+   {
+    "region": "C1",
+    "n": 100
+   },
+   {
+    "region": "C2",
+    "n": 100
+   },
+   {
+    "region": "C3",
+    "n": 100
+   },
+   {
+    "region": "Cadv",
+    "n": 100
+   }
+  ],
+  "D": [
+   {
+    "region": "D1",
+    "n": 100
+   },
+   {
+    "region": "D2",
+    "n": 100
+   },
+   {
+    "region": "D3",
+    "n": 100
+   },
+   {
+    "region": "Dadv",
+    "n": 100
+   }
+  ],
+  "G1": [
+   {
+    "region": "G1a",
+    "n": 134
+   },
+   {
+    "region": "G1adv",
+    "n": 133
+   },
+   {
+    "region": "G1b",
+    "n": 133
+   }
+  ],
+  "G2": [
+   {
+    "region": "G2a",
+    "n": 134
+   },
+   {
+    "region": "G2b",
+    "n": 133
+   },
+   {
+    "region": "G2c",
+    "n": 133
+   }
+  ]
+ }
+}
