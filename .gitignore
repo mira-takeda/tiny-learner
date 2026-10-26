@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+# Virtual environments
+.venv/
+venv/
+env/
+# Secrets — never commit credentials
+.env
+*.pem
+*token*.json
+*secret*.json
+# Large generated artifacts (snapshots in data/*.json ARE committed; runs are not)
+*.npy
+*.npz
+*.pkl
+*.h5
+*.hdf5
+checkpoints/
+data/runs/
+# Temp / OS
+*~
+*.tmp
+.DS_Store
