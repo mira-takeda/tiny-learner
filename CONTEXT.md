@@ -126,3 +126,6 @@ protects old skills during sequential training.
   checks, FAIL at gen 400 (supersedes PREREG early-stop/800-extension); re-frozen (24/24 tests).
 - 2026-10-26: compliance correction 2 — exact 41,280,000 steps/phase via absorbing padding;
   4 workers chosen (toy benchmark: 2.03x, deterministic); re-frozen (26/26 tests).
+- 2026-10-26: CROSSCHECK.md created (compact state snapshot; update after every milestone).
+  File roles: PREREG=frozen spec, RUNLOG=append-only history, CONTEXT=living detail,
+  CROSSCHECK=current snapshot.
