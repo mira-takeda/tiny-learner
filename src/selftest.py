@@ -231,24 +231,6 @@ def main():
     check("phase-steps-constant",
           PHASE_STEPS == 400 * 64 * 8 * 200 + 40 * 40 * 200 == 41280000)
 
-    # vec scalar-backend == scalar rollout exactly (toys, identical seeds)
-    from vec import run_batch
-    from train import rollout as _roll
-    vth = np.concatenate(
-        [xavier_init(np.random.default_rng(31), SKILL_SHAPES)
-         for _ in range(N_SKILLS)]
-        + [xavier_init(np.random.default_rng(31), GATE_SHAPES)])
-    vmono = xavier_init(np.random.default_rng(32), MONO_SHAPES)
-    vok = True
-    for fam in ("A", "B", "H1"):
-        for arch, th in (("modular", vth), ("mono", vmono)):
-            items = [(TOY_CFGS[fam], 200 + k) for k in range(4)]
-            vr, vs = run_batch(th, arch, fam, items, backend="scalar")
-            for k, (c, s) in enumerate(items):
-                r0, s0 = _roll(th, arch, fam, c, s, [0])
-                vok &= (r0 == vr[k]) and (s0 == vs[k])
-    check("vec-exact-vs-scalar", bool(vok))
-
     print("SELFTEST", "PASS" if all(PASS) else "FAIL")
     return 0 if all(PASS) else 1
 

@@ -332,4 +332,40 @@ this file appends facts only. Never edit past entries — append new ones.
 - Decision rule: both runs 27/27 => original FAIL classified transient /
   non-reproducible, documented as such; vec FAIL in run 0 and/or run 1 =>
   context-dependent, next step is bisection over preceding tests (not yet
-  authorized). GO assessment follows the pasted output.f5599ae7e3a9b91fb299e3617c98ec47d49fc4
+  authorized). GO assessment follows the pasted output.
+
+## 2026-10-26 — ORIGINAL vec FAIL CLASSIFIED TRANSIENT (pre-GO)
+
+- Remote selftest2x (user-pasted): run 0 27/27 exit 0, run 1 27/27 exit 0,
+  vec-exact-vs-scalar PASSED both times in the same Modal process running the
+  UNCHANGED full suite. Combined with vecdiag (norm exact, all fams match) and
+  vecdiag2 (exact isolated repro 3/3 pass), the original single FAIL reproduced
+  in 0 of 6 subsequent remote executions of equivalent-or-identical code.
+- CLASSIFICATION: transient / non-reproducible. No code change is attributed as
+  a fix (nothing in the vec path was modified at any point). The dead-vec
+  cleanup proceeds as planned hygiene (the vec path was always unused by the
+  registered driver), not as a fix for this FAIL.
+- Registered path unaffected throughout: scalar rollout/train/eval verified
+  bit-deterministic remotely (toy run1==run2 exactly) and 26/26 on all
+  non-vec checks in every remote run.
+
+## 2026-10-26 — FINAL CLEANUP: tree restored to frozen e8f3137 (pre-GO)
+
+- Restored src/env.py, src/models.py, src/selftest.py, src/tasks.py to e8f3137
+  blobs; deleted src/vec.py + src/diag.py (dead/diag-only; kept in history).
+  Rewrote modal_app.py as launch-only layer: image py3.14 + numpy 2.5.4,
+  run_registered(arm, seed) -> /vol/runs, launch_all spawns 20 jobs (optional
+  arm/seed filter). All toy/diag/verify actions removed (kept in history).
+- Verification: 22/22 src+data files blob-identical to e8f3137, none
+  missing/extra; PREREG.md sha256 fd7de8cd...aa2c MATCHES frozen record;
+  data/ 6/6 match MANIFEST.json; zero vec/backend refs in src+data; train.py
+  rollout = scalar TaskRunner + HORIZON accounting (no forward pass in
+  absorbing tail); launch manifest == train.ARMS/SEEDS; wrapper imports on
+  host driver; selftest 26/26 + freeze-check PASS locally.
+- Artifacts/concurrency: each job writes /vol/runs/{arm}_{seed}.json +
+  {arm}_{seed}_theta.npz (distinct names, vol.commit); 20 spawn() calls, one
+  container each, 1 CPU/1GiB, timeout 86400s. Local runs/ cleared (5 stale
+  pre-result files from aborted launch); remote jobs read only /root/tl/data.
+- Projections from 7218.4 steps/s: <=1.6h/phase, ~7-8h/job (5 phases + evals),
+  ~8h concurrent wall; cost ~$5.05 flagged (0.5 core/vCPU) / ~$8.83 unflagged.
+- NOT LAUNCHED. Awaiting final GO for the host launch_all command.f5599ae7e3a9b91fb299e3617c98ec47d49fc4
