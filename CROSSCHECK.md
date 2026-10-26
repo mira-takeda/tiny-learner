@@ -10,7 +10,7 @@ RUNLOG.md / PREREG.md — this file never replaces them.
   reward alone, then solves never-seen conjunctions H1–H3 by combining them, beating
   a matched monolith. Secondaries: H-iso (isolation reduces interference,
   validity-conditioned), H-meta (Meta curriculum adds value at equal budgets).
-- **Git HEAD:** `e8f3137` (tree clean before this file; this file not yet committed).
+- **Git HEAD:** see `git log` (code frozen at `e8f3137`; docs/ops commits after).
 - **Preregistration:** FROZEN 2026-10-26 (`PREREG.md` sha `fd7de8cd…`, unaltered).
 - **Datasets:** FROZEN + audited (leakage 0; counts/seeds/subranges PASS; hashes in
   `data/MANIFEST.json`). Code: FROZEN at `e8f3137` (hashes in RUNLOG).
@@ -27,8 +27,8 @@ RUNLOG.md / PREREG.md — this file never replaces them.
 - **Thresholds:** acq ≥80%/skill; I1 ≥70% (else H UNINTERPRETABLE); each H ≥60% AND
   H-mean ≥15pp over monolith AND ≥40pp over best single skill; frozen drop ≤10pp;
   savings ≥2×; Meta ≥10pp over control. 5 seeds, 95% CI.
-- **Latest milestone:** compliance correction #2 committed (`e8f3137`); self-test
-  26/26, freeze-check 18/18 PASS. Optimizer sanity earlier: ES PASS (sr 1.00, 10 gens).
+- **Latest milestone:** registered training LAUNCHED 2026-10-26 15:06 (20 jobs,
+  4 workers, A1 101–104 first). Startup nominal (logs clean at T+3min).
 - **Active caveats:** shared masked obs schema supplies factorization (modularity claim,
   not emergence); frozen retention is structural (3-arm comparison carries the claim);
   skill ontology is experimenter-carved; gate saw compositeness (only combos are novel);
@@ -40,10 +40,10 @@ RUNLOG.md / PREREG.md — this file never replaces them.
 - **Unresolved:** wall-clock projection (~2.5h/phase serial, ~5d matrix at 4-way) is
   estimated — first real phase recalibrates. B-phase acquisition difficulty unknown
   (random survival 0.00); N/A rules stand ready.
-- **NOT run yet:** everything registered — all 4×5 training runs, retention,
-  reacquisition, H-batteries, ablations, demo.
-- **Next authorized step:** AWAIT explicit GO for registered training (4 workers).
-  Do not run `train.py --arm/--seed` until confirmed.
+- **NOT run yet:** no registered run has completed. In progress: 4×5 training runs
+  (retention/reacquisition/H/ablations all run inside each job).
+- **Next authorized step:** MONITOR to first completions (~12h/job); then score H-main
+  per PREREG §5. Relaunch identically if the session drops (skip-if-complete).
 - **Canonical paths (all under `/Users/satoru/Documents/hackathon/tiny-learner/`):**
   `PREREG.md`, `RUNLOG.md`, `CONTEXT.md`, `CROSSCHECK.md`, `src/train.py`,
   `src/{models,tasks,gen,evaluate,audit,es}.py`, `data/MANIFEST.json`,

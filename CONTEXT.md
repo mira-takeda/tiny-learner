@@ -129,3 +129,5 @@ protects old skills during sequential training.
 - 2026-10-26: CROSSCHECK.md created (compact state snapshot; update after every milestone).
   File roles: PREREG=frozen spec, RUNLOG=append-only history, CONTEXT=living detail,
   CROSSCHECK=current snapshot.
+- 2026-10-26 15:06: registered training launched (20 jobs xargs -P4); sandbox-exec
+  unavailable (nested sandbox blocked) — import-assertion integrity stands.

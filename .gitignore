@@ -24,3 +24,5 @@ data/runs/
 *~
 *.tmp
 .DS_Store
+# Registered run outputs (per-run params/logs; excluded from history)
+runs/

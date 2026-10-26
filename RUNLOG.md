@@ -103,6 +103,24 @@ this file appends facts only. Never edit past entries — append new ones.
   train.py a1977d12dd1896e5e8be5e451665328f7088fd805ab4913a81c1bf2ee50dbdb6
   selftest.py 82f819cc83962a30d09fbda2414fbe5102b26cd9da168435dab9f029058b6b0b
   freeze_check.py f1e334a93c8a3edbd921588727b189aa91dc50071eba4075faed58f31e15573c
+
+## 2026-10-26 15:06 — REGISTERED TRAINING LAUNCHED (20 jobs, 4 workers)
+
+- Code state: e8f3137 + docs 8bf2751. No experimental code/data changed for launch.
+- Command: 20 "ARM SEED" jobs from runs/jobs.txt via xargs -P 4, each
+  `python3.14 -u src/train.py --arm A --seed S --data data --out runs`,
+  per-job logs runs/log_A_S.txt, skip-if-complete (valid JSON present).
+- sandbox-exec network-disable UNAVAILABLE here (nested sandbox blocked);
+  integrity rests on frozen mechanisms: assert_no_net() every battery run +
+  static no-network-imports audit (both passing). Operational note, not a deviation.
+- Startup evidence (sandbox blocks ps): 4 workers STARTed (A1 101-104); logs
+  present and empty at T+3min (any startup crash would write tracebacks
+  immediately), master session alive. No output expected until first job
+  completes (~12h/job: 5 phases x ~2.5h).
+- Session caveat: runtime-owned processes end with this session. If interrupted,
+  relaunch the identical command (deterministic seeds => identical results);
+  completed jobs skip automatically. Prevent machine sleep for wall-clock.
+- .gitignore += runs/ (operational hygiene; run outputs excluded from history).
 - From here: any implementation change = logged deviation + rerun affected runs.
 
 ## 2026-10-26 — COMPLIANCE CORRECTION: fixed equal budgets (pre-run, not result-driven)
