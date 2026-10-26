@@ -124,3 +124,5 @@ protects old skills during sequential training.
 - 2026-10-26: training system frozen (22/22 toy selftests, freeze-check PASS, hashes in RUNLOG).
 - 2026-10-26: compliance correction — fixed 400-gen/phase budgets for all arms, record-only
   checks, FAIL at gen 400 (supersedes PREREG early-stop/800-extension); re-frozen (24/24 tests).
+- 2026-10-26: compliance correction 2 — exact 41,280,000 steps/phase via absorbing padding;
+  4 workers chosen (toy benchmark: 2.03x, deterministic); re-frozen (26/26 tests).

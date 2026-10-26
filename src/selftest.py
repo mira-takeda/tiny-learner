@@ -204,6 +204,33 @@ def main():
     check("fixed-budget-ignores-passing-checks",
           fgens == 25 and fchecks == [1.0, 1.0])
 
+    # absorbing padding: early termination cannot alter budget or outcome
+    from train import rollout, HORIZON, PHASE_STEPS
+    adj = {"agent": [50, 50], "goal": {"pos": [52, 50]}}  # arrival on step 1
+    pth = np.concatenate(
+        [xavier_init(np.random.default_rng(21), SKILL_SHAPES)
+         for _ in range(N_SKILLS)]
+        + [xavier_init(np.random.default_rng(21), GATE_SHAPES)])
+    ok = True
+    for es in (3, 17, 99):
+        c = [0]
+        ret, suc = rollout(pth, "modular", "A", adj, es, c)
+        tr = TaskRunner()
+        rr = np.random.default_rng(es)
+        o = tr.reset("A", adj, es)
+        net = ModularNet(pth)
+        tot, done, n = 0.0, False, 0
+        while not done:
+            pp, _ = net.probs(o)
+            o, r, done, info = tr.step(int(rr.choice(len(pp), p=pp)))
+            tot += r
+            n += 1
+        ok &= (n == 1 and tot == ret and info["success"] == suc
+               and suc and c[0] == HORIZON == 200)
+    check("padded-exact-200-early-term", bool(ok))
+    check("phase-steps-constant",
+          PHASE_STEPS == 400 * 64 * 8 * 200 + 40 * 40 * 200 == 41280000)
+
     print("SELFTEST", "PASS" if all(PASS) else "FAIL")
     return 0 if all(PASS) else 1
 

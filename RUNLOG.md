@@ -76,6 +76,33 @@ this file appends facts only. Never edit past entries — append new ones.
   selftest.py 4dd9a2d0da52b151a917ab0baddb438abf34ee3c1d09f0f1c9b31e9d72152377
   tasks.py 4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495
   train.py 7425dbbfe08fb8fc63eaaebad38dc9cc05b207a2367bfcc36ba1b90fbd8237fd
+
+## 2026-10-26 — COMPLIANCE CORRECTION 2: exact-step padding (pre-run)
+
+- Equal generations/episodes still allowed unequal env steps via early
+  termination. Fix: training rollouts pad to exactly HORIZON=200 accounted
+  steps per episode (absorbing: zero reward, no state change after the first
+  terminal event). Return/success/task semantics unchanged (first-terminal
+  outcome preserved). Eval batteries keep natural first-terminal outcomes.
+- Exact steps/phase/arm/seed: 400x64x8x200 (fitness) + 40x40x200 (checks) =
+  41,280,000. Asserted per phase in code (skill + gate). Per arm-seed:
+  206,400,000. Matrix total (20 runs): 4,128,000,000 + conditional
+  reacquisition (measurement, early-stopped, logged separately).
+- Proof: rollout adds exactly HORIZON to the counter (assert steps<=HORIZON);
+  phase asserts delta==PHASE_STEPS; selftest proves 1-step episodes still
+  account 200 with identical return/success.
+- Concurrency benchmark (toy-only, 256 eps): 1 worker 29.3s, 2 workers 19.2s
+  (1.53x), 4 workers 14.4s (2.03x). Results bit-identical across worker counts
+  (explicit per-episode seeds; spawn context). CHOICE: 4 workers for training
+  (fastest wall-clock; ~50% efficiency; machine will be saturated).
+  Projected serial ~2.5h/phase at 4040 steps/s (~180-step mean episodes) ->
+  ~5 days at measured 4-way scaling; first real phase recalibrates.
+- Re-verified: selftest 26/26, freeze-check PASS (18 checks).
+- New executable hashes (sha256, src/): only train.py, selftest.py,
+  freeze_check.py changed:
+  train.py a1977d12dd1896e5e8be5e451665328f7088fd805ab4913a81c1bf2ee50dbdb6
+  selftest.py 82f819cc83962a30d09fbda2414fbe5102b26cd9da168435dab9f029058b6b0b
+  freeze_check.py f1e334a93c8a3edbd921588727b189aa91dc50071eba4075faed58f31e15573c
 - From here: any implementation change = logged deviation + rerun affected runs.
 
 ## 2026-10-26 — COMPLIANCE CORRECTION: fixed equal budgets (pre-run, not result-driven)

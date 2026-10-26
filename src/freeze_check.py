@@ -43,7 +43,9 @@ def main():
                        capture_output=True, text=True)
     plan = json.loads(r.stdout)
     check("plan-fixed-budget", plan["gen_budget_per_phase"] == 400
-          and plan["early_stop_comparative"] is False)
+          and plan["early_stop_comparative"] is False
+          and plan["phase_steps_exact"] == 41280000
+          and T.PHASE_STEPS == 41280000)
     n_meta = sum(1 for _ in open(f"{DATA}/train_meta_v1.json"))
     check("manifests-nonempty", n_meta > 100, n_meta)
 

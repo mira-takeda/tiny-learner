@@ -15,6 +15,7 @@ import numpy as np
 
 sys.path.insert(0, __file__.rsplit("/", 1)[0])
 
+from env import Arena
 from es import train_es
 from evaluate import assert_no_net, run_battery
 from gen import sha256_file
@@ -38,6 +39,12 @@ GEN_BUDGET = 400
 POP_PAIRS, SIGMA, ALPHA = 32, 0.1, 0.05
 FIT_EPS = 8
 ACQ = 0.80
+HORIZON = 200  # == Arena.MAX_STEPS; every training episode accounts exactly this
+CHECKS_PER_PHASE = GEN_BUDGET // 10
+CHECK_EPS = 40
+PHASE_STEPS = (GEN_BUDGET * (2 * POP_PAIRS) * FIT_EPS * HORIZON
+               + CHECKS_PER_PHASE * CHECK_EPS * HORIZON)
+assert HORIZON == Arena.MAX_STEPS, (HORIZON, Arena.MAX_STEPS)
 PURPOSES = {"init": 0, "es": 1, "ep": 2, "ev": 3}
 
 
@@ -54,6 +61,9 @@ GATE_SLICE = slice(N_SKILLS * SKILL_DIM, MODULAR_DIM)
 
 
 def rollout(theta_full, arch, family, cfg, ep_seed, counter, skill_only=None):
+    """Training rollout with exact-horizon accounting. The first terminal
+    event fixes (return, success); remaining steps to HORIZON are absorbing
+    (zero reward, no state change) and exist only for budget exactness."""
     runner = TaskRunner()
     rng = np.random.default_rng(ep_seed)
     obs = runner.reset(family, cfg, int(ep_seed))
@@ -70,7 +80,8 @@ def rollout(theta_full, arch, family, cfg, ep_seed, counter, skill_only=None):
         obs, r, done, info = runner.step(int(rng.choice(len(p), p=p)))
         total += r
         steps += 1
-    counter[0] += steps
+    assert steps <= HORIZON, (steps, HORIZON)
+    counter[0] += HORIZON  # absorbing padding: exact budget, unchanged return
     return total, bool(info["success"])
 
 
@@ -141,6 +152,7 @@ def run_es_phase(theta0_full, sub, arch, fit_families, entries_by_fam,
 
 def skill_phase(arm, arch, family, k, entries_by_fam, theta_base, seed,
                 phase_idx, counter, plastic_full):
+    c0 = counter[0]
     rng_es = rng_for(seed, arm, phase_idx, "es")
     rng_ep = rng_for(seed, arm, phase_idx, "ep")
     rng_ev = rng_for(seed, arm, phase_idx, "ev")
@@ -161,6 +173,7 @@ def skill_phase(arm, arch, family, k, entries_by_fam, theta_base, seed,
     full, gens, hist, checks = run_es_phase(
         theta_base, sub, arch, [(family, FIT_EPS)], entries_by_fam,
         rng_es, rng_ep, counter, check_fn)
+    assert counter[0] - c0 == PHASE_STEPS, (counter[0] - c0, PHASE_STEPS)
     fp = first_pass_gen(checks)
     return {"theta": full, "gens": gens, "history": hist, "checks": checks,
             "first_pass_gen": fp, "acquired": bool(fp is not None),
@@ -169,6 +182,7 @@ def skill_phase(arm, arch, family, k, entries_by_fam, theta_base, seed,
 
 def gate_phase(arm, arch, entries_by_fam, theta_base, seed, phase_idx,
                counter, plastic_full):
+    c0 = counter[0]
     rng_es = rng_for(seed, arm, phase_idx, "es")
     rng_ep = rng_for(seed, arm, phase_idx, "ep")
     rng_ev = rng_for(seed, arm, phase_idx, "ev")
@@ -184,6 +198,7 @@ def gate_phase(arm, arch, entries_by_fam, theta_base, seed, phase_idx,
     full, gens, hist, checks = run_es_phase(
         theta_base, sub, arch, [("G1", 4), ("G2", 4)], entries_by_fam,
         rng_es, rng_ep, counter, check_fn=check_fn)
+    assert counter[0] - c0 == PHASE_STEPS, (counter[0] - c0, PHASE_STEPS)
     return {"theta": full, "gens": gens, "history": hist, "checks": checks,
             "steps": counter[0]}
 
@@ -297,6 +312,7 @@ def plan():
     info = {"seeds": SEEDS, "arms": ARMS, "manifest": ARM_MANIFEST,
             "pop_pairs": POP_PAIRS, "sigma": SIGMA, "alpha": ALPHA,
             "fit_eps": FIT_EPS, "gen_budget_per_phase": GEN_BUDGET,
+            "horizon": HORIZON, "phase_steps_exact": PHASE_STEPS,
             "early_stop_comparative": False, "acq": ACQ,
             "params": verify_param_match()}
     print(json.dumps(info, indent=1, default=float))
