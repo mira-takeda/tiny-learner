@@ -135,3 +135,7 @@ protects old skills during sequential training.
   Vectorization investigated on toys: exact path ~1.0x (BLAS batched-vs-row matmul
   diverges, blocking exact policy batching); 24h infeasible via execution. STOPPED,
   awaiting runtime-amendment decision. No budget changed.
+- 2026-10-26: Modal path — client+token verified present (py3.11, lordtakeda);
+  sandbox cannot reach Modal API but host terminal can. Wrapper modal_app.py ready
+  (toy-only actions + uncalled run_registered; code baked into image copy=True);
+  pre-stated verify interpretation rules in RUNLOG; awaiting host verify paste.

@@ -149,6 +149,45 @@ this file appends facts only. Never edit past entries — append new ones.
 - New/changed hashes: env.py 0096b5b8…, tasks.py 57c8c04e…, models.py b17e481b…,
   vec.py 85ead840… (new), selftest.py ae17d619…. Driver (train.py) unchanged.
 
+## 2026-10-26 — MODAL PREP BLOCKED (sandbox cannot reach Modal API)
+
+- Found: modal 1.6.2 under py3.11 (Framework python); ~/.modal.toml has
+  [lordtakeda] profile with token keys (values never printed). No `modal` on
+  PATH; CLI works via `python3.11 -m modal`.
+- `modal volume/app list` => "Could not connect to the Modal server" (both).
+  curl via sandbox proxy: github.com/meta.com OK, but modal.com TLS returns
+  nothing and api.modal.com fails entirely. Verdict: sandbox egress proxy does
+  not allow Modal endpoints. Auth state UNTESTABLE from here (never connected).
+- Prepared but UNVERIFIED: modal_app.py (env/package/selftest/toy/persist funcs
+  + uncalled run_registered; numpy==2.5.4 pinned; 1 CPU/1GiB; volume
+  tiny-learner-runs). Left UNCOMMITTED pending first verified run.
+- Pricing gathered (2026 sources, for later costing): CPU $0.0000131/core-s,
+  mem $0.00000222/GiB-s, per-second billing.
+- No registered workloads touched. No installs, no new envs (used existing
+  py3.11 for Modal driving per python-env guidance).
+
+## 2026-10-26 — MODAL WRAPPER READY; HOST VERIFY PENDING (sandbox blocked)
+
+- Host terminal confirmed working (`modal volume list` OK outside sandbox).
+  Sandbox proxy remains the only blocker, so verification runs via user-pasted
+  host output. Wrapper validated locally as far as possible without cloud:
+  imports clean, dispatch works, image/volume defs lazy (no network at import).
+  Fixed for modal 1.6.2 API: Mount.from_local_dir gone => code/data baked into
+  image via add_local_dir(copy=True) = immutable snapshot (better for freeze).
+- Local baselines captured BEFORE seeing any remote output: toy expectation
+  (64 eps, seed_base 5000, saved); src+data hashes re-confirmed == frozen.
+- PRE-STATED interpretation rules for the host verify paste: (1) remote file
+  hashes MUST equal frozen exactly (copy check); (2) remote selftest MUST exit
+  0 all-PASS; (3) Modal-vs-Modal toy reruns MUST match exactly (this is the
+  determinism that counts); (4) local-vs-Modal toy: match preferred, ulp-level
+  mismatch acceptable ONLY if (1)-(3) hold (OpenBLAS-vs-Accelerate note) — in
+  that case ALL registered runs happen on Modal only (single environment);
+  (5) volume write/read roundtrip must succeed; (6) throughput/cost projected
+  from measured Modal steps/s at published rates, computed not assumed.
+- Single host command (toy-only; run_registered NOT invoked by any action):
+  cd /Users/satoru/Documents/hackathon/tiny-learner &&
+  /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 -m modal run modal_app.py --action verify
+
 ## 2026-10-26 ~15:35 — REGISTERED TRAINING ABORTED PRE-RESULT (runtime feasibility)
 
 - Master session terminated; completion monitor stopped. runs/ contains ZERO

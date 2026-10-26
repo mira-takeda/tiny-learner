@@ -1,0 +1,220 @@
+"""Modal wrapper for tiny-learner. TOY/UNREGISTERED workloads only until GO.
+
+Registered entrypoint run_registered() is implemented but MUST NOT be invoked
+without explicit user authorization. Registered training stays scalar and
+otherwise exactly as frozen; this file only ships code/data and runs it remotely.
+
+Usage (local, turbulently networked): /Library/.../python3.11 -m modal run \
+  modal_app.py --action env|package|selftest|toy|persist|throughput
+"""
+
+import modal
+
+ROOT = "/Users/satoru/Documents/hackathon/tiny-learner"
+APP = "tiny-learner"
+VOLUME = "tiny-learner-runs"
+
+# copy=True bakes an immutable snapshot into the image: remote code/data are
+# pinned at build time and immune to later local edits.
+image = (modal.Image.debian_slim()
+         .pip_install("numpy==2.5.4")
+         .add_local_dir(f"{ROOT}/src", remote_path="/root/tl/src", copy=True)
+         .add_local_dir(f"{ROOT}/data", remote_path="/root/tl/data", copy=True))
+vol = modal.Volume.from_name(VOLUME, create_if_missing=True)
+
+app = modal.App(APP)
+BASE = dict(image=image, cpu=1.0, memory=1024)
+
+
+@app.function(**BASE, timeout=300)
+def env_info():
+    import os
+    import platform
+    import sys
+
+    import numpy
+    return {"python": sys.version.split()[0], "numpy": numpy.__version__,
+            "platform": platform.platform(), "cpu_count": os.cpu_count()}
+
+
+@app.function(**BASE, timeout=300)
+def packaging_check():
+    import glob
+    import hashlib
+
+    out = {}
+    for path in sorted(glob.glob("/root/tl/src/*.py")
+                       + glob.glob("/root/tl/data/*.json")):
+        h = hashlib.sha256()
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(65536), b""):
+                h.update(chunk)
+        out[path.replace("/root/tl/", "")] = h.hexdigest()
+    return out
+
+
+@app.function(**BASE, timeout=2400)
+def run_selftest():
+    import io
+    import sys
+    from contextlib import redirect_stdout
+
+    sys.path.insert(0, "/root/tl/src")
+    import selftest
+
+    buf = io.StringIO()
+    try:
+        with redirect_stdout(buf):
+            code = selftest.main()
+    except SystemExit as e:
+        code = e.code
+    return {"exit": code, "output": buf.getvalue()[-4000:]}
+
+
+TOY_CFGS = {
+    "A": {"agent": [50, 50], "goal": {"pos": [70, 60]}},
+    "B": {"agent": [50, 50], "hazard": {"pos": [20, 20], "speed": 3.5}},
+    "C": {"agent": [30, 30], "obj": {"pos": [40, 40]},
+          "zone": {"center": [50, 92]}},
+    "D": {"agent": [50, 20], "goal": {"pos": [50, 65]},
+          "wall": {"y": 50, "gap_x": 50, "gap_w": 16}},
+}
+TOY_FAMS = ("A", "B", "C", "D")
+
+
+@app.function(**BASE, timeout=1800)
+def toy_episodes(n_eps=64, seed_base=5000):
+    import sys
+    import time
+
+    import numpy as np
+
+    sys.path.insert(0, "/root/tl/src")
+    from models import N_SKILLS, SKILL_SHAPES, GATE_SHAPES, ModularNet
+    from policies import xavier_init
+    from tasks import TaskRunner
+
+    rng = np.random.default_rng(0)
+    theta = np.concatenate(
+        [xavier_init(rng, SKILL_SHAPES) for _ in range(N_SKILLS)]
+        + [xavier_init(rng, GATE_SHAPES)])
+    net = ModularNet(theta)
+    tr = TaskRunner()
+    out, steps = [], 0
+    t0 = time.time()
+    for k in range(n_eps):
+        fam = TOY_FAMS[k % 4]
+        cfg, seed = TOY_CFGS[fam], seed_base + k
+        r2 = np.random.default_rng(seed)
+        o = tr.reset(fam, cfg, seed)
+        tot, done = 0.0, False
+        while not done:
+            p, _ = net.probs(o)
+            o, r, done, info = tr.step(int(r2.choice(len(p), p=p)))
+            tot += r
+            steps += 1
+        out.append([round(float(tot), 9), bool(info["success"])])
+    wall = time.time() - t0
+    import resource
+
+    peak_kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024
+    return {"episodes": out, "steps": steps, "wall_s": wall,
+            "steps_per_s": steps / wall, "peak_rss_mb": peak_kb}
+
+
+@app.function(image=image, volumes={"/vol": vol}, cpu=1.0, memory=1024,
+             timeout=300)
+def persistence_write(tag):
+    import json
+    import os
+
+    path = f"/vol/probe_{tag}.json"
+    payload = {"tag": tag, "n": 3}
+    with open(path, "w") as f:
+        json.dump(payload, f)
+    vol.commit()
+    return {"path": path, "bytes": os.path.getsize(path)}
+
+
+@app.function(image=image, volumes={"/vol": vol}, cpu=1.0, memory=1024,
+             timeout=300)
+def persistence_read(tag):
+    import json
+    import os
+
+    path = f"/vol/probe_{tag}.json"
+    with open(path) as f:
+        payload = json.load(f)
+    os.remove(path)
+    vol.commit()
+    return payload
+
+
+@app.function(**BASE, volumes={"/vol": vol}, timeout=86400)
+def run_registered(arm, seed):
+    """DO NOT INVOKE without explicit user GO. Runs one frozen arm/seed job."""
+    import json
+    import os
+    import sys
+
+    sys.path.insert(0, "/root/tl/src")
+    import train
+
+    assert arm in train.ARMS and seed in train.SEEDS
+    log = train.run_arm_seed(arm, seed, "/root/tl/data", "/vol/runs")
+    vol.commit()
+    return {"arm": arm, "seed": seed,
+            "phases": {k: {"gens": v["gens"], "acquired": v.get("acquired")}
+                       for k, v in log["phases"].items()},
+            "total_steps": log["total_steps"]}
+
+
+@app.local_entrypoint()
+def main(action="env", n_eps=64, seed_base=5000, tag="probe"):
+    if action == "env":
+        print(env_info.remote())
+    elif action == "package":
+        for k, v in sorted(packaging_check.remote().items()):
+            print(f"{k} {v}")
+    elif action == "selftest":
+        r = run_selftest.remote()
+        print(r["output"])
+        print("SELFTEST-REMOTE-EXIT:", r["exit"])
+    elif action == "toy":
+        import json as _j
+
+        print(_j.dumps(toy_episodes.remote(n_eps=n_eps,
+                                           seed_base=seed_base)))
+    elif action == "persist":
+        print(persistence_write.remote(tag))
+        print(persistence_read.remote(tag))
+    elif action == "verify":
+        import json as _j
+
+        print("### ENV")
+        print(_j.dumps(env_info.remote(), indent=1))
+        print("### PACKAGE")
+        pkg = packaging_check.remote()
+        for k in sorted(pkg):
+            print(f"{k} {pkg[k]}")
+        print("### SELFTEST")
+        r = run_selftest.remote()
+        print(r["output"])
+        print("SELFTEST-REMOTE-EXIT:", r["exit"])
+        print("### TOY-RUN-1")
+        t1 = toy_episodes.remote(n_eps=64, seed_base=5000)
+        print(_j.dumps(t1))
+        print("### TOY-RUN-2")
+        t2 = toy_episodes.remote(n_eps=64, seed_base=5000)
+        print(_j.dumps(t2["episodes"]))
+        print("MATCH-RUN1:", t1["episodes"] == t2["episodes"])
+        print("### THROUGHPUT")
+        t3 = toy_episodes.remote(n_eps=256, seed_base=9000)
+        print(_j.dumps({k: t3[k] for k in ("steps", "wall_s", "steps_per_s",
+                                           "peak_rss_mb")}))
+        print("### PERSIST")
+        print(persistence_write.remote("verify1"))
+        print(persistence_read.remote("verify1"))
+        print("### VERIFY-DONE")
+    else:
+        raise SystemExit(f"unknown action: {action}")
