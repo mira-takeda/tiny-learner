@@ -38,7 +38,12 @@ def main():
     check("train-arms", T.ARMS == ["A1", "A2", "A3", "A4"])
     check("battery-file", T.BATTERY_FILE == "test_battery_v1.json")
     check("es-hypers", (T.POP_PAIRS, T.SIGMA, T.ALPHA, T.FIT_EPS,
-                        T.GEN_CAP, T.GEN_MAX) == (32, 0.1, 0.05, 8, 400, 800))
+                        T.GEN_BUDGET) == (32, 0.1, 0.05, 8, 400))
+    r = subprocess.run([sys.executable, f"{SRC}/train.py", "--plan"],
+                       capture_output=True, text=True)
+    plan = json.loads(r.stdout)
+    check("plan-fixed-budget", plan["gen_budget_per_phase"] == 400
+          and plan["early_stop_comparative"] is False)
     n_meta = sum(1 for _ in open(f"{DATA}/train_meta_v1.json"))
     check("manifests-nonempty", n_meta > 100, n_meta)
 

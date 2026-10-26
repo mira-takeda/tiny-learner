@@ -77,3 +77,45 @@ this file appends facts only. Never edit past entries — append new ones.
   tasks.py 4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495
   train.py 7425dbbfe08fb8fc63eaaebad38dc9cc05b207a2367bfcc36ba1b90fbd8237fd
 - From here: any implementation change = logged deviation + rerun affected runs.
+
+## 2026-10-26 — COMPLIANCE CORRECTION: fixed equal budgets (pre-run, not result-driven)
+
+- PREREG wording verified: section 2 requires "same per-phase step budgets"; section 8
+  requires "same ... budgets" (A3) and "equal step budgets" (A4); H-meta is judged
+  "at equal step budgets". Section 5's acquisition early-stop is incompatible with
+  equal ACTUAL budgets (it shortens training unevenly across arms/seeds).
+- Correction: every skill phase runs a FIXED 400 ES generations for all arms/seeds
+  (pop 64, fitness 8 eps, identical check schedule every 10 gens incl. plastic arms
+  and gate). Acquisition checks are record-only; FAIL = unacquired at gen 400.
+  The 800-gen extension is removed (it cannot coexist with equal actual budgets).
+  Phase output = end-of-budget theta. Savings = scratch first-pass gens /
+  reacquire gens. Reacquisition = 40 gens with early stop (a measurement, not a
+  comparative budget). Hypotheses, datasets, thresholds, batteries unchanged.
+- Fixed budget/phase: 400 gens x 64 thetas x 8 eps x <=200 steps = <=41M env steps
+  (plus 40 record-only checks x 40 eps). Measured 4040 steps/s (math-identical
+  bound-net optimization, bit-verified, 1380 -> 4040). Projected ~2.5h/phase
+  serial (assumes ~180-step mean episodes; first real phase calibrates);
+  100 phases, 4-way parallel recommended at training time.
+- Equality: single GEN_BUDGET constant, identical pop/fitness/checks/data for all
+  arms (asserted by freeze-check plan test + fixed-budget selftest). Actual env
+  steps vary only via behavior-dependent episode length (symmetric across arms)
+  and are logged per run.
+- No registered runs have occurred. This supersedes PREREG section 5's early-stop
+  sentence and section 7's "FAIL after 800 gens" (now FAIL at gen 400).
+- Re-verified: selftest 24/24 (incl. 2 new: bound-bit-identical,
+  fixed-budget-ignores-passing-checks), freeze-check PASS.
+- New executable hashes (sha256, src/):
+  audit.py a88efe2f750d436f9e247826fb7378e1a117b07d88f4178da9e4c5167123aa20
+  env.py 390b82f74778e00e0d437c91ed1e24e75f5dbeae85a4cb4478e6eb8e5bb4d968
+  es.py 3778e1070beef5140454941844431660c87ce986d098654e870ced0f1a5c91a0
+  evaluate.py 6efd31ad1d7ec6a40cfa66883138df0cccab51be47b74aa3d4a1256aaae0ec8f
+  freeze_check.py 80912515b919a330fb5d3e70e30326e1a3781d8066cee0cebb7383956d6d8043
+  gen.py b78df222de6950563c5dbedf3ccf0992c3ef733e2fcf838564be66423c1223b5
+  mkdata.py a1b58eb32a802fcb93a4f534ae0f14e53c078d66894043b0ec7ebbb82af5be58
+  models.py 276d8762b479dc122af88a71b280c3517872bfd89bdf5745df9bfc36beab3643
+  policies.py 13ac7f7af80af9d9ddcd0303ebd68b23dc566e757f38f4f2dea49a819ac2c7e4
+  reinforce.py 2fb977f4923c378b9ce6b3b14967eafb24348ffc53042ae725492826712750c8
+  sanity.py 033786bde869cb3a7a62cebf076c2f2bf4a876b7878959e578736a9608575848
+  selftest.py 14ab22e176da77f12c0711ca779b8dfa61293cf97346b58ce62a20c66ecdb475
+  tasks.py 4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495
+  train.py 7f2bf51eec7c02001f6e6e92c9f5599ae7e3a9b91fb299e3617c98ec47d49fc4

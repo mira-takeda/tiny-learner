@@ -69,3 +69,49 @@ def mono_act(theta, obs, rng, deterministic=False, **kw):
     if deterministic:
         return int(np.argmax(p))
     return int(rng.choice(len(p), p=p))
+
+
+# Bound networks: identical math to *_probs, weights unpacked once per theta
+# instead of once per step. Bit-identical outputs (covered by selftest).
+
+
+def _forward_mats(mats, x):
+    h = x
+    for i in range(0, len(mats) - 2, 2):
+        h = np.tanh(h @ mats[i] + mats[i + 1])
+    return h @ mats[-2] + mats[-1]
+
+
+class ModularNet:
+    def __init__(self, theta):
+        from policies import unpack
+        skills, gate = split_modular(theta)
+        self.skill_mats = [unpack(s, SKILL_SHAPES) for s in skills]
+        self.gate_mats = unpack(gate, GATE_SHAPES)
+
+    def probs(self, obs, skill_only=None, gate_mats=None, mask_hazard=False):
+        if mask_hazard:
+            obs = obs.copy()
+            obs[5:8] = 0.0
+        if skill_only is None:
+            w = softmax(_forward_mats(gate_mats or self.gate_mats, obs))
+        else:
+            w = np.zeros(N_SKILLS)
+            w[skill_only] = 1.0
+        p = np.zeros(N_ACTIONS)
+        for k in range(N_SKILLS):
+            if w[k] > 0:
+                p += w[k] * softmax(_forward_mats(self.skill_mats[k], obs))
+        return p, w
+
+
+class MonoNet:
+    def __init__(self, theta):
+        from policies import unpack
+        self.mats = unpack(theta, MONO_SHAPES)
+
+    def probs(self, obs, mask_hazard=False):
+        if mask_hazard:
+            obs = obs.copy()
+            obs[5:8] = 0.0
+        return softmax(_forward_mats(self.mats, obs))

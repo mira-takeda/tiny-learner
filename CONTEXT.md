@@ -122,3 +122,5 @@ protects old skills during sequential training.
 - 2026-10-26: registered datasets frozen + audits PASS (leakage 0, counts/seeds/subranges verified);
   chance baselines measured (A .40, B .00, C .045, D .405, I1/H1/H2 .00, H3 .095).
 - 2026-10-26: training system frozen (22/22 toy selftests, freeze-check PASS, hashes in RUNLOG).
+- 2026-10-26: compliance correction — fixed 400-gen/phase budgets for all arms, record-only
+  checks, FAIL at gen 400 (supersedes PREREG early-stop/800-extension); re-frozen (24/24 tests).

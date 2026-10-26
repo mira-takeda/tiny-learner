@@ -50,10 +50,15 @@ def subset(path, battery):
 
 
 def make_policy(arch, theta, mode="normal", shuffle_seed=0, trace=None):
-    gate_theta = None
+    from models import ModularNet, MonoNet
+    from policies import unpack
+    net = ModularNet(theta) if arch == "modular" else MonoNet(theta)
+    gate_mats = None
     if mode == "shuffle":
-        gate_theta = xavier_init(np.random.default_rng(shuffle_seed),
-                                 layer_shapes(14, [32], N_SKILLS))
+        gate_mats = unpack(
+            xavier_init(np.random.default_rng(shuffle_seed),
+                        layer_shapes(14, [32], N_SKILLS)),
+            layer_shapes(14, [32], N_SKILLS))
     skill_only = None
     if mode.startswith("skill-"):
         skill_only = int(mode.split("-")[1])
@@ -63,10 +68,10 @@ def make_policy(arch, theta, mode="normal", shuffle_seed=0, trace=None):
 
     def policy_fn(obs, rng):
         if arch == "modular":
-            p, w = modular_probs(theta, obs, skill_only=skill_only,
-                                 gate_theta=gate_theta, mask_hazard=mask)
+            p, w = net.probs(obs, skill_only=skill_only,
+                             gate_mats=gate_mats, mask_hazard=mask)
         else:
-            p = mono_probs(theta, obs, mask_hazard=mask)
+            p = net.probs(obs, mask_hazard=mask)
             w = None
         if trace is not None and w is not None:
             trace.append([float(x) for x in w])

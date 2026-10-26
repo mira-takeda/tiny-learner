@@ -20,7 +20,7 @@ from models import (MODULAR_DIM, MONO_DIM, SKILL_DIM, GATE_DIM, N_SKILLS,
                     mono_probs)
 from policies import xavier_init, count_params
 from tasks import TaskRunner
-from train import SEEDS, ARM_MANIFEST, POP_PAIRS, FIT_EPS, GEN_CAP
+from train import SEEDS, ARM_MANIFEST, POP_PAIRS, FIT_EPS, GEN_BUDGET
 
 PASS = []
 
@@ -166,13 +166,43 @@ def main():
           res["generations"] == 2 and len(res["history"]) == 2)
 
     # budget arithmetic + maps (pure, no data files)
-    cap = GEN_CAP * (2 * POP_PAIRS) * FIT_EPS * 200
-    check("budget-cap-41M", cap == 400 * 64 * 8 * 200)
+    cap = GEN_BUDGET * (2 * POP_PAIRS) * FIT_EPS * 200
+    check("budget-fixed-41M-max", cap == 400 * 64 * 8 * 200)
     check("seeds-frozen", SEEDS == [101, 102, 103, 104, 105])
     check("curriculum-map", ARM_MANIFEST == {"A1": "train_meta_v1.json",
                                             "A2": "train_meta_v1.json",
                                             "A3": "train_meta_v1.json",
                                             "A4": "train_control_v1.json"})
+
+    # bound nets are bit-identical to unbound forward (speed-only change)
+    from models import ModularNet, MonoNet
+    from models import mono_probs as _mp
+    bt = np.concatenate(
+        [xavier_init(np.random.default_rng(11), SKILL_SHAPES)
+         for _ in range(N_SKILLS)]
+        + [xavier_init(np.random.default_rng(11), GATE_SHAPES)])
+    mt = xavier_init(np.random.default_rng(12), MONO_SHAPES)
+    bo = np.random.default_rng(13).normal(size=(5, 14))
+    bmod, bmono = ModularNet(bt), MonoNet(mt)
+    same = all(np.array_equal(bmod.probs(o)[0], modular_probs(bt, o)[0])
+               and np.array_equal(bmod.probs(o)[1], modular_probs(bt, o)[1])
+               for o in bo)
+    same &= all(np.array_equal(bmono.probs(o), _mp(mt, o)) for o in bo)
+    check("bound-bit-identical", same)
+
+    # fixed budget: passing checks NEVER shorten a comparative phase
+    from train import run_es_phase
+    ft = np.concatenate(
+        [xavier_init(np.random.default_rng(14), SKILL_SHAPES)
+         for _ in range(N_SKILLS)]
+        + [np.zeros(GATE_DIM)])
+    fentries = {"A": [{"family": "A", "cfg": TOY_CFGS["A"]} for _ in range(4)]}
+    _, fgens, _, fchecks = run_es_phase(
+        ft, slice(0, SKILL_DIM), "modular", [("A", 2)], fentries,
+        np.random.default_rng(15), np.random.default_rng(16), [0],
+        check_fn=lambda full: 1.0, generations=25)
+    check("fixed-budget-ignores-passing-checks",
+          fgens == 25 and fchecks == [1.0, 1.0])
 
     print("SELFTEST", "PASS" if all(PASS) else "FAIL")
     return 0 if all(PASS) else 1
