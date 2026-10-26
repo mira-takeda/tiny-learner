@@ -27,8 +27,8 @@ RUNLOG.md / PREREG.md — this file never replaces them.
 - **Thresholds:** acq ≥80%/skill; I1 ≥70% (else H UNINTERPRETABLE); each H ≥60% AND
   H-mean ≥15pp over monolith AND ≥40pp over best single skill; frozen drop ≤10pp;
   savings ≥2×; Meta ≥10pp over control. 5 seeds, 95% CI.
-- **Latest milestone:** Modal wrapper ready + locally validated; host verify
-  SUITE prepared (single toy-only command). Awaiting user-pasted host output.
+- **Latest milestone:** Modal image build FAILED (py3.11 vs numpy 2.5.4); fixed to
+  Python 3.14 base. Awaiting user rerun of host verify + pasted output.
 - **Active caveats:** shared masked obs schema supplies factorization (modularity claim,
   not emergence); frozen retention is structural (3-arm comparison carries the claim);
   skill ontology is experimenter-carved; gate saw compositeness (only combos are novel);

@@ -16,7 +16,7 @@ VOLUME = "tiny-learner-runs"
 
 # copy=True bakes an immutable snapshot into the image: remote code/data are
 # pinned at build time and immune to later local edits.
-image = (modal.Image.debian_slim()
+image = (modal.Image.debian_slim(python_version="3.14")
          .pip_install("numpy==2.5.4")
          .add_local_dir(f"{ROOT}/src", remote_path="/root/tl/src", copy=True)
          .add_local_dir(f"{ROOT}/data", remote_path="/root/tl/data", copy=True))

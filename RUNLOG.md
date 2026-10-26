@@ -188,6 +188,16 @@ this file appends facts only. Never edit past entries — append new ones.
   cd /Users/satoru/Documents/hackathon/tiny-learner &&
   /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 -m modal run modal_app.py --action verify
 
+## 2026-10-26 — MODAL WRAPPER FIX: Python 3.14 base image (pre-run)
+
+- Host verify attempt FAILED at image build (no workload executed anywhere):
+  base image inherited Python 3.11 from the local client, but pinned
+  numpy==2.5.4 requires Python >=3.12.
+- Fix (operational, wrapper-only): modal.Image.debian_slim(python_version="3.14"),
+  matching the frozen local training interpreter (3.14). NumPy stays 2.5.4.
+  Everything else unchanged. Import-validated locally (pin accepted).
+- No registered workload has run anywhere. No budgets/seeds/thresholds touched.
+
 ## 2026-10-26 ~15:35 — REGISTERED TRAINING ABORTED PRE-RESULT (runtime feasibility)
 
 - Master session terminated; completion monitor stopped. runs/ contains ZERO

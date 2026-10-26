@@ -139,3 +139,5 @@ protects old skills during sequential training.
   sandbox cannot reach Modal API but host terminal can. Wrapper modal_app.py ready
   (toy-only actions + uncalled run_registered; code baked into image copy=True);
   pre-stated verify interpretation rules in RUNLOG; awaiting host verify paste.
+- 2026-10-26: host image build failed (py3.11 base vs numpy 2.5.4); fixed base to
+  Python 3.14 (matches frozen local interpreter). No workload ran; no budget touched.
