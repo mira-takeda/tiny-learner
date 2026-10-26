@@ -115,3 +115,43 @@ class MonoNet:
             obs = obs.copy()
             obs[5:8] = 0.0
         return softmax(_forward_mats(self.mats, obs))
+
+
+def _forward_mats_batch(mats, X):
+    H = X
+    for i in range(0, len(mats) - 2, 2):
+        H = np.tanh(H @ mats[i] + mats[i + 1])
+    return H @ mats[-2] + mats[-1]
+
+
+def _softmax_batch(L):
+    Z = L - L.max(axis=1, keepdims=True)
+    E = np.exp(Z)
+    return E / E.sum(axis=1, keepdims=True)
+
+
+def batched_modular_probs(skill_mats_list, gate_mats, X, skill_only=None,
+                          gate_mats_override=None, mask_hazard=False):
+    """Batched ModularNet.probs. Row n must equal the scalar call on X[n]."""
+    if mask_hazard:
+        X = X.copy()
+        X[:, 5:8] = 0.0
+    if skill_only is None:
+        W = _softmax_batch(_forward_mats_batch(
+            gate_mats_override or gate_mats, X))
+    else:
+        W = np.zeros((X.shape[0], N_SKILLS))
+        W[:, skill_only] = 1.0
+    P0 = _softmax_batch(_forward_mats_batch(skill_mats_list[0], X))
+    P1 = _softmax_batch(_forward_mats_batch(skill_mats_list[1], X))
+    P2 = _softmax_batch(_forward_mats_batch(skill_mats_list[2], X))
+    P3 = _softmax_batch(_forward_mats_batch(skill_mats_list[3], X))
+    P = (W[:, 0:1] * P0 + W[:, 1:2] * P1 + W[:, 2:3] * P2 + W[:, 3:4] * P3)
+    return P, W
+
+
+def batched_mono_probs(mats, X, mask_hazard=False):
+    if mask_hazard:
+        X = X.copy()
+        X[:, 5:8] = 0.0
+    return _softmax_batch(_forward_mats_batch(mats, X))

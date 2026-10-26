@@ -121,6 +121,49 @@ this file appends facts only. Never edit past entries — append new ones.
   relaunch the identical command (deterministic seeds => identical results);
   completed jobs skip automatically. Prevent machine sleep for wall-clock.
 - .gitignore += runs/ (operational hygiene; run outputs excluded from history).
+
+## 2026-10-26 — OPTIMIZATION INVESTIGATION (toy-only) => 24h INFEASIBLE via execution
+
+- Profile (6783 toy steps): policy forward 58% (matmuls 28%, softmax 22%),
+  env+obs+rewards ~40%. Per-step numpy-call overhead dominates.
+- Built (additive, NOT wired into driver): VecArena + VecTaskRunner (bit-exact
+  vectorized env/rewards; norms verified bit-identical batched) + batched policy
+  forward + vec.run_batch with scalar (exact) and batched (fast) backends.
+- KEY FINDING: batched matmul is NOT bit-identical to per-row matmul on this
+  BLAS (different kernels). Exact methods can therefore batch env math but must
+  loop policy calls per env.
+- Measured (toy, long episodes): N=8 (fitness batch size): vec-scalar 1.02x,
+  vec-batched 1.82x. N=40: vec-scalar 1.22x, vec-batched 4.10x. Fitness is
+  99.2% of the budget at N=8, so governing speedups are ~1.0x exact / ~1.8x
+  inexact. Needed for 24h: ~4.4x code speedup (5-day base / 1 day).
+- VERDICT: <=24h NOT achievable via execution optimization within the
+  equivalence requirement. STOPPED per instructions; no budget changed.
+- Open decision (pre-result, needs explicit authorization): (a) runtime
+  amendment shrinking the registered budget, and/or (b) tolerance for
+  batched-policy numerical divergence (unbuilt cross-theta batching is the only
+  remaining lever, magnitude uncharacterized at ES scale).
+- Equivalence proof: vec scalar-backend == scalar rollout EXACTLY (all 10
+  families x 2 archs x 6 eps, identical seeds) + committed selftest
+  vec-exact-vs-scalar. Scalar frozen code untouched (sed revert verified).
+- Re-verified: selftest 27/27, freeze-check PASS.
+- New/changed hashes: env.py 0096b5b8…, tasks.py 57c8c04e…, models.py b17e481b…,
+  vec.py 85ead840… (new), selftest.py ae17d619…. Driver (train.py) unchanged.
+
+## 2026-10-26 ~15:35 — REGISTERED TRAINING ABORTED PRE-RESULT (runtime feasibility)
+
+- Master session terminated; completion monitor stopped. runs/ contains ZERO
+  outputs (no JSON, no npz) — abort is pre-result by construction. No partial
+  parameters, fitness curves, or outcomes were inspected (only file existence).
+- Reason: projected ~5-day matrix runtime unviable for hackathon schedule.
+  Operational correction before observing any registered result.
+- Worker-death verification: ps/pgrep/pkill all blocked in sandbox. Tree-kill
+  requested; runtime kills managed tree at session end regardless. Backstop:
+  train.py is deterministic — any hypothetical survivor could only emit outputs
+  identical to a frozen relaunch. RELAUNCH HYGIENE (binding): before any future
+  relaunch, delete runs/*.json + runs/*.npz so no pre-optimization output can
+  be picked up by skip-if-complete.
+- Next: optimize execution on toys only (vectorization with equivalence proof).
+  No registered configs until an optimization report lands. Training NOT resumed.
 - From here: any implementation change = logged deviation + rerun affected runs.
 
 ## 2026-10-26 — COMPLIANCE CORRECTION: fixed equal budgets (pre-run, not result-driven)

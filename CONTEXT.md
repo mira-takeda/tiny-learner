@@ -131,3 +131,7 @@ protects old skills during sequential training.
   CROSSCHECK=current snapshot.
 - 2026-10-26 15:06: registered training launched (20 jobs xargs -P4); sandbox-exec
   unavailable (nested sandbox blocked) — import-assertion integrity stands.
+- 2026-10-26 ~15:35: training aborted pre-result (zero outputs, runtime unviable).
+  Vectorization investigated on toys: exact path ~1.0x (BLAS batched-vs-row matmul
+  diverges, blocking exact policy batching); 24h infeasible via execution. STOPPED,
+  awaiting runtime-amendment decision. No budget changed.

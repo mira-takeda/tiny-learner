@@ -27,8 +27,8 @@ RUNLOG.md / PREREG.md — this file never replaces them.
 - **Thresholds:** acq ≥80%/skill; I1 ≥70% (else H UNINTERPRETABLE); each H ≥60% AND
   H-mean ≥15pp over monolith AND ≥40pp over best single skill; frozen drop ≤10pp;
   savings ≥2×; Meta ≥10pp over control. 5 seeds, 95% CI.
-- **Latest milestone:** registered training LAUNCHED 2026-10-26 15:06 (20 jobs,
-  4 workers, A1 101–104 first). Startup nominal (logs clean at T+3min).
+- **Latest milestone:** optimization verdict — 24h INFEASIBLE via execution
+  (exact ~1.0x, need ~4.4x). STOPPED. Awaiting runtime-amendment decision.
 - **Active caveats:** shared masked obs schema supplies factorization (modularity claim,
   not emergence); frozen retention is structural (3-arm comparison carries the claim);
   skill ontology is experimenter-carved; gate saw compositeness (only combos are novel);
@@ -37,13 +37,13 @@ RUNLOG.md / PREREG.md — this file never replaces them.
   record-only checks, FAIL at gen 400 (supersedes PREREG early-stop/800-extension);
   (2) absorbing padding to exact 41.28M steps/phase. Gap-fills: CONTACT_R=5.0,
   G1-train beacon–haz≥35, H2 haz–agent sep≥10, shared train manifests, gate fixed 400.
-- **Unresolved:** wall-clock projection (~2.5h/phase serial, ~5d matrix at 4-way) is
-  estimated — first real phase recalibrates. B-phase acquisition difficulty unknown
-  (random survival 0.00); N/A rules stand ready.
-- **NOT run yet:** no registered run has completed. In progress: 4×5 training runs
-  (retention/reacquisition/H/ablations all run inside each job).
-- **Next authorized step:** MONITOR to first completions (~12h/job); then score H-main
-  per PREREG §5. Relaunch identically if the session drops (skip-if-complete).
+- **Unresolved:** runtime amendment decision (shrink budget and/or tolerate batched
+  divergence?) — must be made pre-result with explicit authorization. B-phase
+  acquisition difficulty still unknown (N/A rules ready).
+- **NOT run yet:** everything registered (launched 15:06, aborted ~15:35 pre-result,
+  zero outputs). Relaunch requires hygiene (clear runs/*.json+*.npz) + explicit GO.
+- **Next authorized step:** AWAIT your decision on (a) runtime amendment and/or
+  (b) numerical-divergence tolerance. Do NOT resume training or change budgets.
 - **Canonical paths (all under `/Users/satoru/Documents/hackathon/tiny-learner/`):**
   `PREREG.md`, `RUNLOG.md`, `CONTEXT.md`, `CROSSCHECK.md`, `src/train.py`,
   `src/{models,tasks,gen,evaluate,audit,es}.py`, `data/MANIFEST.json`,
