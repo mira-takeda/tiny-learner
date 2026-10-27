@@ -27,10 +27,10 @@ RUNLOG.md / PREREG.md — this file never replaces them.
 - **Thresholds:** acq ≥80%/skill; I1 ≥70% (else H UNINTERPRETABLE); each H ≥60% AND
   H-mean ≥15pp over monolith AND ≥40pp over best single skill; frozen drop ≤10pp;
   savings ≥2×; Meta ≥10pp over control. 5 seeds, 95% CI.
-- **Latest milestone:** vec FAIL classified TRANSIENT (full suite 27/27 ×2 remote).
-  Tree restored blob-exact to frozen `e8f3137` (22/22 src/data files); diag/vec
-  code removed; `modal_app.py` slimmed to launch-only; local selftest 26/26 +
-  freeze-check PASS. Ready for final GO.
+- **Latest milestone:** LAUNCHED 18:09 local 2026-10-26 — all 20 registered jobs
+  spawned on Modal (commit `ab640ad`, app `ap-CW89pkvUZOoZ1KwBc7H9S3`), IDs in
+  `runs/launch_ab640ad.json`. No launch errors. Completion expected ~01:00–
+  03:30 local 2026-10-27.
 - **Active caveats:** shared masked obs schema supplies factorization (modularity claim,
   not emergence); frozen retention is structural (3-arm comparison carries the claim);
   skill ontology is experimenter-carved; gate saw compositeness (only combos are novel);
@@ -45,9 +45,9 @@ RUNLOG.md / PREREG.md — this file never replaces them.
   the 20 jobs complete (separate step, same frozen code).
 - **NOT run yet:** everything registered (launched 15:06, aborted ~15:35 pre-result,
   zero outputs). Relaunch requires hygiene (clear runs/*.json+*.npz) + explicit GO.
-- **Next authorized step:** USER gives final GO; then host runs the launch_all
-  command (20 concurrent Modal jobs, ~8h wall, ~$5-9). No training yet —
-  nothing registered has been launched.
+- **Next authorized step:** jobs running on Modal (no action needed). USER checks
+  dashboard/volume periodically; on completion downloads `/vol/runs` and pastes
+  `volume ls` output. Then PREREG scoring on raw results. Do not modify code.
 - **Canonical paths (all under `/Users/satoru/Documents/hackathon/tiny-learner/`):**
   `PREREG.md`, `RUNLOG.md`, `CONTEXT.md`, `CROSSCHECK.md`, `src/train.py`,
   `src/{models,tasks,gen,evaluate,audit,es}.py`, `data/MANIFEST.json`,

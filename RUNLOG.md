@@ -368,4 +368,33 @@ this file appends facts only. Never edit past entries — append new ones.
   pre-result files from aborted launch); remote jobs read only /root/tl/data.
 - Projections from 7218.4 steps/s: <=1.6h/phase, ~7-8h/job (5 phases + evals),
   ~8h concurrent wall; cost ~$5.05 flagged (0.5 core/vCPU) / ~$8.83 unflagged.
-- NOT LAUNCHED. Awaiting final GO for the host launch_all command.f5599ae7e3a9b91fb299e3617c98ec47d49fc4
+- NOT LAUNCHED. Awaiting final GO for the host launch_all command.
+
+## 2026-10-26 — REGISTERED LAUNCH GO (Modal, 20 jobs, commit ab640ad)
+
+- GO received. Pre-launch audit record written to runs/launch_ab640ad.json
+  (14 src + 8 data sha256, modal_app 23b85478..., local py/numpy versions).
+  Frozen experiment == e8f3137 blobs (verified); operational layer modal_app.py
+  only. Curriculum/data manifests: data/MANIFEST.json (6 files) + frozen
+  train_meta/train_control/test_battery (unchanged since snapshot).
+- Launch command (host): modal run modal_app.py --action launch_all
+  (20 spawn, 1 CPU/1 GiB each, timeout 86400s, out /vol/runs).
+- Expected: ~7-8h/job compute, ~8h concurrent wall + image-build/startup
+  overhead (~10-20 min); completion window ~9h from launch. Cost ~$5-9.
+- NOTE: per-job artifacts + stdout summary appear only at job END
+  (run_arm_seed writes once); /vol/runs stays empty until first completion.
+  Live health = Modal dashboard / container status only. Job IDs + start/end
+  timestamps to be recorded here when pasted back. Failures (if any) preserved
+  exactly before any action.
+
+## 2026-10-26 18:09 — ALL 20 JOBS LAUNCHED (Modal, commit ab640ad)
+
+- Host launch completed 18:09 local (18.4s wall): image built in ~4s
+  (im-shAOEcyuTTaXrwH3xcjvXb, im-EEoRBXIkYp4mTESxFqTFv9), app
+  ap-CW89pkvUZOoZ1KwBc7H9S3, all 20 (arm, seed) pairs spawned with IDs
+  fc-01M5XAZ1... through fc-01M5XAZ3... (full map in runs/launch_ab640ad.json,
+  ignored). No errors at launch. Local entrypoint exited cleanly.
+- Expected completion window: ~01:00-03:30 local 2026-10-27 (~7-9h wall).
+  Next: user checks dashboard/volume; on completion, download /vol/runs (40
+  files expected: 20 JSON + 20 npz) and paste `volume ls` for confirmation
+  before scoring. Then PREREG analysis on raw results.f5599ae7e3a9b91fb299e3617c98ec47d49fc4
