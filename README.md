@@ -13,7 +13,7 @@ retained, and reused as conditions change.**
 
 <sub>META GLOBAL AI DEVELOPER HACKATHON 2026</sub>
 
-[The learning process](#explore-the-learning-process) &nbsp; · &nbsp; [Applications](#where-it-could-matter) &nbsp; · &nbsp; [If it scales](#if-it-scales)
+[Explore the learning process](#explore-the-learning-process) &nbsp; · &nbsp; [Applications](#where-it-could-matter) &nbsp; · &nbsp; [If it scales](#if-it-scales)
 
 </div>
 

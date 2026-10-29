@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#11161a">
+<meta name="description" content="Tiny Learner is a CPU-first experimental learning system exploring skill acquisition, memory, and transfer.">
+<title>Tiny Learner | Learn. Remember. Adapt.</title>
+<style>
+:root{--bg:#11161a;--bg2:#171e23;--paper:#f0eee7;--muted:#9facb2;--accent:#9bb2bf;--line:rgba(189,208,213,.15);--faint:rgba(233,238,235,.045)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--paper);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}::selection{background:#7392a2;color:#0a1114}
+a{color:inherit;text-decoration:none}button{font:inherit}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--accent);line-height:1.7}
+.wrap{max-width:1336px;margin:auto;padding-left:clamp(22px,5vw,84px);padding-right:clamp(22px,5vw,84px)}
+nav{display:flex;align-items:center;justify-content:space-between;padding-top:29px;padding-bottom:29px;border-bottom:1px solid var(--line);gap:24px}
+.brand{font-size:17px;letter-spacing:-.05em;font-weight:800;white-space:nowrap}.brand i{display:inline-block;width:8px;height:8px;border:1.6px solid var(--accent);border-radius:50%;margin-left:7px;transform:translateY(-1px)}nav .links{display:flex;align-items:center;gap:30px;font-size:12px;color:#b9c2c2}nav .links a:hover{color:#fff}.repo{border:1px solid var(--line);padding:11px 16px;color:#e8e8e2!important}.repo:hover{border-color:#9ab0bc}
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);min-height:665px;border-bottom:1px solid var(--line)}.hero-left{padding-top:clamp(90px,10vw,148px);padding-bottom:105px;z-index:2}.edition{margin-bottom:48px;display:flex;align-items:center;gap:16px}.edition::before{content:"";height:1px;width:40px;background:var(--accent)}h1{margin:0;font-size:clamp(72px,8.9vw,148px);line-height:.82;letter-spacing:-.094em;font-weight:750}h1 span{display:block}.hero h2{font-size:clamp(25px,2.6vw,39px);font-weight:400;letter-spacing:-.045em;margin:46px 0 18px}.lede{font-size:15px;line-height:1.75;color:#b6c2c5;max-width:530px}.hero-actions{display:flex;gap:12px;margin-top:38px;align-items:center;flex-wrap:wrap}.primary{display:inline-flex;padding:15px 22px;background:var(--paper);color:#11161a;font-size:12px;font-weight:700;gap:20px;align-items:center;border:1px solid var(--paper);transition:.2s}.primary:hover{background:#bacbd1;border-color:#bacbd1}.quiet{color:#c6d0ce;font-size:12px;padding:15px 14px;border-bottom:1px solid var(--line)}.quiet:hover{color:white}
+.hero-art{overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;min-height:460px}.hero-art::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 36%),radial-gradient(ellipse at 68% 45%,rgba(118,150,164,.07),transparent 60%)}.hero-art svg{width:min(100%,700px);overflow:visible;transform:scale(1.16) translateX(4%)}.trace{fill:none;stroke:var(--accent);stroke-width:1.05;opacity:.38;stroke-linecap:round}.trace.fine{stroke-width:.55;opacity:.23}.point{fill:#a5bdc4}.point.dim{opacity:.28}.trace.ring{opacity:.2;stroke-dasharray:1 9}.orb{fill:#95aab2;opacity:.86}.art-footer{position:absolute;right:3%;bottom:48px;font-size:9px;letter-spacing:.2em;color:#8598a1;writing-mode:vertical-rl}
+.quickline{padding-top:22px;padding-bottom:22px;border-bottom:1px solid var(--line);display:flex;gap:22px;align-items:center;flex-wrap:wrap}.quickline span{font-family:ui-monospace,monospace;font-size:10px;color:#93a8b0;letter-spacing:.11em}.quickline .separator{color:#52616b}
+section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;border-bottom:1px solid var(--line)}.section-head{display:grid;grid-template-columns:.42fr 1fr;gap:60px;margin-bottom:56px}.section-head h2{font-size:clamp(35px,4.5vw,65px);letter-spacing:-.065em;line-height:1.07;font-weight:550;margin:0}.section-head p{color:#a9b6bc;max-width:600px;line-height:1.85;font-size:15px;margin:21px 0 0}
+.stage-area{display:grid;grid-template-columns:310px minmax(0,1fr);gap:45px;background:rgba(255,255,255,.012);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0 28px}.stages{display:flex;flex-direction:column;gap:0}.stage{color:var(--muted);background:transparent;border:0;border-bottom:1px solid var(--line);padding:23px 12px 23px 0;text-align:left;cursor:pointer;display:grid;grid-template-columns:45px 1fr;gap:6px;transition:color .2s}.stage:first-child{border-top:1px solid var(--line)}.stage strong{font-size:15px;font-weight:500;letter-spacing:-.02em}.stage small{display:block;font-size:11px;line-height:1.6;margin-top:7px;color:#81929b}.stage:hover{color:#fff}.stage[aria-pressed="true"]{color:#f4f3ec}.stage[aria-pressed="true"] .stage-num{color:#d4e0df}.stage .stage-num{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.13em;color:#52616b;margin-top:4px}.stage[aria-pressed="true"]{box-shadow:inset 2px 0 #9eafba;padding-left:13px}
+.lab{position:relative;background:var(--bg2);border:1px solid var(--line);min-height:460px;overflow:hidden}.lab-top{display:flex;align-items:center;justify-content:space-between;position:absolute;top:27px;left:28px;right:28px;z-index:2}.lab-top span:last-child{color:#697f8a}.lab-canvas{position:absolute;inset:0;display:flex;justify-content:center;align-items:center}.lab-svg{width:min(94%,620px);max-height:385px;overflow:visible}.guide{stroke:#5b707b;opacity:.19;stroke-width:1;fill:none}.link{stroke:#96b0bf;stroke-width:1.3;fill:none;opacity:.21;transition:opacity .45s,stroke-width .45s}.nucleus{fill:#15252e;stroke:#7f9caa;stroke-width:1.4}.nucleus-inner{fill:#adc0c3;opacity:.72}.arc-cluster{transition:opacity .5s}.lab[data-stage="0"] .arc-middle,.lab[data-stage="0"] .arc-outer{opacity:.12}.lab[data-stage="1"] .arc-outer{opacity:.20}.lab[data-stage="2"] .arc-middle{opacity:.8}.lab[data-stage="2"] .arc-outer{opacity:1}.lab[data-stage="3"] .arc-cluster{opacity:1}.lab[data-stage="3"] .link{opacity:.52;stroke-width:1.7}.lab[data-stage="1"] .arc-middle .link{opacity:.75}.lab[data-stage="2"] .arc-outer .link{opacity:.67}
+.lab-caption{position:absolute;bottom:22px;left:28px;right:28px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.lab-caption span{font-size:11px;color:#8ea0aa}.lab-caption em{font-style:normal;font-family:ui-monospace,monospace;font-size:10px;color:#a5b4ba}.stage-story{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:32px}.story-title{font-size:25px;font-weight:500;letter-spacing:-.045em;margin:5px 0 14px}.stage-story p{font-size:14px;color:#a8b6bc;line-height:1.9;margin:0}.stage-story .note{border-left:1px solid #637b88;padding-left:20px;font-size:13px}.disclaimer{font-size:11px;line-height:1.7;color:#84949c;margin-top:25px}
+.appgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}.app{background:var(--bg);padding:32px 30px 36px;min-height:240px;display:flex;flex-direction:column}.app h3{font-size:23px;letter-spacing:-.05em;font-weight:500;margin:28px 0 14px}.app p{font-size:13px;color:#aab8bf;line-height:1.75;margin:0}.app .mono{color:#697e8a}.app:hover{background:#192229}
+.scale{display:grid;grid-template-columns:1fr .85fr;gap:90px;align-items:center}.scale h2{font-weight:500;letter-spacing:-.07em;font-size:clamp(45px,6vw,92px);line-height:1.02;margin:20px 0 34px}.scale p{font-size:16px;color:#b0bec1;line-height:1.9;max-width:580px}.scale-right{border-left:1px solid var(--line);padding:24px 0 24px 34px;display:grid;gap:32px}.scale-right strong{font-weight:500;font-size:24px;letter-spacing:-.05em}.scale-right small{display:block;color:#8e9fa8;line-height:1.8;font-size:13px;margin-top:7px}.research{display:grid;grid-template-columns:1fr 1fr;gap:70px}.research h2{font-size:39px;font-weight:500;letter-spacing:-.06em;margin:16px 0 24px}.research p{font-size:14px;line-height:1.9;color:#aab8bd}.research-item{padding:26px 0;border-top:1px solid var(--line)}.research-item strong{font-size:18px;font-weight:500;letter-spacing:-.035em}.research-item p{margin:10px 0 0}.bottom{display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap;padding-top:45px;padding-bottom:50px}.bottom .mark{font-size:27px;letter-spacing:-.065em;font-weight:700}.bottom .right{color:#9aabb2;font-size:12px;line-height:1.8}.bottom .right a{text-decoration:underline;text-underline-offset:5px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.hero-left{padding-top:90px;padding-bottom:35px}.hero-art{min-height:340px;opacity:.83}.hero-art svg{max-width:580px;transform:scale(1.05)}.hero-art::before{background:linear-gradient(180deg,var(--bg),transparent 55%)}.section-head{grid-template-columns:1fr;gap:0}.stage-area{grid-template-columns:1fr}.stages{display:grid;grid-template-columns:repeat(4,1fr)}.stage{display:block;padding:18px 12px;border-top:1px solid var(--line)}.stage strong{font-size:12px}.stage .stage-num{display:block;margin-bottom:12px}.stage small{font-size:10px}.appgrid{grid-template-columns:repeat(2,1fr)}.scale{grid-template-columns:1fr;gap:15px}.scale-right{grid-template-columns:repeat(3,1fr);gap:18px}.research{gap:35px}}
+@media(max-width:640px){nav .links{gap:14px}nav .links .hide-mobile{display:none}.hero-left{padding-top:80px;padding-bottom:15px}h1{font-size:clamp(72px,18vw,120px)}.hero h2{margin-top:32px}.hero-art{min-height:260px}.hero-art svg{width:100%;max-height:290px}.quickline{gap:12px}.section{padding-top:75px;padding-bottom:75px}.section-head{margin-bottom:33px}.stage-area{gap:20px}.stages{grid-template-columns:repeat(2,1fr)}.stage{min-height:112px}.lab{min-height:340px}.lab-top{top:18px;left:18px;right:18px}.lab-caption{bottom:15px;left:18px;right:18px}.lab-svg{width:100%}.stage-story{grid-template-columns:1fr;gap:20px}.appgrid{grid-template-columns:1fr}.app{min-height:auto;padding:27px 24px}.app h3{margin-top:17px}.scale-right{grid-template-columns:1fr;gap:21px}.research{grid-template-columns:1fr;gap:20px}.bottom{padding-top:32px}.disclaimer{font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<nav class="wrap" aria-label="Main navigation">
+  <a class="brand" href="#top">tiny learner<i aria-hidden="true"></i></a>
+  <div class="links">
+    <a href="#explore">Explore</a>
+    <a href="#applications" class="hide-mobile">Applications</a>
+    <a href="#research" class="hide-mobile">Research</a>
+    <a class="repo" href="https://github.com/mira-takeda/tiny-learner">GitHub ↗</a>
+  </div>
+</nav>
+<main id="top">
+  <header class="hero wrap">
+    <div class="hero-left">
+      <div class="mono edition">Independent research / 2026</div>
+      <h1><span>TINY</span><span>LEARNER.</span></h1>
+      <h2>Learn. Remember. Adapt.</h2>
+      <p class="lede">An experimental, CPU-first learning system investigating how small agents acquire new skills, preserve old ones, and draw on experience when conditions change.</p>
+      <div class="hero-actions">
+        <a class="primary" href="#explore">Explore the idea <span aria-hidden="true">↘</span></a>
+        <a class="quiet" href="#applications">Where it could matter</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg">
+        <g class="trace ring"><circle cx="338" cy="256" r="191"/><circle cx="338" cy="256" r="244"/><circle cx="338" cy="256" r="132"/></g>
+        <g class="trace fine"><path d="M95 180 Q185 125 273 213 T565 182"/><path d="M122 381 Q199 239 322 275 T609 377"/><path d="M224 56 C243 210 382 192 564 132"/><path d="M151 451 C240 431 287 372 325 259 S462 97 573 87"/><path d="M90 252 C221 337 371 373 599 263"/></g>
+        <g class="trace">
+          <path d="M323 258 C282 206 261 140 221 109 C177 80 141 121 102 99"/><path d="M323 258 C369 195 434 179 470 132 S538 88 581 112"/><path d="M323 258 C418 254 474 307 550 286 S607 214 639 224"/><path d="M323 258 C352 318 336 390 394 434 S481 461 514 497"/><path d="M323 258 C266 318 197 335 164 378 S135 446 94 472"/><path d="M323 258 C265 263 216 223 145 241 S85 280 39 260"/>
+        </g>
+        <g fill="none" stroke="#667d88" stroke-width="1" opacity=".6"><path d="M323 229 L351 246 L344 280 L312 287 L296 259 Z"/><path d="M308 245 L337 232 L354 266 L325 286 L299 272 Z"/></g>
+        <g class="orb"><circle cx="323" cy="258" r="6"/><circle cx="221" cy="109" r="4"/><circle cx="470" cy="132" r="4"/><circle cx="550" cy="286" r="3.5"/><circle cx="394" cy="434" r="4"/><circle cx="164" cy="378" r="4"/><circle cx="145" cy="241" r="4"/></g>
+        <g class="point dim"><circle cx="102" cy="99" r="2.5"/><circle cx="581" cy="112" r="2.5"/><circle cx="639" cy="224" r="2.5"/><circle cx="514" cy="497" r="2.5"/><circle cx="94" cy="472" r="2.5"/><circle cx="39" cy="260" r="2.5"/></g>
+      </svg>
+      <div class="art-footer mono">Experiences / Connections / Change</div>
+    </div>
+  </header>
+  <div class="wrap quickline" aria-label="Research focus"><span>CPU FIRST</span><span class="separator">/</span><span>CONTINUAL LEARNING</span><span class="separator">/</span><span>RETENTION</span><span class="separator">/</span><span>TRANSFER</span></div>
+
+  <section class="section wrap" id="explore">
+    <div class="section-head">
+      <div class="mono">01 / Experience</div>
+      <div><h2>Learning is what<br>happens next.</h2><p>A system completing one trained task is only the beginning. The interesting question is what happens after more experience, new skills, and unfamiliar conditions.</p></div>
+    </div>
+    <div class="stage-area">
+      <div class="stages" aria-label="Explore research stages">
+        <button class="stage" data-stage-button="0" aria-pressed="true"><span class="stage-num">01</span><span><strong>Experience</strong><small>Acquire a useful behavior.</small></span></button>
+        <button class="stage" data-stage-button="1" aria-pressed="false"><span class="stage-num">02</span><span><strong>Continuity</strong><small>Keep learning over time.</small></span></button>
+        <button class="stage" data-stage-button="2" aria-pressed="false"><span class="stage-num">03</span><span><strong>Transfer</strong><small>Meet unfamiliar conditions.</small></span></button>
+        <button class="stage" data-stage-button="3" aria-pressed="false"><span class="stage-num">04</span><span><strong>Evaluation</strong><small>Test what really carries over.</small></span></button>
+      </div>
+      <div>
+        <div class="lab" id="lab" data-stage="0">
+          <div class="lab-top"><span class="mono">Learning paths / Conceptual view</span><span class="mono" id="lab-counter">01 — 04</span></div>
+          <div class="lab-canvas">
+            <svg class="lab-svg" viewBox="0 0 620 390" role="img" aria-label="Abstract diagram of learning, memory, and transfer pathways.">
+              <g class="guide"><circle cx="290" cy="197" r="113"/><circle cx="290" cy="197" r="156"/><path d="M80 197 H535 M290 20 V360"/></g>
+              <g class="arc-cluster arc-initial">
+                <path class="link" d="M290 197 Q236 184 197 109 T101 91"/><path class="link" d="M290 197 Q232 213 164 238 T80 291"/><path class="link" d="M290 197 Q260 140 274 72 T243 31"/><circle class="point" cx="197" cy="109" r="4"/><circle class="point" cx="164" cy="238" r="4"/><circle class="point dim" cx="101" cy="91" r="3"/><circle class="point dim" cx="80" cy="291" r="3"/><circle class="point dim" cx="243" cy="31" r="3"/>
+              </g>
+              <g class="arc-cluster arc-middle">
+                <path class="link" d="M290 197 Q353 129 410 107 T494 50"/><path class="link" d="M290 197 Q381 205 439 249 T552 244"/><path class="link" d="M290 197 Q354 258 345 315 T400 362"/><circle class="point" cx="410" cy="107" r="4"/><circle class="point" cx="439" cy="249" r="4"/><circle class="point" cx="345" cy="315" r="4"/><circle class="point dim" cx="494" cy="50" r="3"/><circle class="point dim" cx="552" cy="244" r="3"/><circle class="point dim" cx="400" cy="362" r="3"/>
+              </g>
+              <g class="arc-cluster arc-outer">
+                <path class="link" d="M197 109 C271 70 358 78 410 107"/><path class="link" d="M164 238 C249 294 372 315 439 249"/><path class="link" d="M274 72 C371 36 410 190 552 244"/><path class="link" d="M101 91 C184 162 345 315 400 362"/><circle class="point" cx="320" cy="93" r="3"/><circle class="point" cx="282" cy="294" r="3"/>
+              </g>
+              <circle class="nucleus" cx="290" cy="197" r="27"/><circle class="nucleus-inner" cx="290" cy="197" r="9"/>
+            </svg>
+          </div>
+          <div class="lab-caption"><span>Explore the stages above</span><em id="lab-state">Acquisition</em></div>
+        </div>
+        <div class="stage-story" aria-live="polite" aria-atomic="true">
+          <div><div class="mono" id="story-label">01 / Experience</div><h3 class="story-title" id="story-title">Learning from feedback.</h3><p id="story-copy">A learner encounters a task, acts, receives feedback, and changes its internal state through experience.</p></div>
+          <p class="note" id="story-example">Example: acquiring a grasping behavior across different object orientations.</p>
+        </div>
+        <div class="disclaimer">This interactive illustration explains research questions. It is not a live run of Tiny Learner or a benchmark result.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="applications">
+    <div class="section-head">
+      <div class="mono">02 / Applications</div>
+      <div><h2>Small systems.<br>Real-world potential.</h2><p>Many practical environments demand more than a fixed sequence. These are areas where compact, adaptive learning could eventually make a difference.</p></div>
+    </div>
+    <div class="appgrid">
+      <article class="app"><div class="mono">01 / Manipulation</div><h3>Robotic arms</h3><p>Reusing grasping, placement, and sorting behaviors when the objects or workflow change.</p></article>
+      <article class="app"><div class="mono">02 / Observation</div><h3>Inspection robots</h3><p>Combining movement, sensing, and task responses when routes and equipment differ.</p></article>
+      <article class="app"><div class="mono">03 / Field work</div><h3>Agricultural systems</h3><p>Learning to respond to crops, terrain, and operating conditions across changing situations.</p></article>
+      <article class="app"><div class="mono">04 / Logistics</div><h3>Workshop helpers</h3><p>Recombining handling and delivery skills under shifting destinations and constraints.</p></article>
+      <article class="app"><div class="mono">05 / On-device</div><h3>Embedded robotics</h3><p>Lightweight learning close to the hardware rather than calling a large model for every small decision.</p></article>
+      <article class="app"><div class="mono">06 / Operations</div><h3>Service systems</h3><p>Reusing learned task sequences as timing, order, and context change.</p></article>
+    </div>
+  </section>
+
+  <section class="section wrap" id="scale">
+    <div class="scale">
+      <div><div class="mono">03 / Future direction</div><h2>If it scales...</h2><p>What begins as a tiny learner could develop a growing repertoire of behaviors. The question is not only how large a system becomes, but how much more it can do with experience.</p></div>
+      <div class="scale-right"><div><strong>More skills.</strong><small>New abilities without a new program for every combination.</small></div><div><strong>Longer experience.</strong><small>Keeping useful knowledge available as learning continues.</small></div><div><strong>Richer environments.</strong><small>Exploring increasingly complex situations and specialized collaborators.</small></div></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="research">
+    <div class="section-head">
+      <div class="mono">04 / Research</div>
+      <div><h2>A question worth testing.</h2><p>The work is experimental. Tiny Learner investigates mechanisms for acquisition, retention, and transfer with controlled challenges and comparisons.</p></div>
+    </div>
+    <div class="research">
+      <div><div class="mono">Where Muse fits</div><h2>Curriculum, not a shortcut.</h2><p>Meta Muse contributes to curriculum development and learning challenges. Tiny Learner is the small system under evaluation. The distinction lets us ask what the learner acquired itself.</p><a class="quiet" href="https://github.com/mira-takeda/tiny-learner">View GitHub project ↗</a></div>
+      <div>
+        <div class="research-item"><div class="mono">01 / Acquisition</div><strong>What did the system learn?</strong><p>New behavior acquired through experience.</p></div>
+        <div class="research-item"><div class="mono">02 / Retention</div><strong>What did it preserve?</strong><p>Earlier abilities after additional learning.</p></div>
+        <div class="research-item"><div class="mono">03 / Transfer</div><strong>What carries over?</strong><p>Use of experience in held-out situations.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="bottom wrap">
+  <div><div class="mark">tiny learner.</div><div class="mono">Learn. Remember. Adapt.</div></div>
+  <div class="right">An independent experimental project for the Meta Global AI Developer Hackathon 2026.<br><a href="https://github.com/mira-takeda">Research profile</a> &nbsp; / &nbsp; <a href="https://github.com/mira-takeda/tiny-learner">Repository</a></div>
+</footer>
+<script>
+(function(){
+  'use strict';
+  const stages=[
+    {label:'01 / Experience',title:'Learning from feedback.',copy:'A learner encounters a task, acts, receives feedback, and changes its internal state through experience.',example:'Example: acquiring a grasping behavior across different object orientations.',state:'Acquisition'},
+    {label:'02 / Continuity',title:'The same learner continues.',copy:'New tasks arrive after earlier learning. The system must update without needlessly disrupting what it already knows.',example:'Example: adding sorting and placement after grasping, while preserving earlier behavior.',state:'Retention'},
+    {label:'03 / Transfer',title:'Experience meets the unfamiliar.',copy:'Previously acquired behaviors face new contexts and novel combinations rather than a single rehearsed solution.',example:'Example: object types, destinations, and task order all change together.',state:'Transfer'},
+    {label:'04 / Evaluation',title:'What actually carries over?',copy:'Controlled evaluations separate newly learned behavior, retained skills, and performance under unseen conditions.',example:'Example: compare earlier-task performance before and after later training, then test held-out combinations.',state:'Controlled tests'}
+  ];
+  const lab=document.getElementById('lab');
+  const buttons=Array.from(document.querySelectorAll('[data-stage-button]'));
+  function selectStage(index){
+    const s=stages[index];if(!s)return;
+    lab.dataset.stage=String(index);
+    document.getElementById('story-label').textContent=s.label;
+    document.getElementById('story-title').textContent=s.title;
+    document.getElementById('story-copy').textContent=s.copy;
+    document.getElementById('story-example').textContent=s.example;
+    document.getElementById('lab-state').textContent=s.state;
+    document.getElementById('lab-counter').textContent='0'+(index+1)+' — 04';
+    buttons.forEach(function(button,i){button.setAttribute('aria-pressed',String(i===index));});
+  }
+  buttons.forEach(function(button){button.addEventListener('click',function(){selectStage(Number(button.dataset.stageButton));});});
+  selectStage(0);
+})();
+</script>
+</body>
+</html>
