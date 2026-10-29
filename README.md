@@ -1,99 +1,94 @@
 <div align="center">
 
+<sub>AN EXPERIMENTAL CPU-FIRST LEARNING SYSTEM</sub>
+
 # TINY LEARNER
 
 ### Learn. Remember. Adapt.
 
-**A compact, CPU-first learning agent exploring how small systems can acquire skills, keep what they have learned, and use those skills in new situations.**
+A compact learning agent exploring how new skills can be acquired, retained,<br>
+and brought together when the situation changes.
 
-`CPU-FIRST` · `SKILL LEARNING` · `RETENTION` · `NEW COMBINATIONS`
+<code>CPU-FIRST</code> &nbsp; <code>CONTINUAL LEARNING</code> &nbsp; <code>SKILL TRANSFER</code>
 
-**Meta Global AI Developer Hackathon 2026**
+<sub>Meta Global AI Developer Hackathon 2026</sub>
 
 </div>
 
 ---
 
-## The idea in 20 seconds
+## Beyond a fixed set of instructions
 
-Imagine teaching a tiny robot three different skills: **pick up an object**, **avoid a dangerous area**, and **deliver the object to the right place**.
+A machine can be programmed to perform many tasks. But every new condition creates a harder question: **can it use what it already learned without being taught the exact solution?**
 
-Then change the layout, move the destination, and give it a new task.
+Imagine a robotic arm that has learned to grasp objects, sort components, and deliver them to different stations. Now the objects, layout, and sequence change.
 
-Can it **combine what it learned** without being programmed for that exact sequence?
+Tiny Learner explores the learning mechanism behind that challenge: **acquiring abilities over time, keeping them available, and applying them in situations the system has not encountered in precisely that form.**
 
-**That is the problem Tiny Learner explores:** learning skills separately, keeping them available, and trying to reuse them when a task changes.
+<table>
+<tr>
+<td align="center" width="33%"><strong>LEARN</strong><br><sub>Acquire new behavior through experience</sub></td>
+<td align="center" width="33%"><strong>REMEMBER</strong><br><sub>Preserve previously acquired skills</sub></td>
+<td align="center" width="33%"><strong>ADAPT</strong><br><sub>Use familiar skills in new contexts</sub></td>
+</tr>
+</table>
 
-> **The bigger idea: give small devices the ability to adapt, not just follow instructions.**
+## Where this could matter
 
-## Where could this matter?
+The underlying idea reaches beyond any single device. Small, adaptable learners could eventually contribute to systems such as:
 
-A small learner becomes especially interesting when a machine needs to **combine familiar actions in an unfamiliar situation**.
+| Field | The opportunity |
+| :--- | :--- |
+| **Robotic manipulation** | Arms that build a repertoire of grasping, handling, and sorting behaviors, then reuse them when parts or workflows change. |
+| **Inspection and maintenance** | Mobile robots combining navigation, measurement, and task-specific responses across unfamiliar layouts. |
+| **Agricultural robotics** | Lightweight field machines adapting their learned behaviors to different crops, obstacles, and operating conditions. |
+| **Warehouse automation** | Mobile manipulators combining pickup, transport, and placement skills under changing task requirements. |
+| **Embedded robotics** | Small devices that improve their behavior locally, without relying on a large remote model for every decision. |
+| **Kitchen and service systems** | Assistive machines that adjust learned task sequences as timing, order, and context change. |
 
-| Where it could be used | What adaptation could look like |
-| --- | --- |
-| **Robotic arms and sorting stations** | Learn to grasp, classify, and place objects, then combine those skills when the objects or work sequence change. |
-| **Inspection rovers** | Reuse navigation, obstacle avoidance, and measurement skills to inspect machinery or reach a new checkpoint after a route changes. |
-| **Agricultural robots** | Combine movement between crop rows, sensing, and simple handling tasks as plants and field conditions vary. |
-| **Warehouse and workshop helpers** | Learn to find a part, pick it up, avoid a restricted area, and deliver it to the correct station in a changing layout. |
-| **Small mobile robots** | Build up a repertoire of actions such as approaching, gripping, transporting, and releasing objects on modest onboard hardware. |
-| **Kitchen and service automation** | Reuse learned task sequences when the order of preparation, timing, or delivery changes. |
-
-**The common thread:** teach a few useful behaviors, retain them, and explore whether they can be combined when the environment changes.
+The thread connecting them is **learning that carries forward**, not programming each new combination from scratch.
 
 ## If it scales...
 
-**What starts as a tiny learner could become a much more capable adaptive system.**
+What begins as a tiny learner could develop into a system with an expanding repertoire of skills.
 
-If the same learning mechanism can handle **more skills, longer experience, and more complex environments** without losing what it already knows, the possibilities grow:
+**More skills. Longer experience. Richer environments.**
 
-- **One learner, many skills.** An agent that keeps expanding its repertoire rather than being rebuilt for each task.
-- **Modular, cooperative intelligence.** Specialized learners that contribute different abilities to a larger system.
-- **More capable local devices.** Robots, machines, and assistants that handle richer situations while keeping routine decisions close to the device.
+The ambition is not only to increase model size. It is to investigate whether a compact learning mechanism can support increasingly complex behavior and, eventually, cooperate with other specialized learners.
 
-The next frontier is learning **how far the same approach can go** as tasks and skill combinations become more complex.
+---
 
-## How Tiny Learner is being tested
+## From experience to new situations
 
 ```mermaid
 flowchart TD
-    subgraph TRAIN["Learning over time"]
-      E1["Experience and feedback<br/>on an initial task"] --> S1["Tiny Learner<br/>updates its state"]
-      S1 --> E2["New skills and changing conditions"]
-      E2 --> S2["The same learner<br/>updates again"]
-    end
-    subgraph TEST["Challenges not rehearsed directly"]
-      S2 --> R["Retention test<br/>Do earlier skills still work?"]
-      S2 --> G["Transfer test<br/>Can learned behaviors work in new contexts?"]
-    end
-    R --> V["Compare results<br/>with controls and baselines"]
-    G --> V
+    A["Initial experience"] --> B["Tiny Learner<br/>learns and updates"]
+    B --> C["Further experience<br/>and new skills"]
+    C --> D["Same learner<br/>continues adapting"]
+    D --> E["Retention<br/>earlier skills"]
+    D --> F["Transfer<br/>unseen situations"]
+    E --> G["Controlled evaluation"]
+    F --> G
 ```
 
-A learned behavior is only the beginning. The central challenge is what happens **after further learning**: can the same system preserve useful behavior, cope with interference, and respond to conditions it has never practiced in that exact form?
+The important question is not whether a system can perform one trained task. It is **what remains, what changes, and what transfers after it keeps learning.**
 
-We examine **skill acquisition, retention, and transfer separately** through controlled tasks and held-out evaluations.
+## Designed for ordinary hardware
 
-## Why CPU-first?
+Tiny Learner is built around a **small, CPU-first approach**. Its size makes iterative experiments accessible on everyday computers and motivates a longer-term vision of learning on resource-constrained devices.
 
-We are exploring learning with a small computational footprint, on ordinary hardware.
+## Meta Muse and the learning curriculum
 
-That opens an interesting direction for future devices: **local, lightweight adaptation without needing a large model for every small decision.**
+Meta Muse supports the design of learning challenges and experimental curricula. Tiny Learner is the system under evaluation: its ability to learn, retain, and transfer skills is the focus of the project.
 
-## Where Meta Muse fits
+## Research
 
-**Muse helps with curriculum design and the development of learning challenges.** Tiny Learner is the system being trained and evaluated.
-
-The distinction matters: the goal is to study **what the small learner retains and reuses**, not simply what a larger model can answer on its behalf.
-
-## Project status
-
-**Active research prototype.** Tiny Learner is being evaluated in controlled environments for skill acquisition, retention, and performance on unseen combinations.
+**Active prototype.** Work focuses on skill acquisition, interference, retention, and generalization in controlled environments.
 
 <details>
-<summary><strong>Research approach and evaluation principles</strong></summary>
+<summary>Evaluation methodology</summary>
 
-We use defined tasks, controlled comparisons, and held-out tests. Outcomes are recorded as `PASS`, `FAIL`, or `UNKNOWN` where applicable. Retention and transfer are measured separately, and limitations remain part of the technical record.
+Experiments compare learned behavior against defined controls and held-out tasks. Retention and transfer are examined separately. Protocols use explicit outcomes such as `PASS`, `FAIL`, and `UNKNOWN` where appropriate.
 
 </details>
 
@@ -101,8 +96,8 @@ We use defined tasks, controlled comparisons, and held-out tests. Outcomes are r
 
 <div align="center">
 
-### Small enough to explore. Ambitious enough to matter.
+**TINY LEARNER**
 
-**Tiny Learner · Meta Global AI Developer Hackathon 2026**
+<sub>Learn. Remember. Adapt.</sub>
 
 </div>
