@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" role="img" aria-label="Tiny Learner. Learn. Remember. Adapt.">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1018"/><stop offset="1" stop-color="#121c2b"/></linearGradient>
+  <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#466ce2" stop-opacity=".25"/><stop offset=".55" stop-color="#6c98ff" stop-opacity=".85"/><stop offset="1" stop-color="#9cbcff" stop-opacity=".35"/></linearGradient>
+  <linearGradient id="head" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f7f9ff"/><stop offset="1" stop-color="#a6bdfd"/></linearGradient>
+  <radialGradient id="glow"><stop offset="0" stop-color="#3c67d4" stop-opacity=".20"/><stop offset="1" stop-color="#3c67d4" stop-opacity="0"/></radialGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M 32 0 L 0 0 0 32" fill="none" stroke="#90a9d3" stroke-opacity=".075" stroke-width="1"/></pattern>
+</defs>
+<rect width="1600" height="520" fill="url(#bg)"/>
+<rect width="1600" height="520" fill="url(#grid)"/>
+<rect x="765" y="-125" width="790" height="790" fill="url(#glow)"/>
+<path d="M 76 69 H 1524" stroke="#93a6c0" stroke-opacity=".24"/>
+<text x="84" y="51" fill="#8fa5c7" font-size="17" font-family="Arial, Helvetica, sans-serif" letter-spacing="4">INDEPENDENT RESEARCH  /  2026</text>
+<text x="82" y="219" fill="url(#head)" font-family="Arial, Helvetica, sans-serif" font-size="98" font-weight="700" letter-spacing="-4">TINY</text>
+<text x="82" y="313" fill="url(#head)" font-family="Arial, Helvetica, sans-serif" font-size="98" font-weight="700" letter-spacing="-4">LEARNER</text>
+<path d="M 84 343 H 168" stroke="#5c85f3" stroke-width="6" stroke-linecap="round"/>
+<text x="83" y="397" fill="#e1e7f6" font-family="Arial, Helvetica, sans-serif" font-size="35" letter-spacing="1">Learn. Remember. Adapt.</text>
+<text x="84" y="463" fill="#98a9c1" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="3">CPU-FIRST   /   CONTINUAL LEARNING   /   SKILL TRANSFER</text>
+<g transform="translate(818,91)">
+  <g fill="none" stroke="url(#line)" stroke-width="2.5">
+    <path d="M56 126 C138 126 132 40 236 40 S338 76 436 76 S536 42 650 42"/>
+    <path d="M56 126 C138 126 144 126 236 130 S340 180 436 180 S545 131 650 131"/>
+    <path d="M56 238 C147 238 148 226 236 226 S353 76 436 76 S553 240 650 240"/>
+    <path d="M56 238 C137 238 141 329 236 329 S340 331 436 331 S556 240 650 240"/>
+    <path d="M236 40 C310 40 360 331 436 331"/>
+  </g>
+  <g stroke="#4b72cc" stroke-width="2" fill="#121e32">
+    <rect x="12" y="89" width="88" height="74" rx="14"/>
+    <rect x="12" y="201" width="88" height="74" rx="14"/>
+    <rect x="196" y="0" width="80" height="80" rx="15"/>
+    <rect x="196" y="90" width="80" height="80" rx="15"/>
+    <rect x="196" y="186" width="80" height="80" rx="15"/>
+    <rect x="196" y="289" width="80" height="80" rx="15"/>
+    <rect x="399" y="39" width="74" height="74" rx="15"/>
+    <rect x="399" y="143" width="74" height="74" rx="15"/>
+    <rect x="399" y="294" width="74" height="74" rx="15"/>
+  </g>
+  <g fill="#7fa3ff">
+    <circle cx="56" cy="126" r="10"/><circle cx="56" cy="238" r="10"/>
+    <circle cx="236" cy="40" r="11"/><circle cx="236" cy="130" r="11"/><circle cx="236" cy="226" r="11"/><circle cx="236" cy="329" r="11"/>
+    <circle cx="436" cy="76" r="11"/><circle cx="436" cy="180" r="11"/><circle cx="436" cy="331" r="11"/>
+    <circle cx="650" cy="42" r="8"/><circle cx="650" cy="131" r="8"/><circle cx="650" cy="240" r="8"/>
+  </g>
+</g>
+<path d="M 76 490 H 1524" stroke="#93a6c0" stroke-opacity=".20"/>
+</svg>
