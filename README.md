@@ -1,15 +1,8 @@
 <div align="center">
 
-<sub>AN EXPERIMENTAL CPU-FIRST LEARNING SYSTEM</sub>
+<img src="assets/tiny-learner-banner.svg" alt="Tiny Learner: Learn. Remember. Adapt." width="100%" />
 
-# TINY LEARNER
-
-### Learn. Remember. Adapt.
-
-A compact learning agent exploring how new skills can be acquired, retained,<br>
-and brought together when the situation changes.
-
-<code>CPU-FIRST</code> &nbsp; <code>CONTINUAL LEARNING</code> &nbsp; <code>SKILL TRANSFER</code>
+**A compact, CPU-first learning agent exploring how new skills can be acquired, retained, and used in unfamiliar situations.**
 
 <sub>Meta Global AI Developer Hackathon 2026</sub>
 
