@@ -16,11 +16,11 @@
 
 ## The idea in 20 seconds
 
-Imagine teaching a tiny robot how to **move around an obstacle**. Then you teach it how to **choose a route**.
+Imagine teaching a tiny robot three different skills: **pick up an object**, **avoid a dangerous area**, and **deliver the object to the right place**.
 
-Now the room changes.
+Then change the layout, move the destination, and give it a new task.
 
-Can it use both skills together instead of needing a new script for every situation?
+Can it **combine what it learned** without being programmed for that exact sequence?
 
 **That is the problem Tiny Learner explores:** learning skills separately, keeping them available, and trying to reuse them when a task changes.
 
@@ -28,15 +28,16 @@ Can it use both skills together instead of needing a new script for every situat
 
 ## Where could this matter?
 
-Today's project is an **experimental learning system**, not a finished appliance or robot. These examples show the kinds of real-world applications that could benefit if the learning and transfer mechanisms prove reliable and are integrated with suitable sensors, software, and safety controls.
+A small learner becomes especially interesting when a machine needs to **combine familiar actions in an unfamiliar situation**.
 
-| Potential application | What learning could enable |
+| Where it could be used | What adaptation could look like |
 | --- | --- |
-| **🏠 Home robots** | A robot vacuum that adjusts to rearranged furniture by reusing navigation and obstacle-avoidance behaviors. |
-| **🎮 Games and simulations** | An opponent that develops responses to new situations rather than relying only on a fixed library of scripted moves. |
-| **🌱 Smart growing systems** | A compact controller that combines learned responses to changing moisture, temperature, and operating conditions. |
-| **🏭 Small machines and workshops** | Supervised equipment that adapts among tested routines when conditions change, instead of requiring every combination to be preprogrammed. |
-| **🍳 Kitchen and service automation** | A helper that learns recurring task sequences and handles simple changes in order, timing, or workflow. |
+| **🦾 Robotic arms and sorting stations** | Learn to grasp, classify, and place objects, then combine those skills when the objects or work sequence change. |
+| **🔎 Inspection rovers** | Reuse navigation, obstacle avoidance, and measurement skills to inspect machinery or reach a new checkpoint after a route changes. |
+| **🌾 Agricultural robots** | Combine movement between crop rows, sensing, and simple handling tasks as plants and field conditions vary. |
+| **📦 Warehouse and workshop helpers** | Learn to find a part, pick it up, avoid a restricted area, and deliver it to the correct station in a changing layout. |
+| **🤖 Small mobile robots** | Build up a repertoire of actions such as approaching, gripping, transporting, and releasing objects on modest onboard hardware. |
+| **🍳 Kitchen and service automation** | Reuse learned task sequences when the order of preparation, timing, or delivery changes. |
 
 **The common thread:** teach a few useful behaviors, retain them, and explore whether they can be combined when the environment changes.
 
@@ -50,7 +51,7 @@ If the same learning mechanism can handle **more skills, longer experience, and 
 - **Modular, cooperative intelligence.** Specialized learners that contribute different abilities to a larger system.
 - **More capable local devices.** Robots, machines, and assistants that handle richer situations while keeping routine decisions close to the device.
 
-**This is the long-term possibility, not a demonstrated scaling result.** The next challenge is to test where the approach keeps working, where it stops, and why.
+The next frontier is learning **how far the same approach can go** as tasks and skill combinations become more complex.
 
 ## How Tiny Learner is being tested
 
@@ -76,8 +77,6 @@ We are exploring learning with a small computational footprint, on ordinary hard
 
 That opens an interesting direction for future devices: **local, lightweight adaptation without needing a large model for every small decision.**
 
-The hardware examples above are possibilities, not current deployments.
-
 ## Where Meta Muse fits
 
 **Muse helps with curriculum design and the development of learning challenges.** Tiny Learner is the system being trained and evaluated.
@@ -87,8 +86,6 @@ The distinction matters: the goal is to study **what the small learner retains a
 ## Project status
 
 **Active research prototype.** Tiny Learner is being evaluated in controlled environments for skill acquisition, retention, and performance on unseen combinations.
-
-Real-world examples in this README are **potential applications**, not products we claim to have built. Experiment configurations, results, and reproducibility materials will be documented as they are verified.
 
 <details>
 <summary><strong>Research approach and evaluation principles</strong></summary>
