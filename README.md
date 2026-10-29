@@ -40,6 +40,18 @@ Today's project is an **experimental learning system**, not a finished appliance
 
 **The common thread:** teach a few useful behaviors, retain them, and explore whether they can be combined when the environment changes.
 
+## If it scales...
+
+**What starts as a tiny learner could become a much more capable adaptive system.**
+
+If the same learning mechanism can handle **more skills, longer experience, and more complex environments** without losing what it already knows, the possibilities grow:
+
+- **One learner, many skills.** An agent that keeps expanding its repertoire rather than being rebuilt for each task.
+- **Modular, cooperative intelligence.** Specialized learners that contribute different abilities to a larger system.
+- **More capable local devices.** Robots, machines, and assistants that handle richer situations while keeping routine decisions close to the device.
+
+**This is the long-term possibility, not a demonstrated scaling result.** The next challenge is to test where the approach keeps working, where it stops, and why.
+
 ## How Tiny Learner is being tested
 
 ```mermaid
