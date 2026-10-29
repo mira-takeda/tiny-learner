@@ -19,6 +19,15 @@ retained, and reused as conditions change.**
 
 ---
 
+## What this could become
+
+**A growing repertoire of skills. A compact learner that keeps adapting.**
+
+Our interactive concept explores three possible directions for Tiny Learner: adaptive robotic manipulation, autonomous inspection, and cooperation among specialized learners.
+
+[Explore the future of Tiny Learner](https://mira-takeda.github.io/tiny-learner/)  
+<sub>The interactive site becomes accessible once GitHub Pages is enabled for this repository.</sub>
+
 ## Beyond fixed instructions
 
 A conventional automation can follow an impressive set of instructions. But when its environment changes, those instructions may no longer cover the situation.
