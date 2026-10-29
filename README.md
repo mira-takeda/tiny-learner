@@ -56,20 +56,23 @@ The next frontier is learning **how far the same approach can go** as tasks and 
 ## How Tiny Learner is being tested
 
 ```mermaid
-flowchart LR
-    A["Learn skill A"] --> C["Keep both skills"]
-    B["Learn skill B"] --> C
-    C --> D["Try a new combination"]
-    D --> E["Measure what happens"]
+flowchart TD
+    subgraph TRAIN["Learning over time"]
+      E1["Experience and feedback<br/>on an initial task"] --> S1["Tiny Learner<br/>updates its state"]
+      S1 --> E2["New skills and changing conditions"]
+      E2 --> S2["The same learner<br/>updates again"]
+    end
+    subgraph TEST["Challenges not rehearsed directly"]
+      S2 --> R["Retention test<br/>Do earlier skills still work?"]
+      S2 --> G["Transfer test<br/>Can learned behaviors work in new contexts?"]
+    end
+    R --> V["Compare results<br/>with controls and baselines"]
+    G --> V
 ```
 
-Rather than relying on an impressive single demo, we test whether a small learner can:
+A learned behavior is only the beginning. The central challenge is what happens **after further learning**: can the same system preserve useful behavior, cope with interference, and respond to conditions it has never practiced in that exact form?
 
-1. **Learn** a defined behavior from experience.
-2. **Remember** earlier behaviors while learning something new.
-3. **Adapt** by applying learned skills to combinations it was not trained on directly.
-
-These questions are investigated through controlled tasks, comparisons, and held-out evaluations.
+We examine **skill acquisition, retention, and transfer separately** through controlled tasks and held-out evaluations.
 
 ## Why CPU-first?
 
