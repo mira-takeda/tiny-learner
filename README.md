@@ -32,12 +32,12 @@ A small learner becomes especially interesting when a machine needs to **combine
 
 | Where it could be used | What adaptation could look like |
 | --- | --- |
-| ** Robotic arms and sorting stations** | Learn to grasp, classify, and place objects, then combine those skills when the objects or work sequence change. |
-| ** Inspection rovers** | Reuse navigation, obstacle avoidance, and measurement skills to inspect machinery or reach a new checkpoint after a route changes. |
-| ** Agricultural robots** | Combine movement between crop rows, sensing, and simple handling tasks as plants and field conditions vary. |
-| ** Warehouse and workshop helpers** | Learn to find a part, pick it up, avoid a restricted area, and deliver it to the correct station in a changing layout. |
-| ** Small mobile robots** | Build up a repertoire of actions such as approaching, gripping, transporting, and releasing objects on modest onboard hardware. |
-| ** Kitchen and service automation** | Reuse learned task sequences when the order of preparation, timing, or delivery changes. |
+| **Robotic arms and sorting stations** | Learn to grasp, classify, and place objects, then combine those skills when the objects or work sequence change. |
+| **Inspection rovers** | Reuse navigation, obstacle avoidance, and measurement skills to inspect machinery or reach a new checkpoint after a route changes. |
+| **Agricultural robots** | Combine movement between crop rows, sensing, and simple handling tasks as plants and field conditions vary. |
+| **Warehouse and workshop helpers** | Learn to find a part, pick it up, avoid a restricted area, and deliver it to the correct station in a changing layout. |
+| **Small mobile robots** | Build up a repertoire of actions such as approaching, gripping, transporting, and releasing objects on modest onboard hardware. |
+| **Kitchen and service automation** | Reuse learned task sequences when the order of preparation, timing, or delivery changes. |
 
 **The common thread:** teach a few useful behaviors, retain them, and explore whether they can be combined when the environment changes.
 
