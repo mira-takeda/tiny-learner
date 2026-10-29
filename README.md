@@ -1,87 +1,152 @@
 <div align="center">
 
-<img src="assets/tiny-learner-banner.svg" alt="Tiny Learner: Learn. Remember. Adapt." width="100%" />
+<sub>AN EXPERIMENTAL CPU-FIRST LEARNING SYSTEM</sub>
 
-**A compact, CPU-first learning agent exploring how new skills can be acquired, retained, and used in unfamiliar situations.**
+# TINY LEARNER
 
-<sub>Meta Global AI Developer Hackathon 2026</sub>
+### Learn. Remember. Adapt.
+
+A compact learning agent exploring how skills can be acquired, retained,<br>
+and brought into new situations through continued experience.
+
+<sub>META GLOBAL AI DEVELOPER HACKATHON · 2026</sub>
+
+[Explore the learning process](#explore-the-learning-process) · [Potential applications](#where-it-could-matter) · [If it scales](#if-it-scales)
 
 </div>
 
 ---
 
-## Beyond a fixed set of instructions
+## Beyond fixed instructions
 
-A machine can be programmed to perform many tasks. But every new condition creates a harder question: **can it use what it already learned without being taught the exact solution?**
+A conventional automation can follow an impressive set of instructions. But when its environment changes, those instructions may no longer cover the situation.
 
-Imagine a robotic arm that has learned to grasp objects, sort components, and deliver them to different stations. Now the objects, layout, and sequence change.
-
-Tiny Learner explores the learning mechanism behind that challenge: **acquiring abilities over time, keeping them available, and applying them in situations the system has not encountered in precisely that form.**
+Tiny Learner investigates a different possibility: **a small system that keeps learning, carries useful skills forward, and applies past experience to challenges it has not practiced in exactly the same form.**
 
 <table>
 <tr>
-<td align="center" width="33%"><strong>LEARN</strong><br><sub>Acquire new behavior through experience</sub></td>
-<td align="center" width="33%"><strong>REMEMBER</strong><br><sub>Preserve previously acquired skills</sub></td>
-<td align="center" width="33%"><strong>ADAPT</strong><br><sub>Use familiar skills in new contexts</sub></td>
+<td align="center" width="33%"><strong>LEARN</strong><br><sub>Acquire behavior through experience</sub></td>
+<td align="center" width="33%"><strong>REMEMBER</strong><br><sub>Keep earlier abilities while learning more</sub></td>
+<td align="center" width="33%"><strong>ADAPT</strong><br><sub>Apply experience under new conditions</sub></td>
 </tr>
 </table>
 
-## Where this could matter
+## Explore the learning process
 
-The underlying idea reaches beyond any single device. Small, adaptable learners could eventually contribute to systems such as:
+**Open any stage to see what the system is being asked to do.** The stages describe the experimental challenge, not a fixed sequence of scripted answers.
 
-| Field | The opportunity |
-| :--- | :--- |
-| **Robotic manipulation** | Arms that build a repertoire of grasping, handling, and sorting behaviors, then reuse them when parts or workflows change. |
-| **Inspection and maintenance** | Mobile robots combining navigation, measurement, and task-specific responses across unfamiliar layouts. |
-| **Agricultural robotics** | Lightweight field machines adapting their learned behaviors to different crops, obstacles, and operating conditions. |
-| **Warehouse automation** | Mobile manipulators combining pickup, transport, and placement skills under changing task requirements. |
-| **Embedded robotics** | Small devices that improve their behavior locally, without relying on a large remote model for every decision. |
-| **Kitchen and service systems** | Assistive machines that adjust learned task sequences as timing, order, and context change. |
+<details open>
+<summary><strong>01 / EXPERIENCE</strong> · Acquiring a behavior</summary>
 
-The thread connecting them is **learning that carries forward**, not programming each new combination from scratch.
+A learner encounters a task, takes actions, and receives feedback. Its internal state can change with experience.
 
-## If it scales...
+**Example:** a robotic manipulator practices how to grasp objects with different shapes and orientations.
 
-What begins as a tiny learner could develop into a system with an expanding repertoire of skills.
+The key question is whether useful behavior is learned from experience rather than supplied as a separate rule for every case.
+
+</details>
+
+<details>
+<summary><strong>02 / CONTINUITY</strong> · Learning after learning</summary>
+
+New tasks arrive after earlier training. The same learner continues updating.
+
+**Example:** after practicing grasping, the system encounters a sorting task with changing destinations and constraints.
+
+The challenge is not simply acquiring the new behavior. It is doing so **without needlessly disrupting what was learned earlier**.
+
+</details>
+
+<details>
+<summary><strong>03 / TRANSFER</strong> · Encountering unfamiliar conditions</summary>
+
+The environment changes, and the learner faces situations that were not directly rehearsed as complete solutions.
+
+**Example:** the objects, target stations, and ordering of operations change together.
+
+Can previously acquired abilities still contribute to the new task, without training a new solution for each combination?
+
+</details>
+
+<details>
+<summary><strong>04 / EVALUATION</strong> · Finding out what really carried over</summary>
+
+After continued learning, we evaluate different questions separately:
+
+- **Acquisition:** what new behavior was learned?
+- **Retention:** which earlier abilities remain?
+- **Transfer:** what works in unseen situations?
+- **Interference:** what changed or degraded after further learning?
+
+Controlled tasks and held-out tests help distinguish genuine reuse from performance on already practiced cases.
+
+</details>
+
+## Where it could matter
+
+The potential applications share a common need: **machines that can reuse learned behavior when their tasks or surroundings change.**
+
+<details>
+<summary><strong>Robotic manipulation</strong> · Handling changing objects and workflows</summary>
+
+A robotic arm could accumulate useful grasping, sorting, and placement behaviors, then draw on them when new parts or sequences are introduced.
+
+</details>
+
+<details>
+<summary><strong>Inspection and maintenance</strong> · Working beyond a fixed route</summary>
+
+A mobile inspection system could combine movement, measurement, and task-specific responses across changing layouts and equipment.
+
+</details>
+
+<details>
+<summary><strong>Agricultural robotics</strong> · Adapting to changing field conditions</summary>
+
+Compact field machines could build upon learned sensing, movement, and handling behaviors as crops, terrain, and operating conditions vary.
+
+</details>
+
+<details>
+<summary><strong>Warehouse and workshop helpers</strong> · New tasks from familiar abilities</summary>
+
+A helper robot could reuse pickup, transport, and placement skills when destinations, obstacles, and task priorities change.
+
+</details>
+
+<details>
+<summary><strong>Embedded and service robotics</strong> · Learning close to the device</summary>
+
+Smaller machines, including kitchen and service assistants, could adapt recurring behaviors locally without calling a large remote model for every routine decision.
+
+</details>
+
+## If it scales
 
 **More skills. Longer experience. Richer environments.**
 
-The ambition is not only to increase model size. It is to investigate whether a compact learning mechanism can support increasingly complex behavior and, eventually, cooperate with other specialized learners.
+The longer-term question is whether a compact learning mechanism can support a growing repertoire of abilities, more complex situations, and cooperation among specialized learners.
+
+Scaling might mean more than increasing the number of parameters. It could also mean **making better use of experience** as the range of tasks expands.
 
 ---
 
-## From experience to new situations
+## Built for ordinary hardware
 
-```mermaid
-flowchart TD
-    A["Initial experience"] --> B["Tiny Learner<br/>learns and updates"]
-    B --> C["Further experience<br/>and new skills"]
-    C --> D["Same learner<br/>continues adapting"]
-    D --> E["Retention<br/>earlier skills"]
-    D --> F["Transfer<br/>unseen situations"]
-    E --> G["Controlled evaluation"]
-    F --> G
-```
+Tiny Learner follows a **CPU-first, small-footprint** approach. This keeps experiments accessible on ordinary computers and opens up possibilities for resource-constrained devices.
 
-The important question is not whether a system can perform one trained task. It is **what remains, what changes, and what transfers after it keeps learning.**
+## Muse and the curriculum
 
-## Designed for ordinary hardware
+Meta Muse contributes to the development of learning challenges and experimental curricula. Tiny Learner is the system whose skill acquisition, retention, and transfer are studied.
 
-Tiny Learner is built around a **small, CPU-first approach**. Its size makes iterative experiments accessible on everyday computers and motivates a longer-term vision of learning on resource-constrained devices.
+## Research notes
 
-## Meta Muse and the learning curriculum
-
-Meta Muse supports the design of learning challenges and experimental curricula. Tiny Learner is the system under evaluation: its ability to learn, retain, and transfer skills is the focus of the project.
-
-## Research
-
-**Active prototype.** Work focuses on skill acquisition, interference, retention, and generalization in controlled environments.
+**Active experimental prototype.** The work focuses on learning over time, interference, retention, and generalization.
 
 <details>
-<summary>Evaluation methodology</summary>
+<summary><strong>Technical evaluation methodology</strong></summary>
 
-Experiments compare learned behavior against defined controls and held-out tasks. Retention and transfer are examined separately. Protocols use explicit outcomes such as `PASS`, `FAIL`, and `UNKNOWN` where appropriate.
+Experiments use defined controls, separate checks for retention and transfer, and held-out tasks. When applicable, protocols distinguish `PASS`, `FAIL`, and `UNKNOWN`. Specific results belong with their experiment configurations and evaluation criteria.
 
 </details>
 
