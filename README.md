@@ -23,7 +23,7 @@ retained, and reused as conditions change.**
 
 **A growing repertoire of skills. A compact learner that keeps adapting.**
 
-Our interactive concept explores three possible directions for Tiny Learner: adaptive robotic manipulation, autonomous inspection, and cooperation among specialized learners.
+The interactive concept explores three possible directions for Tiny Learner: adaptive robotic manipulation, autonomous inspection, and cooperation among specialized learners.
 
 [Explore the future of Tiny Learner](https://mira-takeda.github.io/tiny-learner/)  
 <sub>The interactive site becomes accessible once GitHub Pages is enabled for this repository.</sub>
@@ -82,7 +82,7 @@ Can previously acquired abilities still contribute to the new task, without trai
 <details>
 <summary><strong>04 / EVALUATION</strong> · Finding out what really carried over</summary>
 
-After continued learning, we evaluate different questions separately:
+After continued learning, evaluation addresses different questions separately:
 
 - **Acquisition:** what new behavior was learned?
 - **Retention:** which earlier abilities remain?
