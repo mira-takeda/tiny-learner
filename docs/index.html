@@ -25,13 +25,47 @@ section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;b
 @media(max-width:980px){.hero{grid-template-columns:1fr}.hero-left{padding-top:90px;padding-bottom:35px}.hero-art{min-height:340px;opacity:.83}.hero-art svg{max-width:580px;transform:scale(1.05)}.hero-art::before{background:linear-gradient(180deg,var(--bg),transparent 55%)}.section-head{grid-template-columns:1fr;gap:0}.stage-area{grid-template-columns:1fr}.stages{display:grid;grid-template-columns:repeat(4,1fr)}.stage{display:block;padding:18px 12px;border-top:1px solid var(--line)}.stage strong{font-size:12px}.stage .stage-num{display:block;margin-bottom:12px}.stage small{font-size:10px}.appgrid{grid-template-columns:repeat(2,1fr)}.scale{grid-template-columns:1fr;gap:15px}.scale-right{grid-template-columns:repeat(3,1fr);gap:18px}.research{gap:35px}}
 @media(max-width:640px){nav .links{gap:14px}nav .links .hide-mobile{display:none}.hero-left{padding-top:80px;padding-bottom:15px}h1{font-size:clamp(72px,18vw,120px)}.hero h2{margin-top:32px}.hero-art{min-height:260px}.hero-art svg{width:100%;max-height:290px}.quickline{gap:12px}.section{padding-top:75px;padding-bottom:75px}.section-head{margin-bottom:33px}.stage-area{gap:20px}.stages{grid-template-columns:repeat(2,1fr)}.stage{min-height:112px}.lab{min-height:340px}.lab-top{top:18px;left:18px;right:18px}.lab-caption{bottom:15px;left:18px;right:18px}.lab-svg{width:100%}.stage-story{grid-template-columns:1fr;gap:20px}.appgrid{grid-template-columns:1fr}.app{min-height:auto;padding:27px 24px}.app h3{margin-top:17px}.scale-right{grid-template-columns:1fr;gap:21px}.research{grid-template-columns:1fr;gap:20px}.bottom{padding-top:32px}.disclaimer{font-size:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* Future application explorer */
+.vision-board{display:grid;grid-template-columns:300px minmax(0,1fr);border:1px solid rgba(189,208,213,.22);background:#151e24;margin-top:40px}
+.vision-controls{padding:31px;border-right:1px solid var(--line)}
+.vision-controls h3{font-size:16px;letter-spacing:-.02em;font-weight:600;margin:0 0 22px}
+.vision-tabs{display:grid;gap:9px}
+.vision-choice{padding:15px 13px;text-align:left;border:1px solid #37464d;background:#1a262d;color:#c3cfd1;cursor:pointer;font-size:13px}
+.vision-choice:hover,.vision-choice[aria-pressed=true]{border-color:#98b4c1;background:#293a43;color:#f3f5ef}
+.vision-actions{display:grid;gap:10px;margin-top:34px}
+.vision-action{padding:13px;text-align:left;border:1px solid #7d9ba7;background:#9ab5c2;color:#10191e;cursor:pointer;font-size:13px;font-weight:600}
+.vision-action:hover:not(:disabled){background:#c5d4d8}
+.vision-action:disabled{opacity:.45;cursor:not-allowed}
+.vision-action.outline{background:transparent;color:#c6d7dd;border-color:#526c78;font-weight:450}
+.vision-action.outline:hover{background:#273840}
+.vision-display{padding:30px 37px 34px;min-width:0}
+.vision-meta{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.vision-network{display:block;width:100%;height:280px;margin:4px 0 0}
+.vision-abilities{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.vision-skill{padding:6px 10px;font:11px ui-monospace,monospace;color:#718b99;border:1px solid #364750}
+.vision-skill.active{color:#d9e4e7;border-color:#849fab;background:#263942}
+.vision-display h3{font-size:29px;font-weight:500;letter-spacing:-.035em;margin:0 0 7px}
+.vision-copy{font-size:14px;line-height:1.7;color:#b0bfc5;max-width:680px;min-height:48px}
+.vision-conditions{border-left:2px solid #8da9b5;padding:5px 0 5px 17px;margin-top:22px}
+.vision-conditions small{display:block;margin-bottom:8px;color:#9db4bf;font:10px ui-monospace,monospace;letter-spacing:.12em}
+.vision-conditions p{font-size:14px;line-height:1.6;color:#d3dee0;margin:0}
+.vision-fineprint{font-size:12px;color:#91a5ac;margin-top:17px}
+.vision-nodes{fill:#17262e;stroke:#7c98a6;stroke-width:1.5}
+.vision-nodes.active{fill:#acc4cb;stroke:#e8f1f2}
+.vision-link{fill:none;stroke:#6d8998;stroke-width:2}
+.vision-link.active{stroke:#bdd0d7;stroke-width:2.6}
+button:focus-visible,a:focus-visible{outline:2px solid #b9d9e6;outline-offset:3px}
+@media(max-width:850px){.vision-board{grid-template-columns:1fr}.vision-controls{border-right:0;border-bottom:1px solid var(--line)}.vision-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.vision-choice{font-size:11px}.vision-actions{grid-template-columns:1fr 1fr;margin-top:18px}}
+@media(max-width:550px){.vision-tabs{grid-template-columns:1fr}.vision-controls{padding:20px}.vision-display{padding:20px}.vision-network{height:205px}.vision-actions{grid-template-columns:1fr}.vision-display h3{font-size:24px}}
+
 </style>
 </head>
 <body>
 <nav class="wrap" aria-label="Main navigation">
   <a class="brand" href="#top">tiny learner<i aria-hidden="true"></i></a>
   <div class="links">
-    <a href="#explore">Explore</a>
+    <a href="#future">Explore</a>
     <a href="#applications" class="hide-mobile">Applications</a>
     <a href="#research" class="hide-mobile">Research</a>
     <a class="repo" href="https://github.com/mira-takeda/tiny-learner">GitHub ↗</a>
@@ -45,7 +79,7 @@ section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;b
       <h2>Learn. Remember. Adapt.</h2>
       <p class="lede">An experimental, CPU-first learning system investigating how small agents acquire new skills, preserve old ones, and draw on experience when conditions change.</p>
       <div class="hero-actions">
-        <a class="primary" href="#explore">Explore the idea <span aria-hidden="true">↘</span></a>
+        <a class="primary" href="#future">Explore the possibilities <span aria-hidden="true">↘</span></a>
         <a class="quiet" href="#applications">Where it could matter</a>
       </div>
     </div>
@@ -65,9 +99,52 @@ section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;b
   </header>
   <div class="wrap quickline" aria-label="Research focus"><span>CPU FIRST</span><span class="separator">/</span><span>CONTINUAL LEARNING</span><span class="separator">/</span><span>RETENTION</span><span class="separator">/</span><span>TRANSFER</span></div>
 
+
+  <section class="section wrap" id="future">
+    <div class="section-head">
+      <div class="mono">01 / Possible futures</div>
+      <div>
+        <h2>A growing repertoire.<br>New kinds of work.</h2>
+        <p>What could a small, continually learning system make possible? Choose a future application, add capabilities, and change the task. The point is not a single predefined action but what happens when skills can be retained and reused.</p>
+      </div>
+    </div>
+    <div class="vision-board">
+      <div class="vision-controls">
+        <div class="mono">Choose a direction</div>
+        <h3>Imagine a Tiny Learner-based system</h3>
+        <div class="vision-tabs" aria-label="Potential applications">
+          <button type="button" class="vision-choice" data-vision="arms" aria-pressed="true">01 / Adaptive robotic arm</button>
+          <button type="button" class="vision-choice" data-vision="inspection" aria-pressed="false">02 / Autonomous inspection</button>
+          <button type="button" class="vision-choice" data-vision="network" aria-pressed="false">03 / Cooperative learners</button>
+        </div>
+        <div class="vision-actions">
+          <button type="button" class="vision-action" id="vision-add">+ Add capability</button>
+          <button type="button" class="vision-action outline" id="vision-change">Change conditions ↻</button>
+          <button type="button" class="vision-action outline" id="vision-reset">Reset experience</button>
+        </div>
+      </div>
+      <div class="vision-display">
+        <div class="vision-meta"><span class="mono">Potential skill repertoire</span><span class="mono" id="vision-count">02 / 05</span></div>
+        <svg class="vision-network" viewBox="0 0 630 300" aria-label="Conceptual network of accumulating capabilities" role="img">
+          <circle cx="315" cy="145" r="115" fill="none" stroke="#5b7685" stroke-dasharray="2 11" opacity=".35"/>
+          <circle cx="315" cy="145" r="81" fill="none" stroke="#5b7685" opacity=".24"/>
+          <g id="vision-lines"></g>
+          <circle cx="315" cy="145" r="31" fill="none" stroke="#93aeba" opacity=".7"/>
+          <circle cx="315" cy="145" r="18" fill="#a4b8c1"/>
+          <g id="vision-dots"></g>
+        </svg>
+        <div class="vision-abilities" id="vision-abilities"></div>
+        <h3 id="vision-title">Adaptive robotic arm</h3>
+        <p class="vision-copy" id="vision-copy"></p>
+        <div class="vision-conditions"><small id="vision-condition-label">INITIAL CONDITIONS</small><p id="vision-condition-text"></p></div>
+      </div>
+    </div>
+    <div class="vision-fineprint">Interactive future-use concept. It illustrates the potential of this specific learning approach; it is not a live model run or a claim of demonstrated robotic ability.</div>
+  </section>
+
   <section class="section wrap" id="explore">
     <div class="section-head">
-      <div class="mono">01 / Experience</div>
+      <div class="mono">02 / Research stages</div>
       <div><h2>Learning is what<br>happens next.</h2><p>A system completing one trained task is only the beginning. The interesting question is what happens after more experience, new skills, and unfamiliar conditions.</p></div>
     </div>
     <div class="stage-area">
@@ -108,7 +185,7 @@ section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;b
 
   <section class="section wrap" id="applications">
     <div class="section-head">
-      <div class="mono">02 / Applications</div>
+      <div class="mono">03 / Applications</div>
       <div><h2>Small systems.<br>Real-world potential.</h2><p>Many practical environments demand more than a fixed sequence. These are areas where compact, adaptive learning could eventually make a difference.</p></div>
     </div>
     <div class="appgrid">
@@ -123,14 +200,14 @@ section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;b
 
   <section class="section wrap" id="scale">
     <div class="scale">
-      <div><div class="mono">03 / Future direction</div><h2>If it scales...</h2><p>What begins as a tiny learner could develop a growing repertoire of behaviors. The question is not only how large a system becomes, but how much more it can do with experience.</p></div>
+      <div><div class="mono">04 / Future direction</div><h2>If it scales...</h2><p>What begins as a tiny learner could develop a growing repertoire of behaviors. The question is not only how large a system becomes, but how much more it can do with experience.</p></div>
       <div class="scale-right"><div><strong>More skills.</strong><small>New abilities without a new program for every combination.</small></div><div><strong>Longer experience.</strong><small>Keeping useful knowledge available as learning continues.</small></div><div><strong>Richer environments.</strong><small>Exploring increasingly complex situations and specialized collaborators.</small></div></div>
     </div>
   </section>
 
   <section class="section wrap" id="research">
     <div class="section-head">
-      <div class="mono">04 / Research</div>
+      <div class="mono">05 / Research</div>
       <div><h2>A question worth testing.</h2><p>The work is experimental. Tiny Learner investigates mechanisms for acquisition, retention, and transfer with controlled challenges and comparisons.</p></div>
     </div>
     <div class="research">
@@ -173,5 +250,66 @@ section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;b
   selectStage(0);
 })();
 </script>
+
+<script>
+(function(){
+"use strict";
+const futures={
+  arms:{
+    title:"Adaptive robotic arm",
+    copy:"Imagine a small learner building a repertoire of handling skills. A new workflow could draw on earlier experience rather than requiring a new script for every combination.",
+    skills:["Sense object","Approach","Grasp","Sort","Recover"],
+    contexts:["A familiar object arrives at a known workstation.","Now the object, destination and order of operations all change at once."],
+    outlook:["Previously acquired handling behaviors could remain available.","The system could reuse familiar abilities in a combination it was never taught directly."]
+  },
+  inspection:{
+    title:"Autonomous inspection",
+    copy:"Imagine an embedded learner retaining navigation, observation and measurement skills as an inspection environment grows more complicated.",
+    skills:["Detect","Navigate","Avoid","Inspect","Report"],
+    contexts:["A rover examines a familiar set of checkpoints.","A passage closes and new targets appear in an unfamiliar section."],
+    outlook:["The learner could retain useful movements and measurements.","It could adapt a route while carrying earlier knowledge into the next inspection."]
+  },
+  network:{
+    title:"Cooperative learners",
+    copy:"Imagine multiple small specialists that develop different abilities, retain them, and contribute to a shared task without relying on one giant model for every decision.",
+    skills:["Observe","Classify","Plan","Coordinate","Review"],
+    contexts:["Several specialists work on a recurring shared task.","New goals require skills from different specialists in an unfamiliar sequence."],
+    outlook:["Individual capabilities could accumulate across experience.","Cooperating learners could combine established skills to address changing demands."]
+  }
+};
+const coords=[[314,21],[450,83],[438,239],[192,245],[171,84]];
+let key="arms",amount=2,changed=false;
+const $=id=>document.getElementById(id);
+function paint(){
+const data=futures[key],ns="http://www.w3.org/2000/svg";
+document.querySelectorAll("[data-vision]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.vision===key)));
+$("vision-title").textContent=data.title;$("vision-copy").textContent=data.copy;
+$("vision-count").textContent=String(amount).padStart(2,"0")+" / 05";
+$("vision-condition-label").textContent=changed?"CHANGED CONDITIONS / POSSIBLE TRANSFER":"INITIAL CONDITIONS / POSSIBLE RETENTION";
+$("vision-condition-text").textContent=data.contexts[Number(changed)]+" "+data.outlook[Number(changed)];
+$("vision-abilities").replaceChildren();
+const links=$("vision-lines"),dots=$("vision-dots");
+links.replaceChildren();dots.replaceChildren();
+data.skills.forEach((skill,i)=>{
+const tag=document.createElement("span");tag.className="vision-skill"+(i<amount?" active":"");tag.textContent=skill;$("vision-abilities").appendChild(tag);
+const [x,y]=coords[i],bend=changed?(i%2?36:-34):0;
+const path=document.createElementNS(ns,"path");path.setAttribute("class","vision-link"+(i<amount?" active":""));
+path.setAttribute("opacity",i<amount?"1":".17");
+path.setAttribute("d","M315 145 Q"+(315+(x-315)*.53+bend)+" "+(145+(y-145)*.49)+" "+x+" "+y);
+links.appendChild(path);
+const dot=document.createElementNS(ns,"circle");dot.setAttribute("class","vision-nodes"+(i<amount?" active":""));dot.setAttribute("cx",x);dot.setAttribute("cy",y);dot.setAttribute("r",i<amount?"10":"7");dots.appendChild(dot);
+});
+$("vision-add").disabled=amount===5;
+$("vision-add").textContent=amount===5?"All capabilities added":"+ Add capability";
+$("vision-change").textContent=changed?"Restore initial conditions ↻":"Change conditions ↻";
+}
+document.querySelectorAll("[data-vision]").forEach(b=>b.addEventListener("click",()=>{key=b.dataset.vision;amount=2;changed=false;paint();}));
+$("vision-add").addEventListener("click",()=>{amount=Math.min(5,amount+1);paint();});
+$("vision-change").addEventListener("click",()=>{changed=!changed;paint();});
+$("vision-reset").addEventListener("click",()=>{amount=2;changed=false;paint();});
+paint();
+})();
+</script>
+
 </body>
 </html>
