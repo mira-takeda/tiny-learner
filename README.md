@@ -1,17 +1,19 @@
 <div align="center">
 
-<sub>AN EXPERIMENTAL CPU-FIRST LEARNING SYSTEM</sub>
+<sub>RESEARCH / ADAPTIVE SYSTEMS / 01</sub>
 
 # TINY LEARNER
 
 ### Learn. Remember. Adapt.
 
-A compact learning agent exploring how skills can be acquired, retained,<br>
-and brought into new situations through continued experience.
+**A compact learning system that explores how new abilities can be learned,<br>
+retained, and reused as conditions change.**
 
-<sub>META GLOBAL AI DEVELOPER HACKATHON · 2026</sub>
+<sub>CPU-FIRST &nbsp; / &nbsp; CONTINUAL LEARNING &nbsp; / &nbsp; SKILL TRANSFER</sub>
 
-[Explore the learning process](#explore-the-learning-process) · [Potential applications](#where-it-could-matter) · [If it scales](#if-it-scales)
+<sub>META GLOBAL AI DEVELOPER HACKATHON 2026</sub>
+
+[The learning process](#explore-the-learning-process) &nbsp; · &nbsp; [Applications](#where-it-could-matter) &nbsp; · &nbsp; [If it scales](#if-it-scales)
 
 </div>
 
@@ -154,8 +156,8 @@ Experiments use defined controls, separate checks for retention and transfer, an
 
 <div align="center">
 
-**TINY LEARNER**
+<sub>LEARNING / MEMORY / ADAPTATION</sub>
 
-<sub>Learn. Remember. Adapt.</sub>
+[Research profile](https://github.com/mira-takeda) &nbsp; · &nbsp; [Back to top](#tiny-learner)
 
 </div>
