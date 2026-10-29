@@ -26,38 +26,55 @@ section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;b
 @media(max-width:640px){nav .links{gap:14px}nav .links .hide-mobile{display:none}.hero-left{padding-top:80px;padding-bottom:15px}h1{font-size:clamp(72px,18vw,120px)}.hero h2{margin-top:32px}.hero-art{min-height:260px}.hero-art svg{width:100%;max-height:290px}.quickline{gap:12px}.section{padding-top:75px;padding-bottom:75px}.section-head{margin-bottom:33px}.stage-area{gap:20px}.stages{grid-template-columns:repeat(2,1fr)}.stage{min-height:112px}.lab{min-height:340px}.lab-top{top:18px;left:18px;right:18px}.lab-caption{bottom:15px;left:18px;right:18px}.lab-svg{width:100%}.stage-story{grid-template-columns:1fr;gap:20px}.appgrid{grid-template-columns:1fr}.app{min-height:auto;padding:27px 24px}.app h3{margin-top:17px}.scale-right{grid-template-columns:1fr;gap:21px}.research{grid-template-columns:1fr;gap:20px}.bottom{padding-top:32px}.disclaimer{font-size:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 
-/* Future application explorer */
-.vision-board{display:grid;grid-template-columns:300px minmax(0,1fr);border:1px solid rgba(189,208,213,.22);background:#151e24;margin-top:40px}
-.vision-controls{padding:31px;border-right:1px solid var(--line)}
-.vision-controls h3{font-size:16px;letter-spacing:-.02em;font-weight:600;margin:0 0 22px}
-.vision-tabs{display:grid;gap:9px}
-.vision-choice{padding:15px 13px;text-align:left;border:1px solid #37464d;background:#1a262d;color:#c3cfd1;cursor:pointer;font-size:13px}
-.vision-choice:hover,.vision-choice[aria-pressed=true]{border-color:#98b4c1;background:#293a43;color:#f3f5ef}
-.vision-actions{display:grid;gap:10px;margin-top:34px}
-.vision-action{padding:13px;text-align:left;border:1px solid #7d9ba7;background:#9ab5c2;color:#10191e;cursor:pointer;font-size:13px;font-weight:600}
-.vision-action:hover:not(:disabled){background:#c5d4d8}
+/* Future-use composition explorer */
+.vision-board{border:1px solid rgba(189,208,213,.22);background:#151e24;margin-top:40px}
+.vision-toolbar{padding:24px 28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.vision-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.vision-choice{border:1px solid #435660;background:transparent;color:#bccad0;font:12px/1.3 Arial,Helvetica,sans-serif;padding:12px 14px;cursor:pointer}
+.vision-choice:hover,.vision-choice[aria-pressed=true]{border-color:#b2c8cf;color:#f5f7f3;background:#293d47}
+.vision-actions{display:flex;gap:8px;flex-wrap:wrap}
+.vision-action{font:600 12px Arial,Helvetica,sans-serif;padding:12px 14px;cursor:pointer;background:#adc3ca;border:1px solid #adc3ca;color:#172128}
+.vision-action:hover:not(:disabled){background:#e0e9e8}
 .vision-action:disabled{opacity:.45;cursor:not-allowed}
-.vision-action.outline{background:transparent;color:#c6d7dd;border-color:#526c78;font-weight:450}
-.vision-action.outline:hover{background:#273840}
-.vision-display{padding:30px 37px 34px;min-width:0}
-.vision-meta{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.vision-network{display:block;width:100%;height:280px;margin:4px 0 0}
-.vision-abilities{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-.vision-skill{padding:6px 10px;font:11px ui-monospace,monospace;color:#718b99;border:1px solid #364750}
-.vision-skill.active{color:#d9e4e7;border-color:#849fab;background:#263942}
-.vision-display h3{font-size:29px;font-weight:500;letter-spacing:-.035em;margin:0 0 7px}
-.vision-copy{font-size:14px;line-height:1.7;color:#b0bfc5;max-width:680px;min-height:48px}
-.vision-conditions{border-left:2px solid #8da9b5;padding:5px 0 5px 17px;margin-top:22px}
-.vision-conditions small{display:block;margin-bottom:8px;color:#9db4bf;font:10px ui-monospace,monospace;letter-spacing:.12em}
-.vision-conditions p{font-size:14px;line-height:1.6;color:#d3dee0;margin:0}
-.vision-fineprint{font-size:12px;color:#91a5ac;margin-top:17px}
-.vision-nodes{fill:#17262e;stroke:#7c98a6;stroke-width:1.5}
-.vision-nodes.active{fill:#acc4cb;stroke:#e8f1f2}
-.vision-link{fill:none;stroke:#6d8998;stroke-width:2}
-.vision-link.active{stroke:#bdd0d7;stroke-width:2.6}
+.vision-action.outline{color:#d0e1e4;background:transparent;border-color:#57727d;font-weight:400}
+.vision-action.outline:hover{background:#2b404a}
+.vision-scroll{overflow-x:auto;scrollbar-color:#607783 transparent}
+.vision-process{display:grid;grid-template-columns:minmax(180px,1fr) 170px minmax(390px,2.6fr);min-width:760px;min-height:468px}
+.vision-panel{padding:25px 20px}
+.vision-left{border-right:1px solid var(--line);background:#18232a}
+.vision-head{font:10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:#9ab2bd;display:block}
+.vision-skills{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.vision-skill{display:flex;align-items:center;gap:10px;color:#e3e9e8;padding:11px 12px;border:1px solid #526d78;background:#233640;font-size:12px;min-height:41px}
+.vision-skill:before{content:"";height:5px;width:5px;background:#aac6cf;border-radius:50%;flex-shrink:0}
+.vision-empty{color:#8197a1;font-size:11px;margin-top:18px}
+.vision-core{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;border-right:1px solid var(--line);position:relative;text-align:center;padding:12px}
+.vision-core-svg{width:150px;height:190px;max-width:100%;overflow:visible}
+.vision-core-ring{fill:none;stroke:#7999a8;stroke-width:1;stroke-opacity:.65}
+.vision-core-tick{stroke:#6c8c9c;stroke-width:1.2;opacity:.72}
+.vision-core-center{fill:#adc3ca}
+.vision-core strong{font-size:12px;font-weight:600;letter-spacing:.04em}
+.vision-core small{font:10px ui-monospace,monospace;color:#91a6b1;max-width:135px;line-height:1.5}
+.vision-output{min-width:0;padding:24px 22px 20px}
+.vision-output-top{display:flex;align-items:end;justify-content:space-between;gap:12px}
+.vision-big-number{font-size:clamp(36px,4.5vw,57px);letter-spacing:-.07em;line-height:1;font-weight:500;color:#edf1ee}
+.vision-big-number em{font-style:normal;color:#a6bec8}
+.vision-network{width:100%;height:300px;display:block;margin:5px 0}
+.vision-key{display:flex;gap:14px;flex-wrap:wrap;color:#9bb0b8;font-size:10px}
+.vision-key .key-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;background:#556f7e}
+.vision-key .key-dot.match{background:#e2ebe5}
+.vision-picked{margin-top:14px;border-top:1px solid var(--line);padding-top:11px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;min-height:43px;color:#c8d6da;font-size:12px}
+.vision-picked b{font-size:11px;color:#90abb8;font-weight:400;letter-spacing:.06em}
+.vision-environment{display:grid;grid-template-columns:minmax(0,1fr) minmax(175px,.7fr);gap:25px;align-items:start;padding:24px 30px;border-top:1px solid var(--line);background:#172229}
+.vision-environment h3{font-size:23px;letter-spacing:-.035em;margin:10px 0 11px;font-weight:500}
+.vision-environment p{font-size:13px;line-height:1.6;color:#c2d0d3;margin:0}
+.vision-required{color:#a8c1cd;margin-top:12px;font:11px/1.6 ui-monospace,monospace}
+.vision-match-box{padding:13px 16px;border-left:2px solid #9eb8c4;background:#1e2c34}
+.vision-match-count{font-size:33px;line-height:1.25;font-weight:500;letter-spacing:-.04em}
+.vision-match-box p{font-size:12px;color:#a8bbc3}
+.vision-fineprint{font-size:12px;line-height:1.65;color:#9dafb5;margin-top:18px;max-width:920px}
 button:focus-visible,a:focus-visible{outline:2px solid #b9d9e6;outline-offset:3px}
-@media(max-width:850px){.vision-board{grid-template-columns:1fr}.vision-controls{border-right:0;border-bottom:1px solid var(--line)}.vision-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.vision-choice{font-size:11px}.vision-actions{grid-template-columns:1fr 1fr;margin-top:18px}}
-@media(max-width:550px){.vision-tabs{grid-template-columns:1fr}.vision-controls{padding:20px}.vision-display{padding:20px}.vision-network{height:205px}.vision-actions{grid-template-columns:1fr}.vision-display h3{font-size:24px}}
+@media(max-width:850px){.vision-toolbar{padding:20px}.vision-process{grid-template-columns:180px 140px minmax(380px,1fr)}.vision-core-svg{width:120px}.vision-environment{grid-template-columns:1fr}}
+@media(max-width:550px){.vision-choice{font-size:11px;padding:10px}.vision-action{flex:1 1 auto}.vision-output{padding:20px}.vision-environment{padding:20px}}
 
 </style>
 </head>
@@ -104,42 +121,73 @@ button:focus-visible,a:focus-visible{outline:2px solid #b9d9e6;outline-offset:3p
     <div class="section-head">
       <div class="mono">01 / Possible futures</div>
       <div>
-        <h2>A growing repertoire.<br>New kinds of work.</h2>
-        <p>What could a small, continually learning system make possible? Choose a future application, add capabilities, and change the task. The point is not a single predefined action but what happens when skills can be retained and reused.</p>
+        <h2>A few skills.<br>An expanding universe of tasks.</h2>
+        <p>Imagine a Tiny Learner that retains every useful skill. What happens when those abilities can be combined in unfamiliar situations? Add skills on the left, then watch the space of possible combinations grow on the right.</p>
       </div>
     </div>
     <div class="vision-board">
-      <div class="vision-controls">
-        <div class="mono">Choose a direction</div>
-        <h3>Imagine a Tiny Learner-based system</h3>
-        <div class="vision-tabs" aria-label="Potential applications">
-          <button type="button" class="vision-choice" data-vision="arms" aria-pressed="true">01 / Adaptive robotic arm</button>
-          <button type="button" class="vision-choice" data-vision="inspection" aria-pressed="false">02 / Autonomous inspection</button>
-          <button type="button" class="vision-choice" data-vision="network" aria-pressed="false">03 / Cooperative learners</button>
+      <div class="vision-toolbar">
+        <div class="vision-tabs" aria-label="Choose a future application">
+          <button type="button" class="vision-choice" data-vision="arms" aria-pressed="true">Adaptive robotic arm</button>
+          <button type="button" class="vision-choice" data-vision="inspection" aria-pressed="false">Inspection rover</button>
+          <button type="button" class="vision-choice" data-vision="network" aria-pressed="false">Cooperative learners</button>
         </div>
         <div class="vision-actions">
           <button type="button" class="vision-action" id="vision-add">+ Add capability</button>
           <button type="button" class="vision-action outline" id="vision-change">Change conditions ↻</button>
-          <button type="button" class="vision-action outline" id="vision-reset">Reset experience</button>
+          <button type="button" class="vision-action outline" id="vision-reset">Reset</button>
         </div>
       </div>
-      <div class="vision-display">
-        <div class="vision-meta"><span class="mono">Potential skill repertoire</span><span class="mono" id="vision-count">02 / 05</span></div>
-        <svg class="vision-network" viewBox="0 0 630 300" aria-label="Conceptual network of accumulating capabilities" role="img">
-          <circle cx="315" cy="145" r="115" fill="none" stroke="#5b7685" stroke-dasharray="2 11" opacity=".35"/>
-          <circle cx="315" cy="145" r="81" fill="none" stroke="#5b7685" opacity=".24"/>
-          <g id="vision-lines"></g>
-          <circle cx="315" cy="145" r="31" fill="none" stroke="#93aeba" opacity=".7"/>
-          <circle cx="315" cy="145" r="18" fill="#a4b8c1"/>
-          <g id="vision-dots"></g>
-        </svg>
-        <div class="vision-abilities" id="vision-abilities"></div>
-        <h3 id="vision-title">Adaptive robotic arm</h3>
-        <p class="vision-copy" id="vision-copy"></p>
-        <div class="vision-conditions"><small id="vision-condition-label">INITIAL CONDITIONS</small><p id="vision-condition-text"></p></div>
+      <div class="vision-scroll" role="region" aria-label="Skills, learner and composition diagram" tabindex="0">
+        <div class="vision-process">
+          <div class="vision-panel vision-left">
+            <span class="vision-head">01 / Learned skills</span>
+            <div class="vision-skills" id="vision-skills"></div>
+            <p class="vision-empty" id="vision-count">03 / 08 skills retained</p>
+          </div>
+          <div class="vision-core">
+            <span class="vision-head">02 / Retain &amp; reuse</span>
+            <svg class="vision-core-svg" viewBox="0 0 150 190" aria-label="Conceptual compact learning core" role="img">
+              <circle class="vision-core-ring" cx="75" cy="95" r="58" stroke-dasharray="2 11"/>
+              <circle class="vision-core-ring" cx="75" cy="95" r="41"/>
+              <circle class="vision-core-ring" cx="75" cy="95" r="27" stroke-dasharray="1 5"/>
+              <g class="vision-core-tick"><path d="M75 15V41 M75 149v26 M6 95h27 M117 95h27 M27 47l19 19 M104 124l20 20 M123 48l-19 18 M46 125l-19 19"/></g>
+              <circle class="vision-core-center" cx="75" cy="95" r="14"/>
+              <circle cx="75" cy="95" r="4" fill="#182832"/>
+            </svg>
+            <strong>TINY LEARNER</strong>
+            <small>Small core / growing experience</small>
+          </div>
+          <div class="vision-output">
+            <div class="vision-output-top">
+              <span class="vision-head">03 / Potential combinations</span>
+              <span class="vision-head">NONEMPTY SUBSETS</span>
+            </div>
+            <div class="vision-big-number"><span id="vision-total">7</span> <em id="vision-math">= 2³ − 1</em></div>
+            <svg class="vision-network" id="vision-network" viewBox="0 0 660 340" aria-label="Possible combinations grow as skills accumulate" role="img">
+              <g id="vision-links"></g>
+              <g id="vision-nodes"></g>
+            </svg>
+            <div class="vision-key"><span><i class="key-dot"></i>Candidate composition</span><span><i class="key-dot match"></i>Includes required skills</span></div>
+            <div class="vision-picked" aria-live="polite"><b>SELECT A NODE</b><span id="vision-picked">Tap any point to inspect a skill combination.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="vision-environment">
+        <div>
+          <span class="vision-head">04 / Environment changes</span>
+          <h3 id="vision-condition-title">Standard workshop</h3>
+          <p id="vision-condition-text">A familiar set of parts needs to be sorted.</p>
+          <div class="vision-required" id="vision-required"></div>
+        </div>
+        <div class="vision-match-box">
+          <span class="vision-head">Compositions containing all required skills</span>
+          <div class="vision-match-count" id="vision-matches">2</div>
+          <p id="vision-fit">These mathematical candidates are not claims of successful task performance.</p>
+        </div>
       </div>
     </div>
-    <div class="vision-fineprint">Interactive future-use concept. It illustrates the potential of this specific learning approach; it is not a live model run or a claim of demonstrated robotic ability.</div>
+    <p class="vision-fineprint">This explores a possible future for Tiny Learner, not a live model run. Each point represents one nonempty <em>subset</em> of retained skills: 2ⁿ − 1 possibilities for n skills. Order, repetition and feasibility are not counted. The highlighted points merely contain the selected situation's required skills; real transfer would have to be demonstrated experimentally.</p>
   </section>
 
   <section class="section wrap" id="explore">
@@ -255,59 +303,110 @@ button:focus-visible,a:focus-visible{outline:2px solid #b9d9e6;outline-offset:3p
 (function(){
 "use strict";
 const futures={
-  arms:{
-    title:"Adaptive robotic arm",
-    copy:"Imagine a small learner building a repertoire of handling skills. A new workflow could draw on earlier experience rather than requiring a new script for every combination.",
-    skills:["Sense object","Approach","Grasp","Sort","Recover"],
-    contexts:["A familiar object arrives at a known workstation.","Now the object, destination and order of operations all change at once."],
-    outlook:["Previously acquired handling behaviors could remain available.","The system could reuse familiar abilities in a combination it was never taught directly."]
-  },
-  inspection:{
-    title:"Autonomous inspection",
-    copy:"Imagine an embedded learner retaining navigation, observation and measurement skills as an inspection environment grows more complicated.",
-    skills:["Detect","Navigate","Avoid","Inspect","Report"],
-    contexts:["A rover examines a familiar set of checkpoints.","A passage closes and new targets appear in an unfamiliar section."],
-    outlook:["The learner could retain useful movements and measurements.","It could adapt a route while carrying earlier knowledge into the next inspection."]
-  },
-  network:{
-    title:"Cooperative learners",
-    copy:"Imagine multiple small specialists that develop different abilities, retain them, and contribute to a shared task without relying on one giant model for every decision.",
-    skills:["Observe","Classify","Plan","Coordinate","Review"],
-    contexts:["Several specialists work on a recurring shared task.","New goals require skills from different specialists in an unfamiliar sequence."],
-    outlook:["Individual capabilities could accumulate across experience.","Cooperating learners could combine established skills to address changing demands."]
-  }
+  arms:{skills:["Sense","Approach","Grasp","Place","Sort","Avoid","Recover","Verify"],contexts:[
+    {title:"Standard workshop",description:"Move familiar parts between known stations.",needs:[0,2]},
+    {title:"Fragile material",description:"Now the object becomes delicate and must be placed with care. Can previously acquired sensing and handling skills be reused?",needs:[0,2,3]},
+    {title:"Crowded workspace",description:"An unexpected obstacle appears while moving the part. The task now needs avoidance as well as manipulation.",needs:[0,1,2,5]}]},
+  inspection:{skills:["Detect","Navigate","Avoid","Inspect","Measure","Report","Return","Verify"],contexts:[
+    {title:"Routine inspection",description:"Visit known checkpoints and inspect equipment.",needs:[0,1]},
+    {title:"Blocked passage",description:"A planned corridor is obstructed. Find another route and still inspect the target.",needs:[0,1,2,3]},
+    {title:"New fault pattern",description:"A novel anomaly requires detection, measurement, documentation and a safe return.",needs:[0,3,4,5,6]}]},
+  network:{skills:["Observe","Classify","Plan","Act","Coordinate","Report","Review","Adapt"],contexts:[
+    {title:"Shared routine",description:"Two small specialists handle a familiar observation and classification task.",needs:[0,1]},
+    {title:"New goal",description:"A new assignment requires observation, planning and coordinated action across specialists.",needs:[0,2,3,4]},
+    {title:"Unexpected outcome",description:"The environment changes after an action. Specialists must observe, coordinate, review and adapt.",needs:[0,3,4,6,7]}]}
 };
-const coords=[[314,21],[450,83],[438,239],[192,245],[171,84]];
-let key="arms",amount=2,changed=false;
 const $=id=>document.getElementById(id);
-function paint(){
-const data=futures[key],ns="http://www.w3.org/2000/svg";
-document.querySelectorAll("[data-vision]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.vision===key)));
-$("vision-title").textContent=data.title;$("vision-copy").textContent=data.copy;
-$("vision-count").textContent=String(amount).padStart(2,"0")+" / 05";
-$("vision-condition-label").textContent=changed?"CHANGED CONDITIONS / POSSIBLE TRANSFER":"INITIAL CONDITIONS / POSSIBLE RETENTION";
-$("vision-condition-text").textContent=data.contexts[Number(changed)]+" "+data.outlook[Number(changed)];
-$("vision-abilities").replaceChildren();
-const links=$("vision-lines"),dots=$("vision-dots");
-links.replaceChildren();dots.replaceChildren();
-data.skills.forEach((skill,i)=>{
-const tag=document.createElement("span");tag.className="vision-skill"+(i<amount?" active":"");tag.textContent=skill;$("vision-abilities").appendChild(tag);
-const [x,y]=coords[i],bend=changed?(i%2?36:-34):0;
-const path=document.createElementNS(ns,"path");path.setAttribute("class","vision-link"+(i<amount?" active":""));
-path.setAttribute("opacity",i<amount?"1":".17");
-path.setAttribute("d","M315 145 Q"+(315+(x-315)*.53+bend)+" "+(145+(y-145)*.49)+" "+x+" "+y);
-links.appendChild(path);
-const dot=document.createElementNS(ns,"circle");dot.setAttribute("class","vision-nodes"+(i<amount?" active":""));dot.setAttribute("cx",x);dot.setAttribute("cy",y);dot.setAttribute("r",i<amount?"10":"7");dots.appendChild(dot);
-});
-$("vision-add").disabled=amount===5;
-$("vision-add").textContent=amount===5?"All capabilities added":"+ Add capability";
-$("vision-change").textContent=changed?"Restore initial conditions ↻":"Change conditions ↻";
+const ns="http://www.w3.org/2000/svg";
+let kind="arms",count=3,contextIndex=0,chosenMask=0;
+const popcount=n=>{let c=0;while(n){n&=n-1;c++}return c};
+const current=()=>futures[kind];
+function spawnSvg(tag,attributes){
+ const node=document.createElementNS(ns,tag);
+ Object.keys(attributes).forEach(k=>node.setAttribute(k,String(attributes[k])));
+ return node;
 }
-document.querySelectorAll("[data-vision]").forEach(b=>b.addEventListener("click",()=>{key=b.dataset.vision;amount=2;changed=false;paint();}));
-$("vision-add").addEventListener("click",()=>{amount=Math.min(5,amount+1);paint();});
-$("vision-change").addEventListener("click",()=>{changed=!changed;paint();});
-$("vision-reset").addEventListener("click",()=>{amount=2;changed=false;paint();});
-paint();
+function render(){
+ const data=current(),required=data.contexts[contextIndex].needs;
+ const all=(1<<count)-1;
+ const requiredMask=required.reduce((m,i)=>m|(1<<i),0);
+ const supported=(requiredMask & all)===requiredMask;
+ const matches=supported?Math.pow(2,count-required.length):0;
+ document.querySelectorAll("[data-vision]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.vision===kind)));
+ $("vision-skills").replaceChildren();
+ data.skills.slice(0,count).forEach((skill,i)=>{
+   const item=document.createElement("div");item.className="vision-skill";
+   item.textContent=String(i+1).padStart(2,"0")+"  /  "+skill;
+   $("vision-skills").appendChild(item);
+ });
+ $("vision-count").textContent=String(count).padStart(2,"0")+" / 08 skills retained";
+ $("vision-total").textContent=all.toLocaleString("en-US");
+ $("vision-math").textContent="= 2"+String.fromCharCode(0x2070+0)+"^"+count+" − 1";
+ $("vision-math").textContent="= 2^"+count+" − 1";
+ $("vision-condition-title").textContent=data.contexts[contextIndex].title;
+ $("vision-condition-text").textContent=data.contexts[contextIndex].description;
+ const missing=required.filter(i=>i>=count).map(i=>data.skills[i]);
+ $("vision-required").textContent="Required here: "+required.map(i=>data.skills[i]).join(" + ");
+ $("vision-matches").textContent=String(matches);
+ $("vision-fit").textContent=missing.length?
+   "Missing from the retained set: "+missing.join(", ")+". Add capabilities to explore this situation.":
+   matches+" theoretical skill sets contain the requirements. Whether they actually solve the task is untested.";
+ $("vision-add").disabled=count>=8;
+ $("vision-add").textContent=count>=8?"All 8 added":"+ Add capability";
+ $("vision-change").textContent="Change conditions ↻ ("+(contextIndex+1)+"/3)";
+ const lineLayer=$("vision-links"),nodeLayer=$("vision-nodes");
+ lineLayer.replaceChildren();nodeLayer.replaceChildren();
+ const pts=new Map();
+ const num=all;
+ for(let idx=0;idx<num;idx++){
+   const mask=idx+1;
+   const angle=idx*2.399963229728653+count*.17;
+   const radius=Math.sqrt((idx+.6)/num);
+   const x=330+radius*307*Math.cos(angle);
+   const y=170+radius*148*Math.sin(angle);
+   pts.set(mask,[x,y]);
+ }
+ for(let mask=1;mask<=all;mask++){
+   const subset=mask&(mask-1);
+   if(subset && pts.has(subset)){
+     const [x1,y1]=pts.get(subset),[x2,y2]=pts.get(mask);
+     lineLayer.appendChild(spawnSvg("line",{x1,y1,x2,y2,stroke:"#7893a0","stroke-width":".7",opacity:count>=7?".12":".22"}));
+   }
+ }
+ if(!chosenMask || chosenMask>all)chosenMask=supported?requiredMask:all;
+ for(let mask=1;mask<=all;mask++){
+   const [cx,cy]=pts.get(mask);
+   const fits=supported && ((mask & requiredMask)===requiredMask);
+   const isSelected=chosenMask===mask;
+   const r=count>=7? (isSelected?6.6:fits?4.4:2.5):(isSelected?7.2:fits?5.4:3.6);
+   const dot=spawnSvg("circle",{cx,cy,r,fill:isSelected?"#f5f5ed":fits?"#c7d7d9":"#587482",opacity:fits||isSelected?"1":".73",stroke:isSelected?"#f5f5ed":"none","stroke-width":1,role:"button",tabindex:"0","aria-label":data.skills.filter((_,i)=>Boolean(mask&(1<<i))).join(" + ")});
+   const choose=()=>{chosenMask=mask;renderSelected()};
+   dot.addEventListener("click",choose);
+   dot.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();choose()}});
+   nodeLayer.appendChild(dot);
+ }
+ renderSelected();
+}
+function renderSelected(){
+ const data=current(),mask=chosenMask;
+ const names=data.skills.filter((_,i)=>Boolean(mask&(1<<i)));
+ $("vision-picked").textContent=names.join(" + ");
+ const all=(1<<count)-1;
+ const req=data.contexts[contextIndex].needs.reduce((m,i)=>m|(1<<i),0);
+ const supported=(req&all)===req;
+ const dots=$("vision-nodes").children;
+ for(let i=0;i<dots.length;i++){
+   const m=i+1, fits=supported && ((m&req)===req);
+   dots[i].setAttribute("stroke",m===mask?"#f8f8f1":"none");
+   dots[i].setAttribute("stroke-width",m===mask?"2.5":"0");
+   dots[i].setAttribute("r",m===mask?"7.2":count>=7?(fits?"4.4":"2.5"):(fits?"5.4":"3.6"));
+ }
+}
+document.querySelectorAll("[data-vision]").forEach(b=>b.addEventListener("click",()=>{kind=b.dataset.vision;count=3;contextIndex=0;chosenMask=0;render()}));
+$("vision-add").addEventListener("click",()=>{count=Math.min(8,count+1);chosenMask=0;render()});
+$("vision-change").addEventListener("click",()=>{contextIndex=(contextIndex+1)%3;chosenMask=0;render()});
+$("vision-reset").addEventListener("click",()=>{count=3;contextIndex=0;chosenMask=0;render()});
+render();
 })();
 </script>
 
