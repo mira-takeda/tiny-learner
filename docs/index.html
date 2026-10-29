@@ -84,6 +84,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #b9d9e6;outline-offset:3p
   <div class="links">
     <a href="#future">Explore</a>
     <a href="#applications" class="hide-mobile">Applications</a>
+    <a href="#footprint" class="hide-mobile">How tiny?</a>
     <a href="#research" class="hide-mobile">Research</a>
     <a class="repo" href="https://github.com/mira-takeda/tiny-learner">GitHub ↗</a>
   </div>
@@ -253,13 +254,21 @@ button:focus-visible,a:focus-visible{outline:2px solid #b9d9e6;outline-offset:3p
     </div>
   </section>
 
+
+  <section class="section wrap" id="footprint">
+    <div class="scale">
+      <div><div class="mono">05 / How tiny?</div><h2>Small enough for<br>a tiny robot's controller.</h2><p>Four skill networks and their selector: 7,944 parameters. Stored at 32 bits each, their weights take just 31.8 kB.</p></div>
+      <div class="scale-right"><div><strong>31.8 kB of weights.</strong><small>Small enough to fit within the memory of an ESP32-class controller, the kind used in small connected devices and robots.</small></div><div><strong>A possible destination.</strong><small>A hardware port would still need code, working memory and sensor integration. On-device operation has not yet been tested.</small></div><div><a class="quiet" href="https://documentation.espressif.com/esp32_datasheet_en.html">ESP32 hardware reference ↗</a></div></div>
+    </div>
+  </section>
+
   <section class="section wrap" id="research">
     <div class="section-head">
-      <div class="mono">05 / Research</div>
-      <div><h2>A question worth testing.</h2><p>The work is experimental. Tiny Learner investigates mechanisms for acquisition, retention, and transfer with controlled challenges and comparisons.</p></div>
+      <div class="mono">06 / Research</div>
+      <div><h2>Can a tiny learner combine<br>what it already knows?</h2><p>Can a tiny neural system learn skills separately, retain them as new skills arrive, and recombine them to solve situations never trained together? Controlled comparisons test whether learned modular routing helps beyond a similarly sized monolithic network and simpler routing controls.</p></div>
     </div>
     <div class="research">
-      <div><div class="mono">Where Muse fits</div><h2>Curriculum, not a shortcut.</h2><p>Meta Muse contributes to curriculum development and learning challenges. Tiny Learner is the small system under evaluation. The distinction makes it possible to examine what the learner acquired independently.</p><a class="quiet" href="https://github.com/mira-takeda/tiny-learner">View GitHub project ↗</a></div>
+      <div><div class="mono">Where Muse fits</div><h2>Learning is everything.</h2><p>Meta Muse contributes to curriculum development and learning challenges. Tiny Learner is the small system under evaluation. The distinction makes it possible to examine what the learner acquired independently.</p><a class="quiet" href="https://github.com/mira-takeda/tiny-learner">View GitHub project ↗</a></div>
       <div>
         <div class="research-item"><div class="mono">01 / Acquisition</div><strong>What did the system learn?</strong><p>New behavior acquired through experience.</p></div>
         <div class="research-item"><div class="mono">02 / Retention</div><strong>What did it preserve?</strong><p>Earlier abilities after additional learning.</p></div>
