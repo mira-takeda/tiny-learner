@@ -1,0 +1,387 @@
+{
+ "files": {
+  "A1_101.json": {
+   "bytes": 50871,
+   "sha256": "4c9e46b178d2626b899ce5d96bf25a702e8db2bb6e57c5dbb147d540cbae68bf"
+  },
+  "A1_101_theta.npz": {
+   "bytes": 63816,
+   "sha256": "4d5ef4603e53be15cea9ee8f7049bf2277ee25899f033248d4583a7c228b3127"
+  },
+  "A1_102.json": {
+   "bytes": 50744,
+   "sha256": "4ada052fa2c4cca49d1d8583068b731872bb6560a39ecc1c46764ea48e4d92e4"
+  },
+  "A1_102_theta.npz": {
+   "bytes": 63816,
+   "sha256": "6d16f5191b4e8a1a54a90e8615c0bc055ddee466d72848eb3cfb96b3057ccf66"
+  },
+  "A1_103.json": {
+   "bytes": 50929,
+   "sha256": "a9dd43b0d5b8f9be04c7f58835b714660c0dfb6b1c800e1b904f2deaa8655fe8"
+  },
+  "A1_103_theta.npz": {
+   "bytes": 63816,
+   "sha256": "9f76940e6d505c9666428571745987be22824e38dceb74d1e36e3227a6cb0647"
+  },
+  "A1_104.json": {
+   "bytes": 51147,
+   "sha256": "c000cb58ab782bd829677d0dd8a452270fcfe5397125cc377a2b8f1377d7d2ba"
+  },
+  "A1_104_theta.npz": {
+   "bytes": 63816,
+   "sha256": "901b6b4e52106191afd6f5c34e8ac8cf20ce88a4b161fe2e67a737653ed0fd2b"
+  },
+  "A1_105.json": {
+   "bytes": 50917,
+   "sha256": "070e46b667e61316097a36075b857228ed91d6cfc144c2828cef40464b58ea60"
+  },
+  "A1_105_theta.npz": {
+   "bytes": 63816,
+   "sha256": "d33d0d51f8527dc206e5dc770dd360ec35d6853fe926f0a3bf86bfe7984a2573"
+  },
+  "A2_101.json": {
+   "bytes": 51517,
+   "sha256": "8853a51c5e2a5a6e502f0252063af34bfcc920594a4fdafc8d29b59cffc7ec0c"
+  },
+  "A2_101_theta.npz": {
+   "bytes": 63816,
+   "sha256": "78b3d42870fa00c29b74bc482b47d53b613722e68573867b7ebafc822c060241"
+  },
+  "A2_102.json": {
+   "bytes": 51378,
+   "sha256": "b3ac1ecb62061b613855955a56c7caed5c0beb866cb21f0859a1af1bc5de71a9"
+  },
+  "A2_102_theta.npz": {
+   "bytes": 63816,
+   "sha256": "56779b3932fa4bf5732997b35b3222fbd212a3697fdc17a9ba69960e4a7ce18b"
+  },
+  "A2_103.json": {
+   "bytes": 51380,
+   "sha256": "2ce94c494101dac4783af96c11c151260ea28ad5d5a23e2ce38488b1276657e6"
+  },
+  "A2_103_theta.npz": {
+   "bytes": 63816,
+   "sha256": "29487208d30b73c4b45c3b8e6a6106643d094ae9f07297ad40ce044a7143d6d8"
+  },
+  "A2_104.json": {
+   "bytes": 51478,
+   "sha256": "8273599a318666840adef341113346cc632c65ddb6a5fadae1f835cc8f10446d"
+  },
+  "A2_104_theta.npz": {
+   "bytes": 63816,
+   "sha256": "b8bb3a8b780655e8b65dab5fe3d83535ec39521192bac44fe436648218a7d9e5"
+  },
+  "A2_105.json": {
+   "bytes": 51368,
+   "sha256": "5ee782ad813961555f2595441b404760862ee965f3bcabb3427a8a10b6a195fa"
+  },
+  "A2_105_theta.npz": {
+   "bytes": 63816,
+   "sha256": "34bd23dcd686090b83b861dc814fd14a295acb59df0ede91aa6ee483f29fb003"
+  },
+  "A3_101.json": {
+   "bytes": 51657,
+   "sha256": "d6703f81d1e8af0beb995647e8bc4e09e3ffcbde08480411a07ba6310def6f2e"
+  },
+  "A3_101_theta.npz": {
+   "bytes": 64608,
+   "sha256": "efd146dce3954bc06949584baa87f1d1a2203d83d60665efbfe2b9db2379d934"
+  },
+  "A3_102.json": {
+   "bytes": 51682,
+   "sha256": "daca2124cec4a0be8095b83b5f7ca8feea12d63b710318c0f48f4cca82378c85"
+  },
+  "A3_102_theta.npz": {
+   "bytes": 64608,
+   "sha256": "3030d614be76e2625fa45444eedddc3e16ee9791f762de18b87f6599cef94990"
+  },
+  "A3_103.json": {
+   "bytes": 51889,
+   "sha256": "fabf7700f7c2f6906d6d8782c9e8d1f1a2b6878f723e217ff96a3b8beba65b62"
+  },
+  "A3_103_theta.npz": {
+   "bytes": 64608,
+   "sha256": "9529bf0c15a6758a7f6ab70b79c1303321f87c23eb496c887e328b7fc626132e"
+  },
+  "A3_104.json": {
+   "bytes": 51410,
+   "sha256": "0262834e099a4289a99a594a9ce431ac9f97d26986780550fccff78e00056c89"
+  },
+  "A3_104_theta.npz": {
+   "bytes": 64608,
+   "sha256": "72480939127ad5e439de3f505089c803801d818a648fbdb2c14c942569636ac8"
+  },
+  "A3_105.json": {
+   "bytes": 51600,
+   "sha256": "986a52f9d8ee47c24c1b2d2aa2eb3a40fdf3da81e22ab39707eef327f6cce28f"
+  },
+  "A3_105_theta.npz": {
+   "bytes": 64608,
+   "sha256": "69b159fe8e1c77711f68cc7e4f5e6d3d82e019d4cc232c7c4174c98a669abbbd"
+  },
+  "A4_101.json": {
+   "bytes": 50795,
+   "sha256": "d907995b24f33446c86a5b718ca0c51a5723ed642e41e9a5b7c08c25069aafb5"
+  },
+  "A4_101_theta.npz": {
+   "bytes": 63816,
+   "sha256": "73242af7dd262cffa3b7c4053c312d84a31376e5068e44e19490a6ab72c1c2e2"
+  },
+  "A4_102.json": {
+   "bytes": 50658,
+   "sha256": "12984b3bfe1599be6cbefc1f2835b2cd0c10e61f5b421a9d4899b5e0410ed73a"
+  },
+  "A4_102_theta.npz": {
+   "bytes": 63816,
+   "sha256": "bb137ffaf1cfb30a8253ed2a6fa4696be13f07113c5cde564facc9e38f39b922"
+  },
+  "A4_103.json": {
+   "bytes": 50773,
+   "sha256": "eb21db8333adaa335def413bfcabc087ce5398a19a0a397dd1468922217eabb8"
+  },
+  "A4_103_theta.npz": {
+   "bytes": 63816,
+   "sha256": "6deb92f6d40e630d3048b5ccb47c02e2127e987be10c7a0135c32e5ddc807a5a"
+  },
+  "A4_104.json": {
+   "bytes": 50893,
+   "sha256": "bb95e341ed51397307cf0b57e21250ae7853d1736f0a8bb90bbd821c6b68c43c"
+  },
+  "A4_104_theta.npz": {
+   "bytes": 63816,
+   "sha256": "2385b2f817f47d33701101c823cf6e3353155da247e3ec86b7bc3cc9f3319517"
+  },
+  "A4_105.json": {
+   "bytes": 50737,
+   "sha256": "d66bd3e2d10e16baaa84ca130f37d0169739859785048ca17ae70be88428ac10"
+  },
+  "A4_105_theta.npz": {
+   "bytes": 63816,
+   "sha256": "17e147a15e8d17327cfe887409a974ba7cac5333e29d548a6252c30f0cdc91bc"
+  }
+ },
+ "jobs": {
+  "A1_101": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A1_102": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A1_103": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A1_104": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A1_105": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A2_101": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "A"
+   ],
+   "total_steps": 206400000
+  },
+  "A2_102": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "A"
+   ],
+   "total_steps": 206400000
+  },
+  "A2_103": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A2_104": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "A"
+   ],
+   "total_steps": 206400000
+  },
+  "A2_105": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A3_101": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "B",
+    "C"
+   ],
+   "total_steps": 206400000
+  },
+  "A3_102": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "B",
+    "C"
+   ],
+   "total_steps": 206400000
+  },
+  "A3_103": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "B",
+    "C",
+    "D"
+   ],
+   "total_steps": 206400000
+  },
+  "A3_104": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "B"
+   ],
+   "total_steps": 206400000
+  },
+  "A3_105": {
+   "acquired": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [
+    "B",
+    "C"
+   ],
+   "total_steps": 206400000
+  },
+  "A4_101": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A4_102": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A4_103": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A4_104": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  },
+  "A4_105": {
+   "acquired": {
+    "A": true,
+    "B": false,
+    "C": false,
+    "D": true
+   },
+   "reacquired": [],
+   "total_steps": 206400000
+  }
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "n": 9,
+ "all_match": true,
+ "repro_wall_s": 38.1,
+ "runs": [
+  {
+   "id": "A-ACQ-0007",
+   "theta": 302,
+   "match": true,
+   "wall_s": 10.8
+  },
+  {
+   "id": "A-ACQ-0008",
+   "theta": 301,
+   "match": true,
+   "wall_s": 2.2
+  },
+  {
+   "id": "A-ACQ-0008",
+   "theta": 302,
+   "match": true,
+   "wall_s": 8.5
+  },
+  {
+   "id": "A-ACQ-0009",
+   "theta": 303,
+   "match": true,
+   "wall_s": 4.8
+  },
+  {
+   "id": "A-ACQ-0011",
+   "theta": 301,
+   "match": true,
+   "wall_s": 3.2
+  },
+  {
+   "id": "A-ACQ-0013",
+   "theta": 301,
+   "match": true,
+   "wall_s": 0.7
+  },
+  {
+   "id": "A-ACQ-0024",
+   "theta": 301,
+   "match": true,
+   "wall_s": 1.2
+  },
+  {
+   "id": "A-ACQ-0028",
+   "theta": 302,
+   "match": true,
+   "wall_s": 2.4
+  },
+  {
+   "id": "A-ACQ-0029",
+   "theta": 303,
+   "match": true,
+   "wall_s": 4.2
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "budget_s": 600,
+ "question": "I1 gate (single opening): does frozen N3b coordination interpolate to A+B with new params?",
+ "battery": {
+  "file": "test_battery_v1.json",
+  "sha256": "543ec81829b0dbc23cbc809b6a60d85c175ca5651ef4922c063ef369d9c51f23",
+  "entries": "I1 only (200); code asserts family==I1; H1/H2/H3 never read",
+  "regions": {
+   "null": 200
+  }
+ },
+ "models": {
+  "n3b_sha256": "d271637473cb340ab191215926db0b008ce49a232569619c3b5bc48528fc9e37"
+ },
+ "skills": {
+  "301": "38e2c6871e5ce9ae621cdf92b509716807faff4ca2ab03df9550019603e604ac",
+  "302": "3be4658e6c6a2228a120110b4bfd60f82bc19a255addd4a11900ac102ac5ba43",
+  "303": "eeb707fb8e7f52569f92c6f22dfc6bae344517da4ebd668734f8af734dc3e095"
+ },
+ "arms": [
+  "N3b-frozen",
+  "A-only",
+  "B-only"
+ ],
+ "episodes": "3 arms x 200 x 3 thetas = 1800",
+ "policy": "greedy argmax-4 -> greedy viewed skill; same seeds all arms",
+ "bar": ">=0.70 N3b global mean (per-theta reported); >=0.70 => H1/H2/H3 once each; <0.70 => H UNINTERPRETABLE, stop, no retunes into I1",
+ "blinding_note": "implementer has seen historical I1/H outcomes of OLD systems (declared CROSSCHECK caveat); this system frozen before opening; no tuning possible post-opening (models fixed); H entries code-unread",
+ "forbidden": [
+  "H reads",
+  "retunes",
+  "arch change",
+  "second opening"
+ ]
+}

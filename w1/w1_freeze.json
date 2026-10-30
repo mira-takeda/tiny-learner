@@ -1,0 +1,236 @@
+{
+ "w1": "redesigned follow-up post-I1 (PREREG_W1.md); NOT blind prereg continuation",
+ "thetas": [
+  301,
+  302,
+  303
+ ],
+ "arch": {
+  "gate": "14->32->4",
+  "gate_dim": 612,
+  "skills": "pilot3 frozen x4",
+  "total_dim": 7944
+ },
+ "generator": {
+  "file": "w1/gen_wide.py",
+  "agz_band": [
+   35.0,
+   70.0
+  ],
+  "bgh_min": 10.0,
+  "bgh_max": null,
+  "speed": [
+   3.0,
+   3.5
+  ],
+  "tries": [
+   600,
+   50
+  ],
+  "derivation": "PREREG_W1.md section 2 table"
+ },
+ "seed_block": {
+  "demo_g1": 21100,
+  "espool_g1": 21101,
+  "gate_g1": 21102,
+  "gate_g2": 21103,
+  "sing_gate": 21104,
+  "planner": 21105,
+  "imit_init": 21106,
+  "es": 21107,
+  "waste": 21999
+ },
+ "pools_spec": {
+  "demo_g1": 18,
+  "espool_g1": 12,
+  "gate_g1": 200,
+  "gate_g2": 200,
+  "sing_gate": 80
+ },
+ "partition_wide_g1": {
+  "rule": "generation order: first 12 train, last 6 eval",
+  "train_idx": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "eval_idx": [
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ]
+ },
+ "partition_g2_reuse": {
+  "train": [
+   "M-G2-2000",
+   "M-G2-2001",
+   "M-G2-2002",
+   "M-G2-2003",
+   "M-G2-2150",
+   "M-G2-2151",
+   "M-G2-2152",
+   "M-G2-2153",
+   "M-G2-2300",
+   "M-G2-2301",
+   "M-G2-2302",
+   "M-G2-2303"
+  ],
+  "eval": [
+   "M-G2-2004",
+   "M-G2-2005",
+   "M-G2-2154",
+   "M-G2-2155",
+   "M-G2-2304",
+   "M-G2-2305"
+  ],
+  "source": "n1_freeze.json (transcription verified here)"
+ },
+ "calendar_rule": "N2 rule: gen g: G1 idx (2g,2g+1)%12, G2 same, singles g%8; window 2G1+2G2+ABCD",
+ "es_pool_g2": [
+  "M-G2-2006",
+  "M-G2-2007",
+  "M-G2-2008",
+  "M-G2-2009",
+  "M-G2-2156",
+  "M-G2-2157",
+  "M-G2-2158",
+  "M-G2-2159",
+  "M-G2-2306",
+  "M-G2-2307",
+  "M-G2-2308",
+  "M-G2-2309"
+ ],
+ "es_pool_singles": {
+  "A": [
+   "M-A-0000",
+   "M-A-0001",
+   "M-A-0150",
+   "M-A-0151",
+   "M-A-0300",
+   "M-A-0301",
+   "M-A-0360",
+   "M-A-0361"
+  ],
+  "B": [
+   "M-B-0400",
+   "M-B-0401",
+   "M-B-0550",
+   "M-B-0551",
+   "M-B-0700",
+   "M-B-0701",
+   "M-B-0760",
+   "M-B-0761"
+  ],
+  "C": [
+   "M-C-0800",
+   "M-C-0801",
+   "M-C-0950",
+   "M-C-0951",
+   "M-C-1100",
+   "M-C-1101",
+   "M-C-1160",
+   "M-C-1161"
+  ],
+  "D": [
+   "M-D-1200",
+   "M-D-1201",
+   "M-D-1350",
+   "M-D-1351",
+   "M-D-1500",
+   "M-D-1501",
+   "M-D-1560",
+   "M-D-1561"
+  ]
+ },
+ "planner": {
+  "source": "ref_plan.shoot/snap",
+  "H": 25,
+  "K": 40,
+  "blocks": [
+   5,
+   5
+  ],
+  "seq_seed": 21105,
+  "runs": 54,
+  "plan_order": "demo-major x thetas (N1 pattern)"
+ },
+ "imit": {
+  "recipe": "N1b verbatim (S3: Xavier hidden, zero out, Adam 1e-3 full-batch, CE, 5000ep, final ckpt)",
+  "init_seeds": [
+   1828596329,
+   3333355894,
+   2602563805
+  ],
+  "d_mass_assert": true,
+  "offline_only": true
+ },
+ "es": {
+  "pop_pairs": 8,
+  "candidates": 16,
+  "sigma": 0.1,
+  "alpha": 0.01,
+  "generations": 25,
+  "seed": 21107,
+  "policy": "greedy argmax-4 gate -> greedy viewed skill",
+  "fitness": "mean exact task return over 8 window eps"
+ },
+ "gate_bar": "W1-final mean >= 0.70 on gate_g1 AND gate_g2 (means over 3 thetas); else STOP",
+ "h_ref": "each H >= 0.60; H-mean >= best-single + 0.40 (descriptive follow-up bars, NOT preregistered)",
+ "budgets": {
+  "collect": 1800,
+  "imitate": 900,
+  "es": 2400,
+  "gate": 900,
+  "h": 1200
+ },
+ "forbidden": [
+  "read/execute I1 ever",
+  "open H without gate PASS",
+  "open gate/H twice",
+  "post-result recipe/seed/pool change",
+  "checkpoint selection",
+  "Modal"
+ ],
+ "pins": {
+  "gen_wide.py": "4fde8c6a9e3b4bbe277e7e9ec0ed5d663175344957f71c56939447f07f64ce21",
+  "w1_collect.py": "4071657448a56088fa6d4991f41861670f42d971b5026901b734e97c4c4cefc7",
+  "w1_imitate.py": "9be75ed465cf027cbb3302f29f81af0e3aeb35f9d6b1806a2c69b73af4813d88",
+  "w1_es.py": "a79c35e03e1c44b518c1be1194d476459631784bd474d0e8e4cb5cfa6cc60583",
+  "w1_gate.py": "cc133dfbffde8b15ffb8d7d83409cb4f117b558bb6ae67055768648da60c0d59",
+  "w1_h.py": "37ebc77bb89e834847cb079b42ad0d0f435e2b487aaafabe5d716efc40385e4c",
+  "PREREG_W1.md": "2cbbbb1eab0476ec6f6776bffb5ad97e6d6ab2ed3c459e00e3c2982c44edf9ad",
+  "data/train_meta_v1.json": "7ebd5b9bd50b49dd8692080dfa294941cde652588da187914b04800f470aae85",
+  "data/test_battery_v1.json": "543ec81829b0dbc23cbc809b6a60d85c175ca5651ef4922c063ef369d9c51f23",
+  "v2conf_diag/n1_freeze.json": "85a50c5c55c1cd4743c86c186897318a4477d2f3be3561986975802f5ecf45e0",
+  "v2conf_diag/n2_freeze.json": "bb9bef28054044d850d9737bc51e732fb51f4c2be4e86a91c42d2f11582225e4",
+  "v2conf_diag/n1_demos.json": "0ea76674d20e64d985b6aa99183b5f2c8616c9eadf0cf6d7d1b68ef774b14d14",
+  "v2conf_diag/n1b_pairs.json": "4ba4ce49769500a41859654927d72c712780d277b7cc12309d6423fb95a7af63",
+  "v2conf_diag/ref_plan.py": "629f0f28ef0fa64b7cba426602615b9f7fe8aa648a4eb453b23dc431d6e9636a",
+  "v2conf_diag/s4_closed.py": "786619ac267aa58813866d76e4784f0e8b77eb8854309ba52a9d22238fd84c27",
+  "src/tasks.py": "4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495",
+  "src/env.py": "390b82f74778e00e0d437c91ed1e24e75f5dbeae85a4cb4478e6eb8e5bb4d968",
+  "src/models.py": "276d8762b479dc122af88a71b280c3517872bfd89bdf5745df9bfc36beab3643",
+  "src/policies.py": "13ac7f7af80af9d9ddcd0303ebd68b23dc566e757f38f4f2dea49a819ac2c7e4",
+  "src/gen.py": "b78df222de6950563c5dbedf3ccf0992c3ef733e2fcf838564be66423c1223b5",
+  "v2views/views_train.py": "12264471fd767a8111aff58fea7faeda911dd4841b3f4c41a32df8572ca43c00",
+  "pilot3_runs/P3_301_theta.npz": "c6863cce252e8b4c08d87ec030ea2d6ab36f42e42ad4e4be63b4e3b8870d652d",
+  "v2conf_runs/VC_301_theta.npz": "38e2c6871e5ce9ae621cdf92b509716807faff4ca2ab03df9550019603e604ac",
+  "pilot3_runs/P3_302_theta.npz": "05eb6431133a497b643f2abf9a3455602449d7719e7eb45dcd75c4d770d07c9e",
+  "v2conf_runs/VC_302_theta.npz": "3be4658e6c6a2228a120110b4bfd60f82bc19a255addd4a11900ac102ac5ba43",
+  "pilot3_runs/P3_303_theta.npz": "20e029819e764493d3179489ba6f94ed89619732d67fc8da92cef3491a25a6c7",
+  "v2conf_runs/VC_303_theta.npz": "eeb707fb8e7f52569f92c6f22dfc6bae344517da4ebd668734f8af734dc3e095"
+ },
+ "vc_eq_p3": "bit-exact 4/4 skills x3 thetas (re-verified at freeze)"
+}

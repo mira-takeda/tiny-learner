@@ -1,0 +1,12 @@
+# Template (NO SECRETS) for the Modal credentials file used by the
+# 2026-10-27 registered training. Real file lives OUTSIDE the repo at
+# ~/.modal.toml and is NEVER read by the repro. To recreate it, run
+# `modal token new` (or `modal token set ...`) on the host; do not
+# paste real values into this repo.
+#
+# Sections/keys per the installed public Modal client (config.py):
+# one profile section holding token_id + token_secret.
+
+[default]
+token_id = "ak-PASTE-YOUR-TOKEN-ID"
+token_secret = "as-PASTE-YOUR-TOKEN-SECRET"

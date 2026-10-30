@@ -1,0 +1,48 @@
+{
+ "rule": "h_obs=obs[7]*DMAX; B-view if h_obs<15 else A-view",
+ "threshold": 15.0,
+ "battery": "ACQ",
+ "n": 200,
+ "seeds": [
+  301,
+  302,
+  303
+ ],
+ "thetas": "VC_301-303",
+ "reference": 0.7,
+ "reference_reached": false,
+ "mean_sr": 0.105,
+ "ci95": 0.10613097478273405,
+ "per_seed": {
+  "301": {
+   "sr": 0.1,
+   "arrival": 20,
+   "collision": 180,
+   "timeout": 0,
+   "other": 0,
+   "T_mean": 15.995,
+   "frac_B": 0.276424,
+   "switches_mean": 2.43
+  },
+  "302": {
+   "sr": 0.15,
+   "arrival": 30,
+   "collision": 170,
+   "timeout": 0,
+   "other": 0,
+   "T_mean": 22.635,
+   "frac_B": 0.323343,
+   "switches_mean": 3.115
+  },
+  "303": {
+   "sr": 0.065,
+   "arrival": 13,
+   "collision": 187,
+   "timeout": 0,
+   "other": 0,
+   "T_mean": 16.985,
+   "frac_B": 0.29906900000000003,
+   "switches_mean": 2.355
+  }
+ }
+}

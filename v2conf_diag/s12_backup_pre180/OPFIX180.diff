@@ -1,0 +1,65 @@
+29c29,32
+< CAP = 300.0
+---
+> # OP-EXT-180 (authorized 2026-10-30): +180 s over the original 300 s cap to
+> # complete the 31 pending 303 interventions only. Original-cap record
+> # (INCOMPLETE, wall 322.5 s) preserved in v2conf_diag/s12_backup_pre180/.
+> CAP = 480.0
+61a65,73
+>     # OP-RESUME (authorized 2026-10-30): exec-104 left phase="done" with 31
+>     # incomplete. Reopen intervene; completed episodes are skipped by status.
+>     if state.get("phase") == "done" and any(
+>             r.get("status") != "complete"
+>             for r in state.get("records", {}).values()):
+>         n_inc = sum(1 for r in state["records"].values()
+>                     if r.get("status") != "complete")
+>         state["phase"] = "intervene"
+>         print(f"RESUME-180: reopened intervene, {n_inc} pending", flush=True)
+117a130,131
+>     # O(1) journal: traces append to s12_records.jsonl; state stays small
+>     # (done-set + counters) and syncs every 25 episodes.
+118a133,141
+>         journal_path = f"{ROOT}/v2conf_diag/s12_records.jsonl"
+>         try:
+>             with open(journal_path) as f:
+>                 traces = {json.loads(l)["_key"]: json.loads(l)["trace"]
+>                           for l in f if l.strip()}
+>         except FileNotFoundError:
+>             traces = {}
+>         journal = open(journal_path, "a")
+>         n_since_sync = 0
+181c204,207
+<                            int_uses=uses2, int_switches=sw2, trace=trace)
+---
+>                            int_uses=uses2, int_switches=sw2)
+>                 journal.write(json.dumps({"_key": key, "trace": trace}) + "\n")
+>                 journal.flush()
+>                 traces[key] = trace
+183,184c209,221
+<                 sync()
+<         state["phase"] = "done"
+---
+>                 n_since_sync += 1
+>                 if n_since_sync >= 25:
+>                     sync()
+>                     n_since_sync = 0
+>         journal.close()
+>         recs = []
+>         for k in sorted(state["records"]):
+>             r = dict(state["records"][k])
+>             if k in traces:
+>                 r["trace"] = traces[k]
+>             recs.append(r)
+>         n_inc = sum(1 for r in recs if r.get("status") != "complete")
+>         state["phase"] = "done" if n_inc == 0 else "incomplete"
+186,187c223
+<         out = {"records": [state["records"][k] for k in sorted(
+<             state["records"])], "wall_s": round(spent(), 1)}
+---
+>         out = {"records": recs, "wall_s": round(spent(), 1)}
+189,190c225,226
+<         n_inc = sum(1 for r in out["records"] if r.get("status") != "complete")
+<         print(f"done wall={out['wall_s']}s incomplete={n_inc}", flush=True)
+---
+>         print(f"{'done' if n_inc == 0 else 'INCOMPLETE'} "
+>               f"wall={out['wall_s']}s incomplete={n_inc}", flush=True)

@@ -1,0 +1,256 @@
+{
+ "budget_s": 900,
+ "data": {
+  "acq15": "s13_acq15.json",
+  "acq15_sha256": "e20b2ef15dd05da6a7d65c91177e09bcf58074fd6b604ab85e4e0f80beb44ea1",
+  "acq15_seed": 9970,
+  "acq16": "s13_acq16.json",
+  "acq16_sha256": "1c87a6d2f15bdeef10286b60247c21fc12e090c3be283703703bec3580e004a6",
+  "acq16_seed": 9980,
+  "dup_check": "zero seed+cfg collisions vs train_meta,test_battery,eval_new,train_conflict,eval_conf,acq7,acq8,acq9,acq10,acq11,acq12,acq13,acq14"
+ },
+ "init": {
+  "source": "s10_models.json T-STU per theta",
+  "file_sha256": "db368f74e1cc5baba97f2047e733811ddf5669b856179e6ca5040e0017c5bc61",
+  "shapes": {
+   "301": 612,
+   "302": 612,
+   "303": 612
+  }
+ },
+ "skills": {
+  "301": "38e2c6871e5ce9ae621cdf92b509716807faff4ca2ab03df9550019603e604ac",
+  "302": "3be4658e6c6a2228a120110b4bfd60f82bc19a255addd4a11900ac102ac5ba43",
+  "303": "eeb707fb8e7f52569f92c6f22dfc6bae344517da4ebd668734f8af734dc3e095"
+ },
+ "policy": "greedy argmax-4 gate -> greedy viewed skill (S4 semantics); skills pristine obs+views; same in fitness and eval",
+ "fitness": "mean exact G1 return (sum of TaskRunner.step rewards) over 6 window scenarios; env seeds = scenario seeds; same window+seeds for all 16 candidates incl +/-",
+ "es": {
+  "pop_pairs": 8,
+  "candidates": 16,
+  "sigma": 0.1,
+  "alpha": 0.05,
+  "generations": 25,
+  "perturbation_rng": "per (theta,g): kid=theta_idx*100+g; np.random.default_rng(np.random.SeedSequence(4242).spawn(kid+1)[kid]); eps[pair]=standard_normal(612). Corrected before valid training: spawn(int) returns a list; gen0-th301 under the buggy call discarded.",
+  "update": "tied centered-rank: avg-rank rbar over M=16 (ties share mean ordinal); u=(rbar-(M-1)/2)/(M-1); grad=(1/8)sum_p (u[2p]-u[2p+1]) eps[p]; theta += (alpha/sigma) grad",
+  "ties": "equal returns share identical weight; all-tied population => all u equal => grad=0 => no update",
+  "incomplete_gen": "no update unless all 16 candidate means present"
+ },
+ "calendar_rule": "gen g, per region r in [G1a,G1b,G1adv]: per-region positions ((2g)%4,(2g+1)%4); 2 per region; all 12 covered every 2 gens",
+ "calendar": [
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ],
+  [
+   "S15-ACQ-0006",
+   "S15-ACQ-0009",
+   "S15-ACQ-0007",
+   "S15-ACQ-0010",
+   "S15-ACQ-0008",
+   "S15-ACQ-0011"
+  ],
+  [
+   "S15-ACQ-0000",
+   "S15-ACQ-0003",
+   "S15-ACQ-0001",
+   "S15-ACQ-0004",
+   "S15-ACQ-0002",
+   "S15-ACQ-0005"
+  ]
+ ],
+ "es_seed": 4242,
+ "final_checkpoint": "gen 25 (0-indexed 24) per theta; no selection, no theta dropping",
+ "eval_rule": "open ACQ16 only when all 3 thetas completed 25 gens; final models only; else INCOMPLETE, stop, no auto-extension",
+ "primary": "tuned-frozen arrival diff per theta + mean, paired; secondary return/collisions/timeouts",
+ "forbidden": [
+  "teacher",
+  "new labels",
+  "planner",
+  "soft mixture",
+  "sampled actions",
+  "best-checkpoint selection",
+  "Modal"
+ ],
+ "notes": "failed attempt exec-150 (spawn bug): 0.8 s process over 1.2 s mkdata seed; its gen-0 update discarded, state reset, budget preserved."
+}

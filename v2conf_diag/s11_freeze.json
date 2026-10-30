@@ -1,0 +1,205 @@
+{
+ "arms": {
+  "STU": "T-STU-S10 base + teacher labels on improved-collector states",
+  "TEA": "same base + teacher labels on teacher-trace states (same 9)",
+  "TSTU10": "s10 T-STU models re-evaluated on ACQ14 (secondary ref)"
+ },
+ "averaging": "per-step mean (unchanged)",
+ "base": "complete T-STU S10 dataset per theta (A36 + STU-new); counts asserted 1189/1508/1470",
+ "budget_s": 900.0,
+ "budget_note": "own S11 cumulative incl. prep/collection/queries/train/eval/failed attempts; resume preserves cumulative; seed in s11_budget_seed.json",
+ "collector": "final T-STU S10 per theta (s10_models.json), frozen, weight identity verified; greedy argmax-4 -> greedy viewed skill",
+ "control_runs": {
+  "base": "SeedSequence(8450).spawn(27)",
+  "order": [
+   {
+    "exec": 0,
+    "id": "S13-ACQ-0000",
+    "theta": 301,
+    "planner_seed": 326933411
+   },
+   {
+    "exec": 1,
+    "id": "S13-ACQ-0000",
+    "theta": 302,
+    "planner_seed": 869793409
+   },
+   {
+    "exec": 2,
+    "id": "S13-ACQ-0000",
+    "theta": 303,
+    "planner_seed": 1154958602
+   },
+   {
+    "exec": 3,
+    "id": "S13-ACQ-0001",
+    "theta": 301,
+    "planner_seed": 3087747110
+   },
+   {
+    "exec": 4,
+    "id": "S13-ACQ-0001",
+    "theta": 302,
+    "planner_seed": 2527840920
+   },
+   {
+    "exec": 5,
+    "id": "S13-ACQ-0001",
+    "theta": 303,
+    "planner_seed": 1787404212
+   },
+   {
+    "exec": 6,
+    "id": "S13-ACQ-0002",
+    "theta": 301,
+    "planner_seed": 3517282862
+   },
+   {
+    "exec": 7,
+    "id": "S13-ACQ-0002",
+    "theta": 302,
+    "planner_seed": 135134650
+   },
+   {
+    "exec": 8,
+    "id": "S13-ACQ-0002",
+    "theta": 303,
+    "planner_seed": 2377294812
+   },
+   {
+    "exec": 9,
+    "id": "S13-ACQ-0003",
+    "theta": 301,
+    "planner_seed": 4196479692
+   },
+   {
+    "exec": 10,
+    "id": "S13-ACQ-0003",
+    "theta": 302,
+    "planner_seed": 1096285562
+   },
+   {
+    "exec": 11,
+    "id": "S13-ACQ-0003",
+    "theta": 303,
+    "planner_seed": 4013017308
+   },
+   {
+    "exec": 12,
+    "id": "S13-ACQ-0004",
+    "theta": 301,
+    "planner_seed": 3452277427
+   },
+   {
+    "exec": 13,
+    "id": "S13-ACQ-0004",
+    "theta": 302,
+    "planner_seed": 1071801978
+   },
+   {
+    "exec": 14,
+    "id": "S13-ACQ-0004",
+    "theta": 303,
+    "planner_seed": 2775506606
+   },
+   {
+    "exec": 15,
+    "id": "S13-ACQ-0005",
+    "theta": 301,
+    "planner_seed": 1002563686
+   },
+   {
+    "exec": 16,
+    "id": "S13-ACQ-0005",
+    "theta": 302,
+    "planner_seed": 1968930850
+   },
+   {
+    "exec": 17,
+    "id": "S13-ACQ-0005",
+    "theta": 303,
+    "planner_seed": 4116883413
+   },
+   {
+    "exec": 18,
+    "id": "S13-ACQ-0006",
+    "theta": 301,
+    "planner_seed": 302549733
+   },
+   {
+    "exec": 19,
+    "id": "S13-ACQ-0006",
+    "theta": 302,
+    "planner_seed": 1597044704
+   },
+   {
+    "exec": 20,
+    "id": "S13-ACQ-0006",
+    "theta": 303,
+    "planner_seed": 2057478097
+   },
+   {
+    "exec": 21,
+    "id": "S13-ACQ-0007",
+    "theta": 301,
+    "planner_seed": 2466495750
+   },
+   {
+    "exec": 22,
+    "id": "S13-ACQ-0007",
+    "theta": 302,
+    "planner_seed": 744987288
+   },
+   {
+    "exec": 23,
+    "id": "S13-ACQ-0007",
+    "theta": 303,
+    "planner_seed": 1824805824
+   },
+   {
+    "exec": 24,
+    "id": "S13-ACQ-0008",
+    "theta": 301,
+    "planner_seed": 114185969
+   },
+   {
+    "exec": 25,
+    "id": "S13-ACQ-0008",
+    "theta": 302,
+    "planner_seed": 88034132
+   },
+   {
+    "exec": 26,
+    "id": "S13-ACQ-0008",
+    "theta": 303,
+    "planner_seed": 1813779201
+   }
+  ],
+  "protocol": "S2 P-AB frozen; single shared pab_decide()"
+ },
+ "data": {
+  "acq13_regions": "3/3/3",
+  "acq13_seed": 9950,
+  "acq13_sha256": "f5c3bebbaba4fe33e03dd40812e1a590fba2a4f51661fb760947c1f2463fb1f3",
+  "acq14_seed": 9960,
+  "acq14_sha256": "caa5f959147e4083b574846bacc52fad003bb1906e5a298205d172df26d43f35",
+  "eval_last": true,
+  "failures_kept": true,
+  "generator": "mkdata_conf.conflict_cfg"
+ },
+ "forbidden": [
+  "tuning",
+  "outcome selection",
+  "extra queries",
+  "Modal",
+  "arch changes",
+  "variant switch",
+  "auto third round",
+  "opening ACQ14 before training"
+ ],
+ "index_formula": "S10 frozen: per pair m=min; idx_j=floor(j*(L-1)/(m-1)) j=0..m-1 if m>1 else [0]",
+ "models10_sha256": "db368f74e1cc5baba97f2047e733811ddf5669b856179e6ca5040e0017c5bc61",
+ "primary": "STU minus TEA arrival rate, paired per scenario, per theta + mean, on common ACQ14; 0.70 descriptive",
+ "query_seed_rule": "int(sha256(S11q|{scenario}|{theta}|{t})[:8]); fixed rule, logged per query; separate RNG streams",
+ "train": "5000 updates, init 9200+theta, Adam lr=1e-3, CE A/B"
+}

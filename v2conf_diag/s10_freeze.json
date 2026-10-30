@@ -1,0 +1,202 @@
+{
+ "arms": {
+  "T-STU": "A36 + teacher labels on frozen-A36-visited states (queries post-rollout)",
+  "T-TEA": "A36 + teacher labels on full teacher-trace states (same 9 scenarios)",
+  "A36-ref": "s8_models36 secondary reference, no retrain"
+ },
+ "averaging": "per-step mean (S3/S5/S8/S9)",
+ "budget_s": 900.0,
+ "budget_note": "cumulative incl. prep/collection/queries/train/eval/failed attempts; resume preserves cumulative; seed in s10_budget_seed.json",
+ "collector": "frozen s8_models36 per theta (weight identity verified); greedy argmax-4 -> greedy viewed skill; deterministic (env RNG = episode seed only)",
+ "control_runs": {
+  "base": "SeedSequence(8400).spawn(27)",
+  "order": [
+   {
+    "exec": 0,
+    "id": "S11-ACQ-0000",
+    "theta": 301,
+    "planner_seed": 666388525
+   },
+   {
+    "exec": 1,
+    "id": "S11-ACQ-0000",
+    "theta": 302,
+    "planner_seed": 4013591521
+   },
+   {
+    "exec": 2,
+    "id": "S11-ACQ-0000",
+    "theta": 303,
+    "planner_seed": 1545540149
+   },
+   {
+    "exec": 3,
+    "id": "S11-ACQ-0001",
+    "theta": 301,
+    "planner_seed": 509101418
+   },
+   {
+    "exec": 4,
+    "id": "S11-ACQ-0001",
+    "theta": 302,
+    "planner_seed": 2045383802
+   },
+   {
+    "exec": 5,
+    "id": "S11-ACQ-0001",
+    "theta": 303,
+    "planner_seed": 2280519370
+   },
+   {
+    "exec": 6,
+    "id": "S11-ACQ-0002",
+    "theta": 301,
+    "planner_seed": 1493188664
+   },
+   {
+    "exec": 7,
+    "id": "S11-ACQ-0002",
+    "theta": 302,
+    "planner_seed": 1560759667
+   },
+   {
+    "exec": 8,
+    "id": "S11-ACQ-0002",
+    "theta": 303,
+    "planner_seed": 3820610424
+   },
+   {
+    "exec": 9,
+    "id": "S11-ACQ-0003",
+    "theta": 301,
+    "planner_seed": 1658557251
+   },
+   {
+    "exec": 10,
+    "id": "S11-ACQ-0003",
+    "theta": 302,
+    "planner_seed": 1127127086
+   },
+   {
+    "exec": 11,
+    "id": "S11-ACQ-0003",
+    "theta": 303,
+    "planner_seed": 3884139395
+   },
+   {
+    "exec": 12,
+    "id": "S11-ACQ-0004",
+    "theta": 301,
+    "planner_seed": 3957001832
+   },
+   {
+    "exec": 13,
+    "id": "S11-ACQ-0004",
+    "theta": 302,
+    "planner_seed": 980753048
+   },
+   {
+    "exec": 14,
+    "id": "S11-ACQ-0004",
+    "theta": 303,
+    "planner_seed": 882140167
+   },
+   {
+    "exec": 15,
+    "id": "S11-ACQ-0005",
+    "theta": 301,
+    "planner_seed": 171256273
+   },
+   {
+    "exec": 16,
+    "id": "S11-ACQ-0005",
+    "theta": 302,
+    "planner_seed": 682902062
+   },
+   {
+    "exec": 17,
+    "id": "S11-ACQ-0005",
+    "theta": 303,
+    "planner_seed": 2294200638
+   },
+   {
+    "exec": 18,
+    "id": "S11-ACQ-0006",
+    "theta": 301,
+    "planner_seed": 182666189
+   },
+   {
+    "exec": 19,
+    "id": "S11-ACQ-0006",
+    "theta": 302,
+    "planner_seed": 531908190
+   },
+   {
+    "exec": 20,
+    "id": "S11-ACQ-0006",
+    "theta": 303,
+    "planner_seed": 2017853043
+   },
+   {
+    "exec": 21,
+    "id": "S11-ACQ-0007",
+    "theta": 301,
+    "planner_seed": 722864166
+   },
+   {
+    "exec": 22,
+    "id": "S11-ACQ-0007",
+    "theta": 302,
+    "planner_seed": 4054126391
+   },
+   {
+    "exec": 23,
+    "id": "S11-ACQ-0007",
+    "theta": 303,
+    "planner_seed": 1520203815
+   },
+   {
+    "exec": 24,
+    "id": "S11-ACQ-0008",
+    "theta": 301,
+    "planner_seed": 2342601011
+   },
+   {
+    "exec": 25,
+    "id": "S11-ACQ-0008",
+    "theta": 302,
+    "planner_seed": 85256640
+   },
+   {
+    "exec": 26,
+    "id": "S11-ACQ-0008",
+    "theta": 303,
+    "planner_seed": 141282483
+   }
+  ],
+  "protocol": "S2 P-AB frozen (H25/K40/5x5/return/first-max/noiseless/replan); single shared pab_decide() for control rollouts and pointwise queries"
+ },
+ "data": {
+  "acq11_sha256": "6132ae4cfda41b63141175b9a124a595544ff6e5620e569af80ec27eaa9ae7da",
+  "acq11_seed": 9930,
+  "acq12_seed": 9940,
+  "acq12_sha256": "a06320173b3289910b39bd048e049e969e434e315ba00f95a87d669771cd65be",
+  "eval_last": true,
+  "failures_kept": true,
+  "generator": "mkdata_conf.conflict_cfg"
+ },
+ "forbidden": [
+  "tuning",
+  "outcome selection",
+  "extra queries",
+  "Modal",
+  "arch changes",
+  "variant switch",
+  "opening ACQ12 before training"
+ ],
+ "index_formula": "per pair m=min(Lstu,Ltea); idx_j=floor(j*(L-1)/(m-1)) j=0..m-1 if m>1 else [0]; distinct (step>=(L-1)/(m-1)>=1); endpoints included",
+ "models36_sha256": "93a354971c21678e1f1350a903b3752ebedd7b9615dd0db8959e92fd51418388",
+ "primary": "T-STU minus T-TEA arrival rate, paired per scenario, per theta + mean, on common ACQ12; 0.70 descriptive",
+ "query_seed_rule": "int(sha256(S10q|{scenario}|{theta}|{t})[:8]); fixed rule, logged per query; separate RNG from env and control streams",
+ "train": "5000 updates, init 9200+theta, Adam lr=1e-3, CE A/B, same A36 base both arms"
+}

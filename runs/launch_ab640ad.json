@@ -1,0 +1,61 @@
+{
+ "commit": "ab640ad",
+ "src": {
+  "src/audit.py": "a88efe2f750d436f9e247826fb7378e1a117b07d88f4178da9e4c5167123aa20",
+  "src/env.py": "390b82f74778e00e0d437c91ed1e24e75f5dbeae85a4cb4478e6eb8e5bb4d968",
+  "src/es.py": "3778e1070beef5140454941844431660c87ce986d098654e870ced0f1a5c91a0",
+  "src/evaluate.py": "6efd31ad1d7ec6a40cfa66883138df0cccab51be47b74aa3d4a1256aaae0ec8f",
+  "src/freeze_check.py": "f1e334a93c8a3edbd921588727b189aa91dc50071eba4075faed58f31e15573c",
+  "src/gen.py": "b78df222de6950563c5dbedf3ccf0992c3ef733e2fcf838564be66423c1223b5",
+  "src/mkdata.py": "a1b58eb32a802fcb93a4f534ae0f14e53c078d66894043b0ec7ebbb82af5be58",
+  "src/models.py": "276d8762b479dc122af88a71b280c3517872bfd89bdf5745df9bfc36beab3643",
+  "src/policies.py": "13ac7f7af80af9d9ddcd0303ebd68b23dc566e757f38f4f2dea49a819ac2c7e4",
+  "src/reinforce.py": "2fb977f4923c378b9ce6b3b14967eafb24348ffc53042ae725492826712750c8",
+  "src/sanity.py": "033786bde869cb3a7a62cebf076c2f2bf4a876b7878959e578736a9608575848",
+  "src/selftest.py": "82f819cc83962a30d09fbda2414fbe5102b26cd9da168435dab9f029058b6b0b",
+  "src/tasks.py": "4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495",
+  "src/train.py": "a1977d12dd1896e5e8be5e451665328f7088fd805ab4913a81c1bf2ee50dbdb6"
+ },
+ "data": {
+  "data/MANIFEST.json": "0eb2978c572bd83fe447e2a88ba019c9f8f8ff57e755b18a12107bffc39d2ce7",
+  "data/audit_report.json": "afec0093f0fc15d79b547e4bb14282067e94ed4234db8401d06a881a0b9d0cc0",
+  "data/curriculum_control_v1.json": "12bb1aaa362f2250aab8aaf4d916d2f7868a77b3fe09bb7137efe328b1ed75dd",
+  "data/curriculum_meta_v1.json": "c0debbd2cd3eadb4d72d5956085daa45612e4acf14cd2dffde57decd7cc0b254",
+  "data/scenario_space_v1.json": "2bd1ff6284e152ba54d49e9b77f94aa131b9f656d1210385b9b562ad0a60f07b",
+  "data/test_battery_v1.json": "543ec81829b0dbc23cbc809b6a60d85c175ca5651ef4922c063ef369d9c51f23",
+  "data/train_control_v1.json": "d4d773d91a951de2273f435c5e49f99437c192169f7f01570c2e95299cfb8576",
+  "data/train_meta_v1.json": "7ebd5b9bd50b49dd8692080dfa294941cde652588da187914b04800f470aae85"
+ },
+ "modal_app": "23b854783dec25285106f0675111c7cb8defa9329513c5d05cbd4ac4f92ccf82",
+ "numpy_local": "2.5.4",
+ "python_local": "3.14.6",
+ "launched": "2026-10-26 ~18:09 CST (host time cmd, 18.4s wall)",
+ "app_url": "https://modal.com/apps/lordtakeda/main/ap-CW89pkvUZOoZ1KwBc7H9S3",
+ "images": [
+  "im-shAOEcyuTTaXrwH3xcjvXb",
+  "im-EEoRBXIkYp4mTESxFqTFv9"
+ ],
+ "jobs": {
+  "A1_101": "fc-01M5XAZ1BJ2AJ67FCPKMMKKE3D",
+  "A1_102": "fc-01M5XAZ1FP344N1NQ1EHQJHMHZ",
+  "A1_103": "fc-01M5XAZ1N9NDFKTYEQ5W4D17KK",
+  "A1_104": "fc-01M5XAZ1S5FM84E3TDEQ72CN37",
+  "A1_105": "fc-01M5XAZ1WWRQP2PASPE9S1DA06",
+  "A2_101": "fc-01M5XAZ20RZHQSKPX54ENPE23E",
+  "A2_102": "fc-01M5XAZ24E9XMQMAX9R8DC2YVJ",
+  "A2_103": "fc-01M5XAZ28843DHQKQC0TXWQKTW",
+  "A2_104": "fc-01M5XAZ2C7W3HPCA1VQ7WK3E1V",
+  "A2_105": "fc-01M5XAZ2G2Q4DFYFBBB57VM9S5",
+  "A3_101": "fc-01M5XAZ2KV26EZDHW2C0DADC6J",
+  "A3_102": "fc-01M5XAZ2QMBK09ZNVX7H0TR5VC",
+  "A3_103": "fc-01M5XAZ2VFQR3G5KDVWRPBCS8N",
+  "A3_104": "fc-01M5XAZ2ZDC7CR3D55B6R02DHE",
+  "A3_105": "fc-01M5XAZ33EYPX58X8P0RT65G7Q",
+  "A4_101": "fc-01M5XAZ373CHYG19SQYGJN0X5E",
+  "A4_102": "fc-01M5XAZ3AP42HASDHB7EZSAZY3",
+  "A4_103": "fc-01M5XAZ3EJN3A3ANBJFGW1WHR4",
+  "A4_104": "fc-01M5XAZ3JJXB8YH1D55AKC4M6X",
+  "A4_105": "fc-01M5XAZ3P9GG9K2823P5FA87SW"
+ },
+ "outcome": "OPERATIONAL LAUNCH FAILURE: host used plain modal run, so the ephemeral app stopped when the local entrypoint exited (Runner terminated). All 20 spawned FunctionCalls terminated with the app. Volume tiny-learner-runs empty next morning: 0 artifacts, 0 outcomes. No experimental code involved. Fix: relaunch with modal run --detach."
+}

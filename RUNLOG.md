@@ -397,4 +397,321 @@ this file appends facts only. Never edit past entries — append new ones.
 - Expected completion window: ~01:00-03:30 local 2026-10-27 (~7-9h wall).
   Next: user checks dashboard/volume; on completion, download /vol/runs (40
   files expected: 20 JSON + 20 npz) and paste `volume ls` for confirmation
-  before scoring. Then PREREG analysis on raw results.f5599ae7e3a9b91fb299e3617c98ec47d49fc4
+  before scoring. Then PREREG analysis on raw results.
+
+## 2026-10-27 — CLOUD LAUNCH FAILURE (operational, zero artifacts)
+
+- Host evidence: local entrypoint exited after 18.4s; app logs show
+  "Stopping app - local entrypoint completed" + "Runner terminated"; Volume
+  tiny-learner-runs completely empty the following morning.
+- Cause: plain `modal run` (no --detach), so the ephemeral app stopped with
+  the launcher and all 20 spawned FunctionCalls died with it. No registered
+  result could complete: completion without artifacts is impossible
+  (run_arm_seed writes JSON+npz + vol.commit before returning), so empty
+  volume <=> zero completions. No experimental outcomes exist from this
+  attempt; no code/budget/seed/threshold issue involved.
+- Relaunch plan (identical, from ab640ad): verified (a) src/data/modal_app
+  byte-identical to ab640ad; (b) modal client 1.6.2 supports
+  `run -d/--detach` ("Don't stop the app if the local process dies or
+  disconnects"); (c) job list recomputed 20/20 unique (A1-A4 x 101-105).
+  Host must confirm volume empty immediately before relaunch, then run the
+  detached command. New FunctionCall IDs to be recorded on paste-back.f5599ae7e3a9b91fb299e3617c98ec47d49fc4
+
+## 2026-10-27 — DETACHED RELAUNCH FAILURE (operational, zero results)
+
+- Detached relaunch (same launcher + --detach; tree = ab640ad plus
+  doc-only uncommitted changes, baked src/data identical to attempt 1)
+  created all 20 FunctionCalls (A1-A4 x 101-105) under app
+  ap-ArwriEWEAlk85lcRu5gV98. The CLI printed the detached-mode notice.
+- ALL 20 failed within seconds at experiment entry: run_arm_seed() ->
+  assert_no_net() raised because the Modal worker had already loaded
+  socket, urllib, ssl, http before user code ran. Zero training steps,
+  zero evaluations, zero artifacts from any job; /vol/runs empty, no
+  registered outcomes. No code/budget/seed/threshold cause: purely the
+  entry gate vs the cloud runtime.
+- Post-checks from a fresh terminal (old terminal left streaming the
+  failure logs, then abandoned; nothing launched from it afterwards):
+  `modal container list` -> no active containers; `modal app list` ->
+  ap-ArwriEWEAlk85lcRu5gV98 stopped, 0 tasks. Nothing running, nothing
+  consuming compute. The blocked old terminal was draining failure logs,
+  not running training.
+- Why verify missed it: remote selftest 27/27 never executes the entry
+  gate (selftest.py imports only constants/run_es_phase/rollout from
+  train; it never calls run_arm_seed/run_battery/assert_no_net), so the
+  Modal-preload clash was unobservable until the first registered call.
+- Local mechanism reproduction (throwaway /tmp script, frozen src):
+  clean interpreter imports train with forbidden-delta [] and the gate
+  PASSES; preloading exactly socket/urllib/ssl/http reproduces the
+  attempt-2 RuntimeError signature verbatim.
+- FunctionCall IDs of this attempt were NOT captured (old terminal
+  output not saved). Next launcher/probe run must tee its output to a
+  file. Attempt-2 IDs stay unknown.
+- Status: SECOND operational zero-result failure. NO relaunch until (a)
+  the entry gate is fixed in a semantics-preserving way (pre-result
+  correction, logged with hashes) and (b) a minimal detached probe
+  proves the fixed gate passes remotely AND multi-spawn detached fan-out
+  survives parent exit (Modal 1.6.2 warns it keeps only the last
+  triggered function alive after disconnect; attempt 2 could not test
+  this because all calls failed while the parent was still attached).
+
+## 2026-10-27 — PREFLIGHT PASS (clean-subprocess gate + single-call survival)
+
+- 3/3 toy inputs wrote done_{i}.json AFTER the local client was killed
+  with Ctrl-C mid-run: F5 PASS. ONE experimental_spawn_map call survives
+  a real disconnect. No further probes authorized or needed.
+- done markers imply the gating asserts passed in every input (marker
+  writes sit after them in code): frozen gate exits 0 in the clean
+  subprocess (F2), frozen --plan reports exact budgets (F3), train.py /
+  evaluate.py hashes match frozen values (F6). Code-gated inference,
+  not pasted output.
+- F1 parent-preload sets and F4 parent-gate outcomes were recorded in
+  the markers but their contents were not pasted; values not registered.
+- Verdict: launch pattern approved for the 20-job registered run.
+  No src/ changes made or needed; tree stays byte-identical to ab640ad.
+
+## 2026-10-27 — REGISTERED LAUNCH, ATTEMPT 3 (single batch call, 20 inputs)
+
+- Pre-launch mechanical checks ONLY: tiny-learner-runs volume EMPTY
+  (host `volume ls`); src/ + data/ 22/22 byte-identical to ab640ad
+  (host confirm + local re-check, no diff vs ab640ad). Nothing else run.
+- Launcher: modal_app.py a15420b8... (clean-subprocess workers) via
+  experimental_spawn_map. App ap-KclxUNJF1x54xqqAdbIZ4Y. Single batch
+  call fc-01M5ZCAF98TR6KNZDHHTFQRF0N with 20 inputs (A1-A4 x 101-105).
+  Results target /vol/runs (40 files expected: 20 JSON + 20 npz).
+- Local client exited normally after creating the call. No relaunch
+  from here; nothing further launched.
+- Next: await completion (~8h concurrent wall per prior projection, plus
+  startup overhead). On completion paste `volume ls` for confirmation
+  before scoring. Then PREREG analysis on raw results.
+
+## 2026-10-27 — ATTEMPT-2 ID AUDIT CLOSURE (no new execution)
+
+- The 20 FunctionCall IDs of the failed detached relaunch (app
+  ap-ArwriEWEAlk85lcRu5gV98; all failed at assert_no_net, zero results)
+  were recovered from the saved launcher output and are registered here,
+  superseding the "IDs unknown" note in the failure entry above:
+  A1_101 fc-01M5YVE1M2C4774AJM8F4V7C2Z
+  A1_102 fc-01M5YVE1QKMKWQYCZBKMRA9BC0
+  A1_103 fc-01M5YVE1VAHSS76G7HHQ2C6V1C
+  A1_104 fc-01M5YVE1Z6B6ZCME43J8X6EC0Z
+  A1_105 fc-01M5YVE23174M65N8HZECFZHJ2
+  A2_101 fc-01M5YVE26T0FR3CDBKM8ZPZ8J3
+  A2_102 fc-01M5YVE2AN2WKST13Z1M28Y1WX
+  A2_103 fc-01M5YVE2EM1K8VD519WRVH6PZ3
+  A2_104 fc-01M5YVE2JQHFVV7YS04WQ5JH4S
+  A2_105 fc-01M5YVE2PNQFBJB852H3Z55WGV
+  A3_101 fc-01M5YVE2TH4CP24NMHN412W4HC
+  A3_102 fc-01M5YVE2YSH9879G4MXA5476CT
+  A3_103 fc-01M5YVE32M8CEV65YW8ZEP09BD
+  A3_104 fc-01M5YVE36FFTGDBE40YWG6JDEQ
+  A3_105 fc-01M5YVE3AA36F8PR8V6DJYTH86
+  A4_101 fc-01M5YVE3DY0XS8A315PSZNZTTF
+  A4_102 fc-01M5YVE3HJ6T1A3HJN3241T8FD
+  A4_103 fc-01M5YVE3NG2ACPYKAAVBR5RCMB
+  A4_104 fc-01M5YVE3SG40B2BFKSTFSYWQTY
+  A4_105 fc-01M5YVE3X79NPKNCQVPSETFF2V
+- Same map preserved in runs/launch_attempt2.json (ignored dir).
+- Attempt-2 audit CLOSED. Attempt 3 untouched and still running; nothing
+  relaunched, nothing else changed.
+
+## 2026-10-27 — REGISTERED RUN CLOSED (attempt 3): 20/20 jobs, 40/40 artifacts
+
+- Host report: all 20 jobs finished; last result A2_103; no active Modal
+  containers; 40 files downloaded to runs_modal/ (20 JSON + 20 _theta.npz,
+  A1-A4 x 101-105 complete).
+- Local integrity (runs/verify_artifacts.py, READ-ONLY on runs_modal/):
+  PASS — exact 40-file set, JSON/NPZ pairs, filename<->content arm/seed
+  match, 400 gens/phase, 41,280,000 steps/phase, 206,400,000 total per
+  job, retention/reacquisition structure, theta shapes (7944 modular /
+  8043 mono) finite. Raw artifacts untouched; manifest saved to
+  runs/artifacts_manifest.json (ignored dir).
+- sha256 of the 40 registered artifacts (BEGIN-HASHES):
+  A1_101.json 4c9e46b178d2626b899ce5d96bf25a702e8db2bb6e57c5dbb147d540cbae68bf
+  A1_101_theta.npz 4d5ef4603e53be15cea9ee8f7049bf2277ee25899f033248d4583a7c228b3127
+  A1_102.json 4ada052fa2c4cca49d1d8583068b731872bb6560a39ecc1c46764ea48e4d92e4
+  A1_102_theta.npz 6d16f5191b4e8a1a54a90e8615c0bc055ddee466d72848eb3cfb96b3057ccf66
+  A1_103.json a9dd43b0d5b8f9be04c7f58835b714660c0dfb6b1c800e1b904f2deaa8655fe8
+  A1_103_theta.npz 9f76940e6d505c9666428571745987be22824e38dceb74d1e36e3227a6cb0647
+  A1_104.json c000cb58ab782bd829677d0dd8a452270fcfe5397125cc377a2b8f1377d7d2ba
+  A1_104_theta.npz 901b6b4e52106191afd6f5c34e8ac8cf20ce88a4b161fe2e67a737653ed0fd2b
+  A1_105.json 070e46b667e61316097a36075b857228ed91d6cfc144c2828cef40464b58ea60
+  A1_105_theta.npz d33d0d51f8527dc206e5dc770dd360ec35d6853fe926f0a3bf86bfe7984a2573
+  A2_101.json 8853a51c5e2a5a6e502f0252063af34bfcc920594a4fdafc8d29b59cffc7ec0c
+  A2_101_theta.npz 78b3d42870fa00c29b74bc482b47d53b613722e68573867b7ebafc822c060241
+  A2_102.json b3ac1ecb62061b613855955a56c7caed5c0beb866cb21f0859a1af1bc5de71a9
+  A2_102_theta.npz 56779b3932fa4bf5732997b35b3222fbd212a3697fdc17a9ba69960e4a7ce18b
+  A2_103.json 2ce94c494101dac4783af96c11c151260ea28ad5d5a23e2ce38488b1276657e6
+  A2_103_theta.npz 29487208d30b73c4b45c3b8e6a6106643d094ae9f07297ad40ce044a7143d6d8
+  A2_104.json 8273599a318666840adef341113346cc632c65ddb6a5fadae1f835cc8f10446d
+  A2_104_theta.npz b8bb3a8b780655e8b65dab5fe3d83535ec39521192bac44fe436648218a7d9e5
+  A2_105.json 5ee782ad813961555f2595441b404760862ee965f3bcabb3427a8a10b6a195fa
+  A2_105_theta.npz 34bd23dcd686090b83b861dc814fd14a295acb59df0ede91aa6ee483f29fb003
+  A3_101.json d6703f81d1e8af0beb995647e8bc4e09e3ffcbde08480411a07ba6310def6f2e
+  A3_101_theta.npz efd146dce3954bc06949584baa87f1d1a2203d83d60665efbfe2b9db2379d934
+  A3_102.json daca2124cec4a0be8095b83b5f7ca8feea12d63b710318c0f48f4cca82378c85
+  A3_102_theta.npz 3030d614be76e2625fa45444eedddc3e16ee9791f762de18b87f6599cef94990
+  A3_103.json fabf7700f7c2f6906d6d8782c9e8d1f1a2b6878f723e217ff96a3b8beba65b62
+  A3_103_theta.npz 9529bf0c15a6758a7f6ab70b79c1303321f87c23eb496c887e328b7fc626132e
+  A3_104.json 0262834e099a4289a99a594a9ce431ac9f97d26986780550fccff78e00056c89
+  A3_104_theta.npz 72480939127ad5e439de3f505089c803801d818a648fbdb2c14c942569636ac8
+  A3_105.json 986a52f9d8ee47c24c1b2d2aa2eb3a40fdf3da81e22ab39707eef327f6cce28f
+  A3_105_theta.npz 69b159fe8e1c77711f68cc7e4f5e6d3d82e019d4cc232c7c4174c98a669abbbd
+  A4_101.json d907995b24f33446c86a5b718ca0c51a5723ed642e41e9a5b7c08c25069aafb5
+  A4_101_theta.npz 73242af7dd262cffa3b7c4053c312d84a31376e5068e44e19490a6ab72c1c2e2
+  A4_102.json 12984b3bfe1599be6cbefc1f2835b2cd0c10e61f5b421a9d4899b5e0410ed73a
+  A4_102_theta.npz bb137ffaf1cfb30a8253ed2a6fa4696be13f07113c5cde564facc9e38f39b922
+  A4_103.json eb21db8333adaa335def413bfcabc087ce5398a19a0a397dd1468922217eabb8
+  A4_103_theta.npz 6deb92f6d40e630d3048b5ccb47c02e2127e987be10c7a0135c32e5ddc807a5a
+  A4_104.json bb95e341ed51397307cf0b57e21250ae7853d1736f0a8bb90bbd821c6b68c43c
+  A4_104_theta.npz 2385b2f817f47d33701101c823cf6e3353155da247e3ec86b7bc3cc9f3319517
+  A4_105.json d66bd3e2d10e16baaa84ca130f37d0169739859785048ca17ae70be88428ac10
+  A4_105_theta.npz 17e147a15e8d17327cfe887409a974ba7cac5333e29d548a6252c30f0cdc91bc
+  (END-HASHES, transcription verified against the manifest programmatically)
+- Acquisition flags observed in logs (driver FAIL definition; PREREG N/A
+  rules apply at scoring): A1/A4 acquired A,D only (B,C FAIL all 5 seeds);
+  A2/A3 acquired A,B,D (C FAIL all 5 seeds). C unacquired in 20/20 runs.
+  Reacquisition events: A2/A in 3 seeds; A3/B,C in most seeds + D once;
+  none in A1/A4. NO verdicts here — scoring next with the same frozen
+  code, no threshold/seed changes, no reruns.
+
+## 2026-10-27 — REGISTERED SCORING COMPLETE (250 batteries, verdicts below)
+
+- Method: runs/score_registered.py (sha 826aba0ff794) post-hoc, READ-ONLY
+  on runs_modal/ + data/; frozen src/evaluate.py make_policy/run_battery;
+  sampled actions (matches frozen retention_eval); seed_xor=0; final
+  thetas. 20 thetas x 8 batteries mode normal + A1 ablations (4 skills x
+  H1-H3, shuffle x H1-H3, mask x H1/H2/C). Raw: runs/scores_raw.json.
+  Verdicts: runs/verdict.py (sha 90a6cd721e69), rules in header:
+  driver-flag FAIL/N/A (correction), thresholds on means over seeds, CI =
+  mean +- 1.96*SD/sqrt(5) (codebase convention), H-iso "measurably" =
+  CI-distinguishable (no invented margin). Full tables: runs/SCORES.md.
+- Per-seed final full-net sr, A B C D I1 H1 H2 H3 (* = N/A per 7):
+  A1_101 1.000 0.000 0.280 1.000 0.055 0.000* 0.000* 0.165*
+  A1_102 1.000 0.000 0.345 1.000 0.095 0.000* 0.000* 0.285*
+  A1_103 1.000 0.000 0.100 1.000 0.155 0.000* 0.000* 0.175*
+  A1_104 1.000 0.000 0.230 1.000 0.065 0.000* 0.000* 0.200*
+  A1_105 1.000 0.000 0.140 1.000 0.095 0.000* 0.000* 0.140*
+  A2_101 1.000 0.000 0.185 1.000 0.145 0.000* 0.000* 0.175*
+  A2_102 1.000 0.000 0.185 0.675 0.120 0.000* 0.000* 0.235*
+  A2_103 1.000 0.000 0.400 1.000 0.060 0.000* 0.000* 0.320*
+  A2_104 1.000 0.000 0.200 1.000 0.150 0.005* 0.000* 0.175*
+  A2_105 1.000 0.000 0.290 1.000 0.100 0.000* 0.000* 0.235*
+  A3_101 1.000 0.125 0.330 1.000 0.185 0.000* 0.000* 0.265*
+  A3_102 1.000 0.000 0.335 1.000 0.065 0.000* 0.000* 0.280*
+  A3_103 1.000 0.000 0.220 1.000 0.115 0.005* 0.000* 0.145*
+  A3_104 1.000 0.000 0.355 0.970 0.105 0.000* 0.000* 0.250*
+  A3_105 1.000 0.000 0.375 1.000 0.125 0.000* 0.000* 0.250*
+  A4_101 1.000 0.000 0.345 1.000 0.130 0.000* 0.000* 0.190*
+  A4_102 1.000 0.000 0.325 0.990 0.105 0.000* 0.000* 0.320*
+  A4_103 1.000 0.000 0.240 1.000 0.100 0.000* 0.000* 0.150*
+  A4_104 1.000 0.000 0.200 1.000 0.100 0.000* 0.000* 0.165*
+  A4_105 1.000 0.000 0.050 1.000 0.175 0.000* 0.000* 0.085*
+- Acquisition (flag count / phase-end heldout mean, bar >= 0.80): A1 A 5/5
+  1.000 PASS, B 0/5 n/e FAIL, C 0/5 n/e FAIL, D 5/5 0.920 PASS; A2 A 5/5
+  0.479 FAIL, B 5/5 0.005 FAIL, C 0/5 0.031 FAIL, D 5/5 0.198 FAIL; A3 A
+  5/5 1.000 PASS, B 5/5 0.816 PASS, C 0/5 0.569 FAIL, D 5/5 1.000 PASS;
+  A4 A 5/5 1.000 PASS, B 0/5 n/e FAIL, C 0/5 n/e FAIL, D 5/5 0.890 PASS.
+  A2 train-flag/heldout divergence: flags A,B,D true but heldouts ~0-0.48
+  (fixed-budget end-of-budget theta vs mid-phase checks; fitness=return).
+  N/A stays flag-based per the correction; disagreements reported as-is.
+- H: ALL cells N/A in all 20 runs (C missing everywhere, gate blocked per
+  7). I1 means: A1 0.093, A2 0.115, A3 0.119, A4 0.122 (bar 0.70 missed
+  everywhere; full CIs in SCORES.md).
+- Retention drops (means): A1/A4 +0.000 structural (asserted); A2 A
+  +0.033+-0.453 (per-seed +0.18,+0.725,-0.62,+0.19,-0.31) D -0.013; A3 B
+  +0.816+-0.055 (all seeds >= 0.745: wipeout) C +0.198 D +0.090.
+  Retention criterion (A1 <= 0.10): MET structural. Sensitivity (>= 0.20):
+  MET via A3/B.
+- Reacquisition: 13 events, 0 pass (restore 1/13, savings 5/13, both
+  0/13; A3/C savings undefined). Criterion NOT MET.
+- Ablations A1 (descriptive, H N/A): single-skill H1/H2 ~0 (near-chance
+  as expected), H3 0.056-0.112; shuffle H3 0.110 vs full 0.193 (partial);
+  mask H1/H2 = 0 (floor, uninformative); mask C = full C (no-op).
+- H-based A1vA2/A2vA3/A1vA4 comparisons VOID (all N/A). Descriptive: I1
+  ~0.1 all arms; A1 = A4 on acquisition (no curriculum signal); A3
+  acquired most at threshold (A,B,D).
+- VERDICTS. H-main: INCONCLUSIVE (UNTESTABLE: all H N/A per 7;
+  independently UNINTERPRETABLE: A1 I1 0.093 < 0.70; bars never engage).
+  H-iso: FAIL (sensitivity met via A3/B +0.816, but ablation comparison
+  A1-vs-A2 shows no measurable reduction: pooled +0.010+-0.216, CI
+  includes 0; per-skill A null, D reversed; measurability = mandated
+  CIs, no invented margin). H-meta: INCONCLUSIVE (UNTESTABLE: H N/A in
+  A1+A4; adversarial-subset disjunct undefined, not filled in).
+- Bottom line: prerequisites failed (C 0/20, B heldout only A3) so the
+  compositional-transfer question is UNTESTABLE as preregistered.
+  Positive registered evidence: frozen retention perfect (structural);
+  monolith catastrophically forgot B (+0.816) while modular-plastic did
+  not systematically; A2 train-check/heldout divergence documented. No
+  thresholds changed, no seeds dropped, no reruns.
+
+## 2026-10-30 - W1 GO + FREEZE (redesigned follow-up post-I1, Windows host)
+
+- User GO with methodological correction: accept diagnosis A (I1 out of
+  G1 geometric support, retired permanently as blind gate/test), but the
+  new generator must NOT use I1-derived bands. Wide-G1 covers the
+  physically valid G1 space procedurally from the task definition.
+- Design frozen in w1/PREREG_W1.md: guarded-mirror generator; agent-haz
+  [35,70] (union of registered B-family pursuit spawn bands);
+  beacon-haz >= MIN_SEP=10 with NO upper bound; speed [3.0,3.5] (G1
+  support); no angular constraint (full range by construction); no
+  regions (single general distribution). Same physics/obs/rewards.
+- Recipe verbatim N1b (imitate) + N2 (hard-ES a=.01, 25 gens, tied
+  ranks); only the G1 distribution changes. G2 demos (54) + singles
+  pairs + ES G2/singles pools reused frozen (sha-pinned). Tiny
+  original: gate 612 + pilot3 skills = 7944 (asserted).
+- Freeze (gen_wide --freeze): VC==P3 bit-exact re-verified 4/4 x3;
+  pins match prior records (train_meta 7ebd5b9b, n1_demos 0ea76674,
+  VC shas == n2_freeze). Code shas (BEGIN-HASHES):
+  gen_wide.py 4fde8c6a9e3b4bbe277e7e9ec0ed5d663175344957f71c56939447f07f64ce21
+  w1_collect.py 4071657448a56088fa6d4991f41861670f42d971b5026901b734e97c4c4cefc7
+  w1_imitate.py 9be75ed465cf027cbb3302f29f81af0e3aeb35f9d6b1806a2c69b73af4813d88
+  w1_es.py a79c35e03e1c44b518c1be1194d476459631784bd474d0e8e4cb5cfa6cc60583
+  w1_gate.py cc133dfbffde8b15ffb8d7d83409cb4f117b558bb6ae67055768648da60c0d59
+  w1_h.py 37ebc77bb89e834847cb079b42ad0d0f435e2b487aaafabe5d716efc40385e4c
+  PREREG_W1.md 2cbbbb1eab0476ec6f6776bffb5ad97e6d6ab2ed3c459e00e3c2982c44edf9ad
+  w1_freeze.json b695381fd5e5 (full in MANIFEST.json)
+  (END-HASHES)
+- Pools (gen_wide --pools): demo 18 / espool 12 / gate-G1 200 /
+  gate-G2 200 / sing-gate 80; 0 collisions vs 10648 prior entries
+  (19 files) + internal 0.
+  w1_pools.json 6050b1536fb250c511289bec8dc60934e8b10a21e4fa84980f138597b1e0856c
+  w1_coverage.json e032ca4d98236ca48425e64fbbde4806be1981729ba128fc19d7afabb99933b7
+- Coverage (descriptive, pre-train): gate-G1 d_gh [10.84,101.19]
+  med 48.15; ang [0.0,3.13] med 1.06, sextiles [56,42,37,29,17,19]
+  (all non-empty); demo d_gh [11.31,87.67]; espool [10.88,77.52].
+  Near-to-far + full angular range confirmed by construction+report.
+- Gate bar (frozen): W1-final mean >= 0.70 on gate-G1 AND gate-G2
+  (means over 3 thetas) else STOP. H refs (descriptive follow-up,
+  not preregistered): each H >= 0.60; H-mean >= best-single + 0.40.
+- Pre-freeze mechanics: selftest T1 PASS (2000 throwaway, ss 21999);
+  planner smoke 1 throwaway ep (ok=True, T=5, 0.3 s); py_compile 6/6.
+  One pre-freeze bugfix (set->str in freeze dict); nothing frozen
+  before the fix. From here w1/*.py + PREREG + freeze immutable
+  (MANIFEST-enforced).
+
+## 2026-10-30 - W1 TRAIN + GATE FAIL + STOP (H sealed)
+
+- Collect: 54/54 P-AB planner on wide-G1 demos x3 th, 105 s of
+  1800 s, 0 incomplete; 52 ok + 2 fails (D00/302, D05/302)
+  included per protocol.
+  w1_demos_g1.json 312009649e4b2210a69bb62cbd517f993c7d55baf74f476480516dcb6d88c866
+- Imitate (N1b verbatim, 54 wide-G1 + 54 reused G2 + reused
+  singles), 119.1 s: train acc .929/.904/.941; eval acc
+  .769/.778/.849 vs const ~.34; singles sel A .87/.805/1,
+  B 1/1/1, C .695/.95/.96, D .97/.97/1; D-mass 220/233/200.
+  w1_imit_models.json 6f763e2140bea2e72326ee4ed712abf468b201124afce2ccd1a62342bfa37825
+  w1_imit_results.json 011437f1d055e0a8f1157ea793bfdfca1e0b6d824e82d2f5fb47b170374cc0b4
+- ES (N2 verbatim, 8 pairs/.1/.01/25 gens/tied ranks, calendar
+  2 wide-G1+2G2+ABCD), 266.5 s of 2400 s, 3x25 gens, 0
+  incomplete; P3 skill shas intact pre+post.
+  w1_es_models.json d7710053799426318912c51dc28f371ff054f08521453aa08d2ad47bded94623
+- GATE (single opening, 2640 eps, 41 s): W1-final G1 0.543
+  (0.56/0.51/0.56) vs imit 0.508; G2 0.678 (0.745/0.755/0.535)
+  vs imit 0.608; singles spot A 59/60 B 45/60 C 38/60 D 60/60.
+  Bar 0.70 each family: FAIL both.
+  w1_gate.json 169d2930cffd90cd6e03c2df6ba3bc37ab3528f970c21e1d8e023038d03df86c
+- STOP per protocol: no retune. H1/H2/H3 NEVER opened
+  (w1_h.py never ran; zero H episodes); H seal intact for
+  future lines (mechanical dup-check loads only, N-series
+  pattern). W1 line closed pending user-authorized redesign.
+  Full record: w1/README.md.

@@ -100,16 +100,28 @@ protects old skills during sequential training.
 - [x] Learner + training system implemented and FROZEN (2026-10-26, no runs yet)
 - [x] Optimizer formal sanity check: ES PASS → optimizer frozen (2026-10-26)
 - [x] Curriculum snapshot (Meta) + control schedule + test battery, audits PASS (2026-10-26)
-- [ ] Registered training + evaluation
-- [ ] Results + demo
+- [x] Registered training + evaluation (20/20 jobs, 40/40 artifacts, 2026-10-27)
+- [x] Results scored (H-main/H-meta INCONCLUSIVE-untestable, H-iso FAIL; RUNLOG)
+- [x] Follow-up line S1–S16 closed, A01 frozen (2026-10-30): pilot3
+  A=1.00/B=0.83/C=0.843/D=1.00; v2 I1=0.047; v2views I1N=0.093; v2conf
+  ACQ=0.102, B-weight ≈0.001; A01 0.647 vs A 0.145/B 0.246 on ACQ18.
+  Useful learned selection; NOT general composition or I1/H transfer.
+- [x] W1 redesigned follow-up RUN 2026-10-30 (Windows host):
+  wide-G1 (no I1 numbers) + verbatim N1b/N2 recipes → GATE FAIL
+  (G1 0.543 / G2 0.678 vs 0.70); STOP, H sealed. Record: w1/.
+- [ ] Corrected monolith (still pending)
+- [ ] User choice (post-W1): (A) authorize a NEW redesigned line
+  (H still sealed) or (B) close experimentation → demo/submission
+- [ ] Demo (3-min, honest claim only — see CROSSCHECK next step)
 
 ## 7. Next steps
 
-1. Implement: env + generator + policies + ES/REINFORCE + sanity runner.
-2. Debug freely (unregistered), then ONE formal sanity run → freeze optimizer.
-3. Report sanity result; await confirmation before registered training.
-4. Snapshot Meta curriculum → control schedule → test battery (order + hashes in RUNLOG).
-5. Registered training (4 arms × 5 seeds), evaluation, demo.
+STOPPED after W1 gate FAIL (2026-10-30). No retune on this line
+(FAIL is terminal per frozen protocol). Awaiting user decision:
+(A) a NEW redesigned line (H1/H2/H3 still sealed and usable) or
+(B) close experimentation → demo/submission. Do not design the
+next experiment until then. (4-day rule retired before W1 GO;
+original 1–5 plan completed 2026-10-27; kept in changelog.)
 
 ## 8. Changelog
 
@@ -145,3 +157,25 @@ protects old skills during sequential training.
   persist pass). Isolation proven by import grep (registered driver cannot reach vec
   code). Mechanism: BLAS-dependent norm kernels vs exact-equality test (pre-stated
   prediction in RUNLOG). vecdiag toy action ready for remote confirmation.
+- 2026-10-27: two cloud launches failed operationally (no-detach kill;
+  assert_no_net vs Modal preloads); preflight PASS (clean-subprocess gate +
+  single-call Ctrl-C survival); attempt 3 ran 20/20 (single batch call
+  fc-01M5ZCAF98TR6KNZDHHTFQRF0N), 40/40 artifacts verified, 250 post-hoc
+  batteries scored with frozen code. Verdicts: H-main INCONCLUSIVE
+  (untestable, C 0/20 acquired; I1 0.093), H-iso FAIL (no measurable
+  A1-vs-A2 reduction; A3/B wiped +0.816), H-meta INCONCLUSIVE
+  (untestable). Demo pending with honest claim only.
+- 2026-10-30: doc cross-check — S1–S16 closed, A01 frozen (S15 +0.080,
+  3/3 positive; S16 0.647 vs A 0.145/B 0.246; repro `repro_s16/`
+  verified incl. clean copy). Source of truth: HANDOFF header.
+  4-day rule binding: no new probe chains; at most ONE last fork
+  after user picks (A) one last pre-frozen composition test or
+  (B) close for demo/submission. Corrected monolith still pending.
+- 2026-10-30 (corrección): única fuente de verdad operativa =
+  CROSSCHECK.md; HANDOFF.md queda como historial/detalle.
+  README y encabezado HANDOFF actualizados en consecuencia.
+- 2026-10-30: W1 GO + RUN (Windows host). Wide-G1 rediseñado
+  (corrección metodológica: sin números de I1) + recetas N1b/N2
+  verbatim → puerta fresca FAIL (G1 0.543/G2 0.678 vs 0.70);
+  STOP sin retune, H sellado intacto. Registro: w1/README.md,
+  RUNLOG, CROSSCHECK.
