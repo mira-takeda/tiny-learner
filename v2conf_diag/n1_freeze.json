@@ -1,0 +1,118 @@
+{
+ "budget_s": 1800,
+ "demos": {
+  "G1": [
+   "M-G1-1600",
+   "M-G1-1601",
+   "M-G1-1602",
+   "M-G1-1603",
+   "M-G1-1604",
+   "M-G1-1605",
+   "M-G1-1800",
+   "M-G1-1801",
+   "M-G1-1802",
+   "M-G1-1803",
+   "M-G1-1804",
+   "M-G1-1805",
+   "M-G1-1940",
+   "M-G1-1941",
+   "M-G1-1942",
+   "M-G1-1943",
+   "M-G1-1944",
+   "M-G1-1945"
+  ],
+  "G2": [
+   "M-G2-2000",
+   "M-G2-2001",
+   "M-G2-2002",
+   "M-G2-2003",
+   "M-G2-2004",
+   "M-G2-2005",
+   "M-G2-2150",
+   "M-G2-2151",
+   "M-G2-2152",
+   "M-G2-2153",
+   "M-G2-2154",
+   "M-G2-2155",
+   "M-G2-2300",
+   "M-G2-2301",
+   "M-G2-2302",
+   "M-G2-2303",
+   "M-G2-2304",
+   "M-G2-2305"
+  ],
+  "planner": "S2/N0 machinery (H25/K40/5x5/replan/return-scoring), P-AB on G1, P-AC on G2, 3 thetas, 108 runs",
+  "seq_seed": 8300,
+  "per_step": "obs14 pre-action + skill label + action + outcome",
+  "overlap_note": "G2 demo ids overlap N0 diagnostic scenarios (train-manifest reuse across train stages; N2 eval uses fresh sealed batteries)"
+ },
+ "partition": {
+  "train": [
+   "M-G1-1600",
+   "M-G1-1601",
+   "M-G1-1602",
+   "M-G1-1603",
+   "M-G1-1800",
+   "M-G1-1801",
+   "M-G1-1802",
+   "M-G1-1803",
+   "M-G1-1940",
+   "M-G1-1941",
+   "M-G1-1942",
+   "M-G1-1943",
+   "M-G2-2000",
+   "M-G2-2001",
+   "M-G2-2002",
+   "M-G2-2003",
+   "M-G2-2150",
+   "M-G2-2151",
+   "M-G2-2152",
+   "M-G2-2153",
+   "M-G2-2300",
+   "M-G2-2301",
+   "M-G2-2302",
+   "M-G2-2303"
+  ],
+  "eval": [
+   "M-G1-1604",
+   "M-G1-1605",
+   "M-G1-1804",
+   "M-G1-1805",
+   "M-G1-1944",
+   "M-G1-1945",
+   "M-G2-2004",
+   "M-G2-2005",
+   "M-G2-2154",
+   "M-G2-2155",
+   "M-G2-2304",
+   "M-G2-2305"
+  ],
+  "shared_thetas": true,
+  "balanced": "12/6 per family, 4/2 per region"
+ },
+ "gate": {
+  "arch": "14->32->4 frozen",
+  "labels": "A/B/C from demos; D absent (documented; D via N2 return on D-singles)"
+ },
+ "train": {
+  "loss": "CE",
+  "opt": "Adam full-batch lr=0.001",
+  "epochs": 5000,
+  "init": "Xavier hidden + zero output per theta (S3 recipe)",
+  "seeds": {
+   "301": 9401,
+   "302": 9402,
+   "303": 9403
+  },
+  "checkpoint": "final ep5000, no selection"
+ },
+ "evals": "offline per theta: CE/acc/confusion/B-vs-const; no control eval in N1",
+ "data_sha": "7ebd5b9bd50b49dd8692080dfa294941cde652588da187914b04800f470aae85",
+ "forbidden": [
+  "gate control eval",
+  "heldout I1/H",
+  "arch change",
+  "Tiny-R",
+  "checkpoint selection"
+ ]
+}

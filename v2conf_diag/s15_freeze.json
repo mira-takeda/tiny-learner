@@ -1,0 +1,34 @@
+{
+ "budget_s": 300,
+ "candidate": "s14_models.json A01 finals (fixed, no selection)",
+ "control": "s10_models.json T-STU frozen",
+ "models": {
+  "a01_sha256": "f346d086ee1c8206e5a73ec5a18dae654252fc3e86f6ea16d3918f1447c4ccf5",
+  "tstu_sha256": "db368f74e1cc5baba97f2047e733811ddf5669b856179e6ca5040e0017c5bc61"
+ },
+ "skills": {
+  "301": "38e2c6871e5ce9ae621cdf92b509716807faff4ca2ab03df9550019603e604ac",
+  "302": "3be4658e6c6a2228a120110b4bfd60f82bc19a255addd4a11900ac102ac5ba43",
+  "303": "eeb707fb8e7f52569f92c6f22dfc6bae344517da4ebd668734f8af734dc3e095"
+ },
+ "data": {
+  "acq18": "s15_acq18.json",
+  "acq18_sha256": "796a64dd556570ee0e8b454ef922b67f1d909da395cc6be68de5f06d1e1e78bf",
+  "acq18_seed": 10000,
+  "n": 400,
+  "regions": "134/133/133",
+  "dup_check": "zero seed+cfg collisions vs all priors incl acq15/16/17"
+ },
+ "policy": "greedy argmax-4 gate -> greedy viewed skill (S4 semantics); same episode seeds both arms",
+ "episodes": "2 arms x 400 x 3 thetas = 2400",
+ "primary": "A01-frozen arrival diff per theta + mean, paired improve/worsen; secondary return/collisions/timeouts/skill use",
+ "reference": "0.70 descriptive only; no compositional GO",
+ "forbidden": [
+  "training",
+  "teacher",
+  "Modal",
+  "alpha essays",
+  "theta/checkpoint selection",
+  "candidate changes"
+ ]
+}

@@ -1,0 +1,227 @@
+[
+ {
+  "name": "train-meta-total",
+  "ok": true,
+  "detail": "2400"
+ },
+ {
+  "name": "train-meta-A",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-meta-B",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-meta-C",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-meta-D",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-meta-G1",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-meta-G2",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-control-total",
+  "ok": true,
+  "detail": "2400"
+ },
+ {
+  "name": "train-control-A",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-control-B",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-control-C",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-control-D",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-control-G1",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "train-control-G2",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "budget-equal-configs",
+  "ok": true,
+  "detail": "2400 vs 2400"
+ },
+ {
+  "name": "test-A",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "test-B",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "test-C",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "test-D",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "test-I1",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "test-H1",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "test-H2",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "test-H3",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "seeds-A",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "seeds-B",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "seeds-C",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "seeds-D",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "seeds-I1",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "seeds-H1",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "seeds-H2",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "seeds-H3",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "leakage-exact-zero",
+  "ok": true,
+  "detail": "hits=[]"
+ },
+ {
+  "name": "distance-report",
+  "ok": true,
+  "detail": "min=0.0246 p5=0.0606 median=0.1779"
+ },
+ {
+  "name": "H1-speed-4.5",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "H1-spawn-range",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "G1-train-max-speed-below-4.5",
+  "ok": true,
+  "detail": "3.5"
+ },
+ {
+  "name": "H2-proximity-15-25",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "H3-gap-10-12",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "D-train-gap-min-14",
+  "ok": true,
+  "detail": "14.0"
+ },
+ {
+  "name": "I1-beacon-haz-12-25",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "G1-train-beacon-haz-min-35",
+  "ok": true,
+  "detail": "35.10"
+ },
+ {
+  "name": "curriculum-schema-curriculum_meta_v1.json",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "curriculum-schema-curriculum_control_v1.json",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "scenario-matches-code",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "no-network-imports",
+  "ok": true,
+  "detail": "[]"
+ }
+]

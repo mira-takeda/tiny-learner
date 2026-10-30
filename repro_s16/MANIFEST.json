@@ -1,0 +1,19 @@
+{
+ "command": "python3.14 -m venv .venv && .venv/bin/pip install -r repro_s16/requirements.txt && .venv/bin/python repro_s16/repro.py (from repo root)",
+ "python": "3.14.6",
+ "numpy": "2.5.4",
+ "deps": "numpy + stdlib only; CPU; no API; no private volumes",
+ "files": {
+  "v2conf_diag/s15_acq18.json": "796a64dd556570ee0e8b454ef922b67f1d909da395cc6be68de5f06d1e1e78bf",
+  "v2conf_diag/s14_models.json": "f346d086ee1c8206e5a73ec5a18dae654252fc3e86f6ea16d3918f1447c4ccf5",
+  "v2conf_runs/VC_301_theta.npz": "38e2c6871e5ce9ae621cdf92b509716807faff4ca2ab03df9550019603e604ac",
+  "v2conf_runs/VC_302_theta.npz": "3be4658e6c6a2228a120110b4bfd60f82bc19a255addd4a11900ac102ac5ba43",
+  "v2conf_runs/VC_303_theta.npz": "eeb707fb8e7f52569f92c6f22dfc6bae344517da4ebd668734f8af734dc3e095",
+  "src/env.py": "390b82f74778e00e0d437c91ed1e24e75f5dbeae85a4cb4478e6eb8e5bb4d968",
+  "src/tasks.py": "4fe0c74e7a69feb42eaa6da4def906b6cb500918bed039a011225289e1b9f495",
+  "src/models.py": "276d8762b479dc122af88a71b280c3517872bfd89bdf5745df9bfc36beab3643",
+  "src/policies.py": "13ac7f7af80af9d9ddcd0303ebd68b23dc566e757f38f4f2dea49a819ac2c7e4",
+  "v2views/views_train.py": "12264471fd767a8111aff58fea7faeda911dd4841b3f4c41a32df8572ca43c00"
+ },
+ "venv": "project-local .venv; numpy==2.5.4 from repro_s16/requirements.txt; no system packages used"
+}

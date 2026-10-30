@@ -1,0 +1,365 @@
+{
+ "arms": {
+  "A18": "S5 32/5000 checkpoints reused (verified)",
+  "A36": "same 18 + 18 ACQ8, 5000 updates, init 9200+theta, Adam lr=1e-3, CE A/B"
+ },
+ "averaging": "per-step mean (S3/S5); long trajectories weigh more; report steps+A/B balance per theta per set",
+ "budget_s": 600.0,
+ "candidate_note": "contrast only; no model selection",
+ "data": {
+  "acq8_sha256": "e987b1df437116294e84e45c78dca3a9da6d79491f4193dd73f016ea241e60f5",
+  "acq8_seed": 9700,
+  "acq9_sha256": "57909132d402791b77f1214784ab33316ed3c385929a049482e88e73d599cd03",
+  "acq9_seed": 9800,
+  "eval_last": true,
+  "generator": "mkdata_conf.conflict_cfg"
+ },
+ "forbidden": [
+  "tuning",
+  "outcome selection",
+  "extra queries",
+  "Modal",
+  "arch changes",
+  "training on accidental subsets",
+  "opening ACQ9 before training done"
+ ],
+ "primary": "A36-A18 arrival-rate difference per theta + mean on common ACQ9; positive mean = observed improvement, not robust-advantage guarantee; 0.70 descriptive only",
+ "reuse_A18_verify": [
+  "data == s3_data train split (obs/labels/ids)",
+  "partition == s3 partition",
+  "config identical (arch/loss/Adam/init)",
+  "weights == s5 32/5000 ckpts",
+  "shadow retrain bit-identical"
+ ],
+ "teacher": {
+  "base": "SeedSequence(8300).spawn(54)",
+  "note": "recorded before any query",
+  "order": [
+   {
+    "exec": 0,
+    "id": "S8-ACQ-0000",
+    "theta": 301,
+    "planner_seed": 2068055554
+   },
+   {
+    "exec": 1,
+    "id": "S8-ACQ-0000",
+    "theta": 302,
+    "planner_seed": 1976619615
+   },
+   {
+    "exec": 2,
+    "id": "S8-ACQ-0000",
+    "theta": 303,
+    "planner_seed": 700126495
+   },
+   {
+    "exec": 3,
+    "id": "S8-ACQ-0001",
+    "theta": 301,
+    "planner_seed": 1349258008
+   },
+   {
+    "exec": 4,
+    "id": "S8-ACQ-0001",
+    "theta": 302,
+    "planner_seed": 2979581170
+   },
+   {
+    "exec": 5,
+    "id": "S8-ACQ-0001",
+    "theta": 303,
+    "planner_seed": 95636933
+   },
+   {
+    "exec": 6,
+    "id": "S8-ACQ-0002",
+    "theta": 301,
+    "planner_seed": 3612915082
+   },
+   {
+    "exec": 7,
+    "id": "S8-ACQ-0002",
+    "theta": 302,
+    "planner_seed": 4043468364
+   },
+   {
+    "exec": 8,
+    "id": "S8-ACQ-0002",
+    "theta": 303,
+    "planner_seed": 2850242950
+   },
+   {
+    "exec": 9,
+    "id": "S8-ACQ-0003",
+    "theta": 301,
+    "planner_seed": 429126449
+   },
+   {
+    "exec": 10,
+    "id": "S8-ACQ-0003",
+    "theta": 302,
+    "planner_seed": 1800236107
+   },
+   {
+    "exec": 11,
+    "id": "S8-ACQ-0003",
+    "theta": 303,
+    "planner_seed": 591359781
+   },
+   {
+    "exec": 12,
+    "id": "S8-ACQ-0004",
+    "theta": 301,
+    "planner_seed": 1523775485
+   },
+   {
+    "exec": 13,
+    "id": "S8-ACQ-0004",
+    "theta": 302,
+    "planner_seed": 2939790104
+   },
+   {
+    "exec": 14,
+    "id": "S8-ACQ-0004",
+    "theta": 303,
+    "planner_seed": 421445877
+   },
+   {
+    "exec": 15,
+    "id": "S8-ACQ-0005",
+    "theta": 301,
+    "planner_seed": 2138434123
+   },
+   {
+    "exec": 16,
+    "id": "S8-ACQ-0005",
+    "theta": 302,
+    "planner_seed": 1564760004
+   },
+   {
+    "exec": 17,
+    "id": "S8-ACQ-0005",
+    "theta": 303,
+    "planner_seed": 462138796
+   },
+   {
+    "exec": 18,
+    "id": "S8-ACQ-0006",
+    "theta": 301,
+    "planner_seed": 1837992601
+   },
+   {
+    "exec": 19,
+    "id": "S8-ACQ-0006",
+    "theta": 302,
+    "planner_seed": 2028188682
+   },
+   {
+    "exec": 20,
+    "id": "S8-ACQ-0006",
+    "theta": 303,
+    "planner_seed": 2046839559
+   },
+   {
+    "exec": 21,
+    "id": "S8-ACQ-0007",
+    "theta": 301,
+    "planner_seed": 1328281953
+   },
+   {
+    "exec": 22,
+    "id": "S8-ACQ-0007",
+    "theta": 302,
+    "planner_seed": 3632626993
+   },
+   {
+    "exec": 23,
+    "id": "S8-ACQ-0007",
+    "theta": 303,
+    "planner_seed": 95972075
+   },
+   {
+    "exec": 24,
+    "id": "S8-ACQ-0008",
+    "theta": 301,
+    "planner_seed": 2666768571
+   },
+   {
+    "exec": 25,
+    "id": "S8-ACQ-0008",
+    "theta": 302,
+    "planner_seed": 900501982
+   },
+   {
+    "exec": 26,
+    "id": "S8-ACQ-0008",
+    "theta": 303,
+    "planner_seed": 2217383704
+   },
+   {
+    "exec": 27,
+    "id": "S8-ACQ-0009",
+    "theta": 301,
+    "planner_seed": 3923381743
+   },
+   {
+    "exec": 28,
+    "id": "S8-ACQ-0009",
+    "theta": 302,
+    "planner_seed": 2905898856
+   },
+   {
+    "exec": 29,
+    "id": "S8-ACQ-0009",
+    "theta": 303,
+    "planner_seed": 553755319
+   },
+   {
+    "exec": 30,
+    "id": "S8-ACQ-0010",
+    "theta": 301,
+    "planner_seed": 3601309615
+   },
+   {
+    "exec": 31,
+    "id": "S8-ACQ-0010",
+    "theta": 302,
+    "planner_seed": 4108380784
+   },
+   {
+    "exec": 32,
+    "id": "S8-ACQ-0010",
+    "theta": 303,
+    "planner_seed": 1705510201
+   },
+   {
+    "exec": 33,
+    "id": "S8-ACQ-0011",
+    "theta": 301,
+    "planner_seed": 1068839013
+   },
+   {
+    "exec": 34,
+    "id": "S8-ACQ-0011",
+    "theta": 302,
+    "planner_seed": 2068099325
+   },
+   {
+    "exec": 35,
+    "id": "S8-ACQ-0011",
+    "theta": 303,
+    "planner_seed": 1562416907
+   },
+   {
+    "exec": 36,
+    "id": "S8-ACQ-0012",
+    "theta": 301,
+    "planner_seed": 2523540140
+   },
+   {
+    "exec": 37,
+    "id": "S8-ACQ-0012",
+    "theta": 302,
+    "planner_seed": 213744140
+   },
+   {
+    "exec": 38,
+    "id": "S8-ACQ-0012",
+    "theta": 303,
+    "planner_seed": 2184452808
+   },
+   {
+    "exec": 39,
+    "id": "S8-ACQ-0013",
+    "theta": 301,
+    "planner_seed": 204173124
+   },
+   {
+    "exec": 40,
+    "id": "S8-ACQ-0013",
+    "theta": 302,
+    "planner_seed": 1220026231
+   },
+   {
+    "exec": 41,
+    "id": "S8-ACQ-0013",
+    "theta": 303,
+    "planner_seed": 1131692010
+   },
+   {
+    "exec": 42,
+    "id": "S8-ACQ-0014",
+    "theta": 301,
+    "planner_seed": 26264083
+   },
+   {
+    "exec": 43,
+    "id": "S8-ACQ-0014",
+    "theta": 302,
+    "planner_seed": 3547333968
+   },
+   {
+    "exec": 44,
+    "id": "S8-ACQ-0014",
+    "theta": 303,
+    "planner_seed": 3653018588
+   },
+   {
+    "exec": 45,
+    "id": "S8-ACQ-0015",
+    "theta": 301,
+    "planner_seed": 828282621
+   },
+   {
+    "exec": 46,
+    "id": "S8-ACQ-0015",
+    "theta": 302,
+    "planner_seed": 1581499795
+   },
+   {
+    "exec": 47,
+    "id": "S8-ACQ-0015",
+    "theta": 303,
+    "planner_seed": 590140876
+   },
+   {
+    "exec": 48,
+    "id": "S8-ACQ-0016",
+    "theta": 301,
+    "planner_seed": 520159974
+   },
+   {
+    "exec": 49,
+    "id": "S8-ACQ-0016",
+    "theta": 302,
+    "planner_seed": 1214667504
+   },
+   {
+    "exec": 50,
+    "id": "S8-ACQ-0016",
+    "theta": 303,
+    "planner_seed": 2693077825
+   },
+   {
+    "exec": 51,
+    "id": "S8-ACQ-0017",
+    "theta": 301,
+    "planner_seed": 1556175881
+   },
+   {
+    "exec": 52,
+    "id": "S8-ACQ-0017",
+    "theta": 302,
+    "planner_seed": 3058254276
+   },
+   {
+    "exec": 53,
+    "id": "S8-ACQ-0017",
+    "theta": 303,
+    "planner_seed": 3421437000
+   }
+  ],
+  "protocol": "S2 P-AB frozen (H25/K40/5x5/return/first-max/noiseless/replan)"
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "budget_s": 300.0,
+ "data": {
+  "acq14_sha256": "caa5f959147e4083b574846bacc52fad003bb1906e5a298205d172df26d43f35",
+  "n": 200,
+  "reuse": "diagnostic, no new scenarios"
+ },
+ "forbidden": [
+  "training",
+  "teacher",
+  "tuning",
+  "outcome selection",
+  "new scenarios",
+  "claiming state identity vs unsaved traces"
+ ],
+ "interpretation": "effect of the first substitution under S10 continuation only; does not explain all policy differences; null does not rule out later-decision effects",
+ "models": {
+  "s10_TSTU_sha256": "db368f74e1cc5baba97f2047e733811ddf5669b856179e6ca5040e0017c5bc61",
+  "s11_STU_sha256": "b13d806977648a1fdf40b6b1e533d6f57abdd5f9840782d2325d7e05d074c312"
+ },
+ "policy": "greedy argmax-4 gate -> greedy viewed skill (S4 semantics); skills pristine obs+views",
+ "primary": "intervention minus S10 arrival change per theta + mean, paired improve/worsen",
+ "rule": {
+  "intervention": "fresh env same seed; S10 actions until t, S11 primitive once at t, S10 after; full trace saved",
+  "normalization": "none beyond frozen policies",
+  "null": "no executable-action difference in visited steps -> record null, keep episode with S10 outcome",
+  "repro": "S10 via run_ep-identical loop; verify cause/T/uses/switches vs s11_eval TSTU10; any mismatch halts everything",
+  "rng": "env noise stream from episode seed only; policies use no RNG (state asserted unchanged around policy calls); obs-prefix bit-match asserts same noise; no planner queries",
+  "scan": "during S10 trajectory compute S11 primitive on same obs; first t with a11!=a10 (skill-only diffs do not count); first skill-diff logged as secondary"
+ }
+}

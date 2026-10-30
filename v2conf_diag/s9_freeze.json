@@ -1,0 +1,41 @@
+{
+ "arms": {
+  "informed": "same arch 14->32->4, obs[0:8] + [x/100,y/100,hspeed/5,t/200] at [8:11], [12:14]=0; 5000 updates init 9200+theta Adam lr=1e-3 CE; gate-only augmentation",
+  "original": "s8_models36 reused (verified)"
+ },
+ "attribution": "joint intervention of 4 variables; no per-variable identification",
+ "averaging": "per-step mean (S3/S5/S8)",
+ "budget_s": 300.0,
+ "data": {
+  "acq10_seed": 9900,
+  "acq10_sha256": "d6d411fa26c628ff3da6b31576bdc2b3068d7a78b130aee94b84a8b6ff4ad09b",
+  "counts_per_theta": {
+   "301": 1003,
+   "302": 1283,
+   "303": 1222
+  },
+  "eval_last": true,
+  "excluded": [
+   "S3-eval-9"
+  ],
+  "generator": "mkdata_conf.conflict_cfg",
+  "train": "train-A36 only (S3-train-18 + ACQ8-18)"
+ },
+ "forbidden": [
+  "teacher",
+  "planner",
+  "tuning",
+  "Modal",
+  "checkpoint selection",
+  "per-variable claims"
+ ],
+ "models36_sha256": "93a354971c21678e1f1350a903b3752ebedd7b9615dd0db8959e92fd51418388",
+ "normalizations": {
+  "h10": "hspeed/5.0 cfg-hazard.speed provenance",
+  "h11": "t/200.0 pre-action env.t",
+  "h8": "x/100.0 pre-action agent x",
+  "h9": "y/100.0 pre-action agent y"
+ },
+ "primary": "informed-original arrival-rate difference per theta + mean on common ACQ10; 0.70 descriptive",
+ "skills_inputs": "pristine 14-obs + original views always; asserted"
+}

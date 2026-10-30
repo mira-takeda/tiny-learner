@@ -170,3 +170,13 @@ Experiments use defined controls, separate checks for retention and transfer, an
 [Research profile](https://github.com/mira-takeda) &nbsp; · &nbsp; [Back to top](#tiny-learner)
 
 </div>
+
+## Experimental code and reproducibility
+
+- [Local research README: results, reproduction instructions and documentation map](README.local.md)
+- [Current operational state](CROSSCHECK.md), [research context](CONTEXT.md), and [technical handoff](HANDOFF.md)
+- [Frozen preregistration](PREREG.md) and [append-only run history](RUNLOG.md)
+- [Reproduction package and provenance](repro_s16/README.md)
+- [Frozen source and checks](src/) and [datasets](data/)
+
+The research README records measured results and their limitations. The site presents the research direction and possible future applications. Existing experimental code, tests, and saved artifacts are retained for provenance; integration runs no new experiments.
