@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#11161a">
+<meta name="description" content="Tiny Learner is a CPU-first experimental learning system exploring skill acquisition, memory, and transfer.">
+<title>Tiny Learner | Learn. Remember. Adapt.</title>
+<style>
+:root{--bg:#11161a;--bg2:#171e23;--paper:#f0eee7;--muted:#9facb2;--accent:#9bb2bf;--line:rgba(189,208,213,.15);--faint:rgba(233,238,235,.045)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--paper);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}::selection{background:#7392a2;color:#0a1114}
+a{color:inherit;text-decoration:none}button{font:inherit}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--accent);line-height:1.7}
+.wrap{max-width:1336px;margin:auto;padding-left:clamp(22px,5vw,84px);padding-right:clamp(22px,5vw,84px)}
+nav{display:flex;align-items:center;justify-content:space-between;padding-top:29px;padding-bottom:29px;border-bottom:1px solid var(--line);gap:24px}
+.brand{font-size:17px;letter-spacing:-.05em;font-weight:800;white-space:nowrap}.brand i{display:inline-block;width:8px;height:8px;border:1.6px solid var(--accent);border-radius:50%;margin-left:7px;transform:translateY(-1px)}nav .links{display:flex;align-items:center;gap:30px;font-size:12px;color:#b9c2c2}nav .links a:hover{color:#fff}.repo{border:1px solid var(--line);padding:11px 16px;color:#e8e8e2!important}.repo:hover{border-color:#9ab0bc}
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);min-height:665px;border-bottom:1px solid var(--line)}.hero-left{padding-top:clamp(90px,10vw,148px);padding-bottom:105px;z-index:2}.edition{margin-bottom:48px;display:flex;align-items:center;gap:16px}.edition::before{content:"";height:1px;width:40px;background:var(--accent)}h1{margin:0;font-size:clamp(72px,8.9vw,148px);line-height:.82;letter-spacing:-.094em;font-weight:750}h1 span{display:block}.hero h2{font-size:clamp(25px,2.6vw,39px);font-weight:400;letter-spacing:-.045em;margin:46px 0 18px}.lede{font-size:15px;line-height:1.75;color:#b6c2c5;max-width:530px}.hero-actions{display:flex;gap:12px;margin-top:38px;align-items:center;flex-wrap:wrap}.primary{display:inline-flex;padding:15px 22px;background:var(--paper);color:#11161a;font-size:12px;font-weight:700;gap:20px;align-items:center;border:1px solid var(--paper);transition:.2s}.primary:hover{background:#bacbd1;border-color:#bacbd1}.quiet{color:#c6d0ce;font-size:12px;padding:15px 14px;border-bottom:1px solid var(--line)}.quiet:hover{color:white}
+.hero-art{overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;min-height:460px}.hero-art::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 36%),radial-gradient(ellipse at 68% 45%,rgba(118,150,164,.07),transparent 60%)}.hero-art svg{width:min(100%,700px);overflow:visible;transform:scale(1.16) translateX(4%)}.trace{fill:none;stroke:var(--accent);stroke-width:1.05;opacity:.38;stroke-linecap:round}.trace.fine{stroke-width:.55;opacity:.23}.point{fill:#a5bdc4}.point.dim{opacity:.28}.trace.ring{opacity:.2;stroke-dasharray:1 9}.orb{fill:#95aab2;opacity:.86}.art-footer{position:absolute;right:3%;bottom:48px;font-size:9px;letter-spacing:.2em;color:#8598a1;writing-mode:vertical-rl}
+.quickline{padding-top:22px;padding-bottom:22px;border-bottom:1px solid var(--line);display:flex;gap:22px;align-items:center;flex-wrap:wrap}.quickline span{font-family:ui-monospace,monospace;font-size:10px;color:#93a8b0;letter-spacing:.11em}.quickline .separator{color:#52616b}
+section{scroll-margin-top:30px}.section{padding-top:110px;padding-bottom:110px;border-bottom:1px solid var(--line)}.section-head{display:grid;grid-template-columns:.42fr 1fr;gap:60px;margin-bottom:56px}.section-head h2{font-size:clamp(35px,4.5vw,65px);letter-spacing:-.065em;line-height:1.07;font-weight:550;margin:0}.section-head p{color:#a9b6bc;max-width:600px;line-height:1.85;font-size:15px;margin:21px 0 0}
+.stage-area{display:grid;grid-template-columns:310px minmax(0,1fr);gap:45px;background:rgba(255,255,255,.012);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0 28px}.stages{display:flex;flex-direction:column;gap:0}.stage{color:var(--muted);background:transparent;border:0;border-bottom:1px solid var(--line);padding:23px 12px 23px 0;text-align:left;cursor:pointer;display:grid;grid-template-columns:45px 1fr;gap:6px;transition:color .2s}.stage:first-child{border-top:1px solid var(--line)}.stage strong{font-size:15px;font-weight:500;letter-spacing:-.02em}.stage small{display:block;font-size:11px;line-height:1.6;margin-top:7px;color:#81929b}.stage:hover{color:#fff}.stage[aria-pressed="true"]{color:#f4f3ec}.stage[aria-pressed="true"] .stage-num{color:#d4e0df}.stage .stage-num{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.13em;color:#52616b;margin-top:4px}.stage[aria-pressed="true"]{box-shadow:inset 2px 0 #9eafba;padding-left:13px}
+.lab{position:relative;background:var(--bg2);border:1px solid var(--line);min-height:460px;overflow:hidden}.lab-top{display:flex;align-items:center;justify-content:space-between;position:absolute;top:27px;left:28px;right:28px;z-index:2}.lab-top span:last-child{color:#697f8a}.lab-canvas{position:absolute;inset:0;display:flex;justify-content:center;align-items:center}.lab-svg{width:min(94%,620px);max-height:385px;overflow:visible}.guide{stroke:#5b707b;opacity:.19;stroke-width:1;fill:none}.link{stroke:#96b0bf;stroke-width:1.3;fill:none;opacity:.21;transition:opacity .45s,stroke-width .45s}.nucleus{fill:#15252e;stroke:#7f9caa;stroke-width:1.4}.nucleus-inner{fill:#adc0c3;opacity:.72}.arc-cluster{transition:opacity .5s}.lab[data-stage="0"] .arc-middle,.lab[data-stage="0"] .arc-outer{opacity:.12}.lab[data-stage="1"] .arc-outer{opacity:.20}.lab[data-stage="2"] .arc-middle{opacity:.8}.lab[data-stage="2"] .arc-outer{opacity:1}.lab[data-stage="3"] .arc-cluster{opacity:1}.lab[data-stage="3"] .link{opacity:.52;stroke-width:1.7}.lab[data-stage="1"] .arc-middle .link{opacity:.75}.lab[data-stage="2"] .arc-outer .link{opacity:.67}
+.lab-caption{position:absolute;bottom:22px;left:28px;right:28px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.lab-caption span{font-size:11px;color:#8ea0aa}.lab-caption em{font-style:normal;font-family:ui-monospace,monospace;font-size:10px;color:#a5b4ba}.stage-story{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:32px}.story-title{font-size:25px;font-weight:500;letter-spacing:-.045em;margin:5px 0 14px}.stage-story p{font-size:14px;color:#a8b6bc;line-height:1.9;margin:0}.stage-story .note{border-left:1px solid #637b88;padding-left:20px;font-size:13px}
+.appgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}.app{background:var(--bg);padding:32px 30px 36px;min-height:240px;display:flex;flex-direction:column}.app h3{font-size:23px;letter-spacing:-.05em;font-weight:500;margin:28px 0 14px}.app p{font-size:13px;color:#aab8bf;line-height:1.75;margin:0}.app .mono{color:#697e8a}.app:hover{background:#192229}
+.scale{display:grid;grid-template-columns:1fr .85fr;gap:90px;align-items:center}.scale h2{font-weight:500;letter-spacing:-.07em;font-size:clamp(45px,6vw,92px);line-height:1.02;margin:20px 0 34px}.scale p{font-size:16px;color:#b0bec1;line-height:1.9;max-width:580px}.scale-right{border-left:1px solid var(--line);padding:24px 0 24px 34px;display:grid;gap:32px}.scale-right strong{font-weight:500;font-size:24px;letter-spacing:-.05em}.scale-right small{display:block;color:#8e9fa8;line-height:1.8;font-size:13px;margin-top:7px}.research{display:grid;grid-template-columns:1fr 1fr;gap:70px}.research h2{font-size:39px;font-weight:500;letter-spacing:-.06em;margin:16px 0 24px}.research p{font-size:14px;line-height:1.9;color:#aab8bd}.research-item{padding:26px 0;border-top:1px solid var(--line)}.research-item strong{font-size:18px;font-weight:500;letter-spacing:-.035em}.research-item p{margin:10px 0 0}.bottom{display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap;padding-top:45px;padding-bottom:50px}.bottom .mark{font-size:27px;letter-spacing:-.065em;font-weight:700}.bottom .right{color:#9aabb2;font-size:12px;line-height:1.8}.bottom .right a{text-decoration:underline;text-underline-offset:5px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.hero-left{padding-top:90px;padding-bottom:35px}.hero-art{min-height:340px;opacity:.83}.hero-art svg{max-width:580px;transform:scale(1.05)}.hero-art::before{background:linear-gradient(180deg,var(--bg),transparent 55%)}.section-head{grid-template-columns:1fr;gap:0}.stage-area{grid-template-columns:1fr}.stages{display:grid;grid-template-columns:repeat(4,1fr)}.stage{display:block;padding:18px 12px;border-top:1px solid var(--line)}.stage strong{font-size:12px}.stage .stage-num{display:block;margin-bottom:12px}.stage small{font-size:10px}.appgrid{grid-template-columns:repeat(2,1fr)}.scale{grid-template-columns:1fr;gap:15px}.scale-right{grid-template-columns:repeat(3,1fr);gap:18px}.research{gap:35px}}
+@media(max-width:640px){nav .links{gap:14px}nav .links .hide-mobile{display:none}.hero-left{padding-top:80px;padding-bottom:15px}h1{font-size:clamp(72px,18vw,120px)}.hero h2{margin-top:32px}.hero-art{min-height:260px}.hero-art svg{width:100%;max-height:290px}.quickline{gap:12px}.section{padding-top:75px;padding-bottom:75px}.section-head{margin-bottom:33px}.stage-area{gap:20px}.stages{grid-template-columns:repeat(2,1fr)}.stage{min-height:112px}.lab{min-height:340px}.lab-top{top:18px;left:18px;right:18px}.lab-caption{bottom:15px;left:18px;right:18px}.lab-svg{width:100%}.stage-story{grid-template-columns:1fr;gap:20px}.appgrid{grid-template-columns:1fr}.app{min-height:auto;padding:27px 24px}.app h3{margin-top:17px}.scale-right{grid-template-columns:1fr;gap:21px}.research{grid-template-columns:1fr;gap:20px}.bottom{padding-top:32px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* Future-use composition explorer */
+.vision-board{border:1px solid rgba(189,208,213,.22);background:#151e24;margin-top:40px}
+.vision-toolbar{padding:24px 28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.vision-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.vision-choice{border:1px solid #435660;background:transparent;color:#bccad0;font:12px/1.3 Arial,Helvetica,sans-serif;padding:12px 14px;cursor:pointer}
+.vision-choice:hover,.vision-choice[aria-pressed=true]{border-color:#b2c8cf;color:#f5f7f3;background:#293d47}
+.vision-actions{display:flex;gap:8px;flex-wrap:wrap}
+.vision-action{font:600 12px Arial,Helvetica,sans-serif;padding:12px 14px;cursor:pointer;background:#adc3ca;border:1px solid #adc3ca;color:#172128}
+.vision-action:hover:not(:disabled){background:#e0e9e8}
+.vision-action:disabled{opacity:.45;cursor:not-allowed}
+.vision-action.outline{color:#d0e1e4;background:transparent;border-color:#57727d;font-weight:400}
+.vision-action.outline:hover{background:#2b404a}
+.vision-scroll{overflow-x:auto;scrollbar-color:#607783 transparent}
+.vision-process{display:grid;grid-template-columns:minmax(180px,1fr) 170px minmax(390px,2.6fr);min-width:760px;min-height:468px}
+.vision-panel{padding:25px 20px}
+.vision-left{border-right:1px solid var(--line);background:#18232a}
+.vision-head{font:10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:#9ab2bd;display:block}
+.vision-skills{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.vision-skill{display:flex;align-items:center;gap:10px;color:#e3e9e8;padding:11px 12px;border:1px solid #526d78;background:#233640;font-size:12px;min-height:41px}
+.vision-skill:before{content:"";height:5px;width:5px;background:#aac6cf;border-radius:50%;flex-shrink:0}
+.vision-empty{color:#8197a1;font-size:11px;margin-top:18px}
+.vision-core{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;border-right:1px solid var(--line);position:relative;text-align:center;padding:12px}
+.vision-core-svg{width:150px;height:190px;max-width:100%;overflow:visible}
+.vision-core-ring{fill:none;stroke:#7999a8;stroke-width:1;stroke-opacity:.65}
+.vision-core-tick{stroke:#6c8c9c;stroke-width:1.2;opacity:.72}
+.vision-core-center{fill:#adc3ca}
+.vision-core strong{font-size:12px;font-weight:600;letter-spacing:.04em}
+.vision-core small{font:10px ui-monospace,monospace;color:#91a6b1;max-width:135px;line-height:1.5}
+.vision-output{min-width:0;padding:24px 22px 20px}
+.vision-output-top{display:flex;align-items:end;justify-content:space-between;gap:12px}
+.vision-big-number{font-size:clamp(36px,4.5vw,57px);letter-spacing:-.07em;line-height:1;font-weight:500;color:#edf1ee}
+.vision-big-number em{font-style:normal;color:#a6bec8}
+.vision-network{width:100%;height:300px;display:block;margin:5px 0}
+.vision-key{display:flex;gap:14px;flex-wrap:wrap;color:#9bb0b8;font-size:10px}
+.vision-key .key-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;background:#556f7e}
+.vision-key .key-dot.match{background:#e2ebe5}
+.vision-picked{margin-top:14px;border-top:1px solid var(--line);padding-top:11px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;min-height:43px;color:#c8d6da;font-size:12px}
+.vision-picked b{font-size:11px;color:#90abb8;font-weight:400;letter-spacing:.06em}
+.vision-environment{display:grid;grid-template-columns:minmax(0,1fr) minmax(175px,.7fr);gap:25px;align-items:start;padding:24px 30px;border-top:1px solid var(--line);background:#172229}
+.vision-environment h3{font-size:23px;letter-spacing:-.035em;margin:10px 0 11px;font-weight:500}
+.vision-environment p{font-size:13px;line-height:1.6;color:#c2d0d3;margin:0}
+.vision-required{color:#a8c1cd;margin-top:12px;font:11px/1.6 ui-monospace,monospace}
+.vision-match-box{padding:13px 16px;border-left:2px solid #9eb8c4;background:#1e2c34}
+.vision-match-count{font-size:33px;line-height:1.25;font-weight:500;letter-spacing:-.04em}
+.vision-match-box p{font-size:12px;color:#a8bbc3}
+.vision-caption{font-size:12px;line-height:1.65;color:#9dafb5;margin-top:18px;max-width:920px}
+button:focus-visible,a:focus-visible{outline:2px solid #b9d9e6;outline-offset:3px}
+@media(max-width:850px){.vision-toolbar{padding:20px}.vision-process{grid-template-columns:180px 140px minmax(380px,1fr)}.vision-core-svg{width:120px}.vision-environment{grid-template-columns:1fr}}
+@media(max-width:550px){.vision-choice{font-size:11px;padding:10px}.vision-action{flex:1 1 auto}.vision-output{padding:20px}.vision-environment{padding:20px}}
+
+
+/* Architecture: exact layer counts, responsive flow */
+.tiny-architecture{border:1px solid var(--line);background:#151e24;padding:clamp(20px,3vw,38px)}
+.arch-summary{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px}
+.arch-summary span{border:1px solid #425661;padding:9px 12px;font:11px ui-monospace,monospace;color:#c8d8de}
+.arch-flow{display:grid;grid-template-columns:145px 26px minmax(0,1fr) 26px 205px;align-items:center;gap:12px}
+.arch-box{background:#1d2b34;border:1px solid #4e6977;padding:19px 16px}
+.arch-box h3{font-size:19px;font-weight:500;letter-spacing:-.04em;margin:13px 0}
+.arch-box p,.arch-module p{color:#aebfc7;font-size:12px;line-height:1.7;margin:10px 0 0}
+.arch-box .arch-number{font-size:48px;letter-spacing:-.07em;line-height:1.1;color:#e6eee9}
+.arch-arrow{color:#9ab6c5;text-align:center;font-size:25px}
+.arch-bank{display:grid;gap:12px}
+.arch-module{padding:18px 20px;background:#1b2830;border:1px solid #405965;border-left:3px solid var(--skill-color)}
+.arch-module header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.arch-module h3{font-size:15px;font-weight:500;margin:0;color:#edf1eb}
+.arch-module small{font:10px ui-monospace,monospace;color:#9fb3be;white-space:nowrap}
+.arch-layers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.arch-layer{position:relative}
+.arch-layer:not(:last-child):after{content:"→";position:absolute;right:-11px;top:29px;color:#587582;font-size:13px}
+.arch-layer b{font:15px ui-monospace,monospace;color:#e6ece8;display:block;margin-bottom:7px}
+.arch-dots{display:grid;grid-template-columns:repeat(8,4px);gap:3px;min-height:25px;align-content:start}
+.arch-dot{width:4px;height:4px;border-radius:50%;background:var(--skill-color,#a7bdc9);opacity:.8}
+.arch-layer em{display:block;font-size:9px;line-height:1.5;font-style:normal;color:#9baeb7;margin-top:6px}
+.arch-decision{display:grid;gap:14px}
+.arch-gate{border-top:3px solid #c7bf9c}
+.arch-formula{font:12px/1.7 ui-monospace,monospace;color:#d5e1e1;margin:13px 0}
+.arch-weights{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:14px 0}
+.arch-weights span{padding:8px 0;background:#2b3c46;text-align:center;font:11px ui-monospace,monospace;border-bottom:2px solid var(--skill-color)}
+.arch-outcome{background:#243842;border-color:#849fa9}
+.arch-legend{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid var(--line);margin-top:30px;padding-top:22px}
+.arch-legend p{font-size:12px;line-height:1.8;color:#a7bac3;margin:0}
+.arch-legend strong{color:#dce6e5;font-weight:500}
+@media(max-width:1100px){.arch-flow{grid-template-columns:120px 18px minmax(0,1fr);gap:10px}.arch-decision{grid-column:3;grid-template-columns:1fr 1fr}.arch-arrow.to-decision{grid-column:3;transform:rotate(90deg)}}
+@media(max-width:650px){.arch-flow{display:flex;flex-direction:column;align-items:stretch;gap:14px}.arch-arrow{transform:rotate(90deg)}.arch-input{display:grid;grid-template-columns:60px 1fr;column-gap:15px;align-items:center}.arch-input .mono{grid-column:1/-1}.arch-input p{grid-column:2;margin:0}.arch-input h3{margin:0}.arch-input .arch-number{grid-row:2/4}.arch-decision{grid-template-columns:1fr}.arch-legend{grid-template-columns:1fr;gap:12px}.arch-module{padding:17px 14px}.arch-module header{flex-wrap:wrap;gap:6px}.arch-layers{gap:12px}.arch-dots{grid-template-columns:repeat(8,3px);gap:3px}.arch-dot{width:3px;height:3px}.arch-layer em{font-size:9px}}
+
+</style>
+</head>
+<body>
+<nav class="wrap" aria-label="Main navigation">
+  <a class="brand" href="#top">tiny learner<i aria-hidden="true"></i></a>
+  <div class="links">
+    <a href="#future">Explore</a>
+    <a href="#applications" class="hide-mobile">Applications</a>
+    <a href="#footprint" class="hide-mobile">How tiny?</a>
+    <a href="#research" class="hide-mobile">Research</a>
+    <a class="repo" href="https://github.com/mira-takeda/tiny-learner">GitHub ↗</a>
+  </div>
+</nav>
+<main id="top">
+  <header class="hero wrap">
+    <div class="hero-left">
+      <div class="mono edition">Ongoing experiment / 2026</div>
+      <h1><span>TINY</span><span>LEARNER.</span></h1>
+      <h2>Learn. Remember. Adapt.</h2>
+      <p class="lede">An experimental, CPU-first learning system investigating how small agents acquire new skills, preserve old ones, and draw on experience when conditions change.</p>
+      <div class="hero-actions">
+        <a class="primary" href="#future">Explore the possibilities <span aria-hidden="true">↘</span></a>
+        <a class="quiet" href="#applications">Where it could matter</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg">
+        <g class="trace ring"><circle cx="338" cy="256" r="191"/><circle cx="338" cy="256" r="244"/><circle cx="338" cy="256" r="132"/></g>
+        <g class="trace fine"><path d="M95 180 Q185 125 273 213 T565 182"/><path d="M122 381 Q199 239 322 275 T609 377"/><path d="M224 56 C243 210 382 192 564 132"/><path d="M151 451 C240 431 287 372 325 259 S462 97 573 87"/><path d="M90 252 C221 337 371 373 599 263"/></g>
+        <g class="trace">
+          <path d="M323 258 C282 206 261 140 221 109 C177 80 141 121 102 99"/><path d="M323 258 C369 195 434 179 470 132 S538 88 581 112"/><path d="M323 258 C418 254 474 307 550 286 S607 214 639 224"/><path d="M323 258 C352 318 336 390 394 434 S481 461 514 497"/><path d="M323 258 C266 318 197 335 164 378 S135 446 94 472"/><path d="M323 258 C265 263 216 223 145 241 S85 280 39 260"/>
+        </g>
+        <g fill="none" stroke="#667d88" stroke-width="1" opacity=".6"><path d="M323 229 L351 246 L344 280 L312 287 L296 259 Z"/><path d="M308 245 L337 232 L354 266 L325 286 L299 272 Z"/></g>
+        <g class="orb"><circle cx="323" cy="258" r="6"/><circle cx="221" cy="109" r="4"/><circle cx="470" cy="132" r="4"/><circle cx="550" cy="286" r="3.5"/><circle cx="394" cy="434" r="4"/><circle cx="164" cy="378" r="4"/><circle cx="145" cy="241" r="4"/></g>
+        <g class="point dim"><circle cx="102" cy="99" r="2.5"/><circle cx="581" cy="112" r="2.5"/><circle cx="639" cy="224" r="2.5"/><circle cx="514" cy="497" r="2.5"/><circle cx="94" cy="472" r="2.5"/><circle cx="39" cy="260" r="2.5"/></g>
+      </svg>
+      <div class="art-footer mono">Experiences / Connections / Change</div>
+    </div>
+  </header>
+  <div class="wrap quickline" aria-label="Research focus"><span>CPU FIRST</span><span class="separator">/</span><span>CONTINUAL LEARNING</span><span class="separator">/</span><span>RETENTION</span><span class="separator">/</span><span>TRANSFER</span></div>
+
+
+  <section class="section wrap" id="future">
+    <div class="section-head">
+      <div class="mono">01 / Possible futures</div>
+      <div>
+        <h2>A few skills.<br>An expanding universe of tasks.</h2>
+        <p>Imagine a Tiny Learner that retains every useful skill. What happens when those abilities can be combined in unfamiliar situations? Add skills on the left, then watch the space of possible combinations grow on the right.</p>
+      </div>
+    </div>
+    <div class="vision-board">
+      <div class="vision-toolbar">
+        <div class="vision-tabs" aria-label="Choose a future application">
+          <button type="button" class="vision-choice" data-vision="arms" aria-pressed="true">Adaptive robotic arm</button>
+          <button type="button" class="vision-choice" data-vision="inspection" aria-pressed="false">Inspection rover</button>
+          <button type="button" class="vision-choice" data-vision="network" aria-pressed="false">Cooperative learners</button>
+        </div>
+        <div class="vision-actions">
+          <button type="button" class="vision-action" id="vision-add">+ Add capability</button>
+          <button type="button" class="vision-action outline" id="vision-change">Change conditions ↻</button>
+          <button type="button" class="vision-action outline" id="vision-reset">Reset</button>
+        </div>
+      </div>
+      <div class="vision-scroll" role="region" aria-label="Skills, learner and composition diagram" tabindex="0">
+        <div class="vision-process">
+          <div class="vision-panel vision-left">
+            <span class="vision-head">01 / Learned skills</span>
+            <div class="vision-skills" id="vision-skills"></div>
+            <p class="vision-empty" id="vision-count">03 / 08 skills retained</p>
+          </div>
+          <div class="vision-core">
+            <span class="vision-head">02 / Retain &amp; reuse</span>
+            <svg class="vision-core-svg" viewBox="0 0 150 190" aria-label="Conceptual compact learning core" role="img">
+              <circle class="vision-core-ring" cx="75" cy="95" r="58" stroke-dasharray="2 11"/>
+              <circle class="vision-core-ring" cx="75" cy="95" r="41"/>
+              <circle class="vision-core-ring" cx="75" cy="95" r="27" stroke-dasharray="1 5"/>
+              <g class="vision-core-tick"><path d="M75 15V41 M75 149v26 M6 95h27 M117 95h27 M27 47l19 19 M104 124l20 20 M123 48l-19 18 M46 125l-19 19"/></g>
+              <circle class="vision-core-center" cx="75" cy="95" r="14"/>
+              <circle cx="75" cy="95" r="4" fill="#182832"/>
+            </svg>
+            <strong>TINY LEARNER</strong>
+            <small>Small core / growing experience</small>
+          </div>
+          <div class="vision-output">
+            <div class="vision-output-top">
+              <span class="vision-head">03 / Potential combinations</span>
+              <span class="vision-head">NONEMPTY SUBSETS</span>
+            </div>
+            <div class="vision-big-number"><span id="vision-total">7</span> <em id="vision-math">= 2³ − 1</em></div>
+            <svg class="vision-network" id="vision-network" viewBox="0 0 660 340" aria-label="Possible combinations grow as skills accumulate" role="img">
+              <g id="vision-links"></g>
+              <g id="vision-nodes"></g>
+            </svg>
+            <div class="vision-key"><span><i class="key-dot"></i>Candidate composition</span><span><i class="key-dot match"></i>Includes required skills</span></div>
+            <div class="vision-picked" aria-live="polite"><b>SELECT A NODE</b><span id="vision-picked">Tap any point to inspect a skill combination.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="vision-environment">
+        <div>
+          <span class="vision-head">04 / Environment changes</span>
+          <h3 id="vision-condition-title">Standard workshop</h3>
+          <p id="vision-condition-text">A familiar set of parts needs to be sorted.</p>
+          <div class="vision-required" id="vision-required"></div>
+        </div>
+        <div class="vision-match-box">
+          <span class="vision-head">Compositions containing all required skills</span>
+          <div class="vision-match-count" id="vision-matches">2</div>
+          <p id="vision-fit">Explore the skill combinations available for this situation.</p>
+        </div>
+      </div>
+    </div>
+    <p class="vision-caption">Each point is a different set of skills. With n skills, there are 2ⁿ − 1 nonempty combinations. Highlighted points contain all the skills required by the selected situation.</p>
+  </section>
+
+  <section class="section wrap" id="explore">
+    <div class="section-head">
+      <div class="mono">02 / Research stages</div>
+      <div><h2>Learning is what<br>happens next.</h2><p>A system completing one trained task is only the beginning. The interesting question is what happens after more experience, new skills, and unfamiliar conditions.</p></div>
+    </div>
+    <div class="stage-area">
+      <div class="stages" aria-label="Explore research stages">
+        <button class="stage" data-stage-button="0" aria-pressed="true"><span class="stage-num">01</span><span><strong>Experience</strong><small>Acquire a useful behavior.</small></span></button>
+        <button class="stage" data-stage-button="1" aria-pressed="false"><span class="stage-num">02</span><span><strong>Continuity</strong><small>Keep learning over time.</small></span></button>
+        <button class="stage" data-stage-button="2" aria-pressed="false"><span class="stage-num">03</span><span><strong>Transfer</strong><small>Meet unfamiliar conditions.</small></span></button>
+        <button class="stage" data-stage-button="3" aria-pressed="false"><span class="stage-num">04</span><span><strong>Evaluation</strong><small>Test what really carries over.</small></span></button>
+      </div>
+      <div>
+        <div class="lab" id="lab" data-stage="0">
+          <div class="lab-top"><span class="mono">Learning paths / Conceptual view</span><span class="mono" id="lab-counter">01 — 04</span></div>
+          <div class="lab-canvas">
+            <svg class="lab-svg" viewBox="0 0 620 390" role="img" aria-label="Abstract diagram of learning, memory, and transfer pathways.">
+              <g class="guide"><circle cx="290" cy="197" r="113"/><circle cx="290" cy="197" r="156"/><path d="M80 197 H535 M290 20 V360"/></g>
+              <g class="arc-cluster arc-initial">
+                <path class="link" d="M290 197 Q236 184 197 109 T101 91"/><path class="link" d="M290 197 Q232 213 164 238 T80 291"/><path class="link" d="M290 197 Q260 140 274 72 T243 31"/><circle class="point" cx="197" cy="109" r="4"/><circle class="point" cx="164" cy="238" r="4"/><circle class="point dim" cx="101" cy="91" r="3"/><circle class="point dim" cx="80" cy="291" r="3"/><circle class="point dim" cx="243" cy="31" r="3"/>
+              </g>
+              <g class="arc-cluster arc-middle">
+                <path class="link" d="M290 197 Q353 129 410 107 T494 50"/><path class="link" d="M290 197 Q381 205 439 249 T552 244"/><path class="link" d="M290 197 Q354 258 345 315 T400 362"/><circle class="point" cx="410" cy="107" r="4"/><circle class="point" cx="439" cy="249" r="4"/><circle class="point" cx="345" cy="315" r="4"/><circle class="point dim" cx="494" cy="50" r="3"/><circle class="point dim" cx="552" cy="244" r="3"/><circle class="point dim" cx="400" cy="362" r="3"/>
+              </g>
+              <g class="arc-cluster arc-outer">
+                <path class="link" d="M197 109 C271 70 358 78 410 107"/><path class="link" d="M164 238 C249 294 372 315 439 249"/><path class="link" d="M274 72 C371 36 410 190 552 244"/><path class="link" d="M101 91 C184 162 345 315 400 362"/><circle class="point" cx="320" cy="93" r="3"/><circle class="point" cx="282" cy="294" r="3"/>
+              </g>
+              <circle class="nucleus" cx="290" cy="197" r="27"/><circle class="nucleus-inner" cx="290" cy="197" r="9"/>
+            </svg>
+          </div>
+          <div class="lab-caption"><span>Explore the stages above</span><em id="lab-state">Acquisition</em></div>
+        </div>
+        <div class="stage-story" aria-live="polite" aria-atomic="true">
+          <div><div class="mono" id="story-label">01 / Experience</div><h3 class="story-title" id="story-title">Learning from feedback.</h3><p id="story-copy">A learner encounters a task, acts, receives feedback, and changes its internal state through experience.</p></div>
+          <p class="note" id="story-example">Example: acquiring a grasping behavior across different object orientations.</p>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="applications">
+    <div class="section-head">
+      <div class="mono">03 / Applications</div>
+      <div><h2>Small systems.<br>Real-world potential.</h2><p>Many practical environments demand more than a fixed sequence. These are areas where compact, adaptive learning could eventually make a difference.</p></div>
+    </div>
+    <div class="appgrid">
+      <article class="app"><div class="mono">01 / Manipulation</div><h3>Robotic arms</h3><p>Reusing grasping, placement, and sorting behaviors when the objects or workflow change.</p></article>
+      <article class="app"><div class="mono">02 / Observation</div><h3>Inspection robots</h3><p>Combining movement, sensing, and task responses when routes and equipment differ.</p></article>
+      <article class="app"><div class="mono">03 / Field work</div><h3>Agricultural systems</h3><p>Learning to respond to crops, terrain, and operating conditions across changing situations.</p></article>
+      <article class="app"><div class="mono">04 / Logistics</div><h3>Workshop helpers</h3><p>Recombining handling and delivery skills under shifting destinations and constraints.</p></article>
+      <article class="app"><div class="mono">05 / On-device</div><h3>Embedded robotics</h3><p>Lightweight learning close to the hardware rather than calling a large model for every small decision.</p></article>
+      <article class="app"><div class="mono">06 / Operations</div><h3>Service systems</h3><p>Reusing learned task sequences as timing, order, and context change.</p></article>
+    </div>
+  </section>
+
+  <section class="section wrap" id="scale">
+    <div class="scale">
+      <div><div class="mono">04 / Future direction</div><h2>If it scales...</h2><p>What begins as a tiny learner could develop a growing repertoire of behaviors. The question is not only how large a system becomes, but how much more it can do with experience.</p></div>
+      <div class="scale-right"><div><strong>More skills.</strong><small>New abilities without a new program for every combination.</small></div><div><strong>Longer experience.</strong><small>Keeping useful knowledge available as learning continues.</small></div><div><strong>Richer environments.</strong><small>Exploring increasingly complex situations and specialized collaborators.</small></div></div>
+    </div>
+  </section>
+
+
+
+  <section class="section wrap" id="architecture">
+    <div class="section-head">
+      <div class="mono">05 / Inside Tiny</div>
+      <div><h2>Four small networks.<br>One shared decision.</h2><p>Each skill is its own neural network, with two hidden layers of 32 neurons. All four receive the same 14 observation values. A separate network, the gate, learns how to weight their outputs.</p></div>
+    </div>
+    <div class="tiny-architecture">
+      <div class="arch-summary"><span>4 skill modules</span><span>64 hidden neurons per skill</span><span>32 hidden neurons in the gate</span><span>7,944 parameters total</span></div>
+      <div class="arch-flow">
+        <div class="arch-box arch-input"><div class="mono">01 / Observe</div><div class="arch-number">14</div><h3>Observation values</h3><p>The environment is represented as numbers. These inputs go to every skill and to the gate.</p></div>
+        <div class="arch-arrow" aria-hidden="true">→</div>
+        <div class="arch-bank"><article class="arch-module" style="--skill-color:#9fc3d0"><header><h3>A / Approach a target</h3><small>1,833 parameters</small></header><div class="arch-layers" aria-label="14 inputs, 32 hidden neurons, 32 hidden neurons, 9 action outputs"><div class="arch-layer"><b>14</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Inputs</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 1</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 2</em></div><div class="arch-layer"><b>9</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Action outputs</em></div></div><p>Move toward the target or beacon.</p></article>
+<article class="arch-module" style="--skill-color:#d1b49a"><header><h3>B / Avoid a hazard</h3><small>1,833 parameters</small></header><div class="arch-layers" aria-label="14 inputs, 32 hidden neurons, 32 hidden neurons, 9 action outputs"><div class="arch-layer"><b>14</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Inputs</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 1</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 2</em></div><div class="arch-layer"><b>9</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Action outputs</em></div></div><p>Move away from a pursuing danger.</p></article>
+<article class="arch-module" style="--skill-color:#b4c5a3"><header><h3>C / Transport an object</h3><small>1,833 parameters</small></header><div class="arch-layers" aria-label="14 inputs, 32 hidden neurons, 32 hidden neurons, 9 action outputs"><div class="arch-layer"><b>14</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Inputs</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 1</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 2</em></div><div class="arch-layer"><b>9</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Action outputs</em></div></div><p>Carry an object toward its destination.</p></article>
+<article class="arch-module" style="--skill-color:#c1b0ce"><header><h3>D / Pass through a corridor</h3><small>1,833 parameters</small></header><div class="arch-layers" aria-label="14 inputs, 32 hidden neurons, 32 hidden neurons, 9 action outputs"><div class="arch-layer"><b>14</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Inputs</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 1</em></div><div class="arch-layer"><b>32</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Hidden layer 2</em></div><div class="arch-layer"><b>9</b><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><em>Action outputs</em></div></div><p>Navigate a confined passage.</p></article></div>
+        <div class="arch-arrow to-decision" aria-hidden="true">→</div>
+        <div class="arch-decision">
+          <div class="arch-box arch-gate"><div class="mono">02 / Gate</div><h3>How much of each skill?</h3><div class="arch-formula">14 inputs → 32 hidden → 4 weights</div><div class="arch-dots" aria-hidden="true"><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i><i class="arch-dot"></i></div><div class="arch-weights"><span style="--skill-color:#9fc3d0">A</span><span style="--skill-color:#d1b49a">B</span><span style="--skill-color:#b4c5a3">C</span><span style="--skill-color:#c1b0ce">D</span></div><p>The gate also reads the same 14 observation values. Its four softmax weights control each skill's contribution.</p><div class="arch-formula">612 parameters</div></div>
+          <div class="arch-box arch-outcome"><div class="mono">03 / Combine &amp; act</div><h3>Four outputs become one decision.</h3><p>The gate weights the four sets of action outputs. The resulting nine action scores feed the action-selection step.</p><div class="arch-formula">4 × 9 outputs<br>↓ weighted combination<br>9 action scores → 1 action</div></div>
+        </div>
+      </div>
+      <div class="arch-legend">
+        <p><strong>Read the layers.</strong> Each skill drawing shows all 14 inputs, 32 + 32 hidden neurons and 9 outputs. Parameters are the learned connection weights and biases between layers.</p>
+        <p><strong>The total, step by step.</strong> Each skill: (14 × 32 + 32) + (32 × 32 + 32) + (32 × 9 + 9) = 1,833. Four skills: 7,332. Gate: (14 × 32 + 32) + (32 × 4 + 4) = 612. Total: 7,944.</p>
+      </div>
+    </div>
+    
+  </section>
+
+  <section class="section wrap" id="footprint">
+    <div class="scale">
+      <div><div class="mono">06 / How tiny?</div><h2>Small enough for<br>a tiny robot's controller.</h2><p>Four skill networks and their selector: 7,944 parameters. Stored at 32 bits each, their weights take just 31.8 kB.</p></div>
+      <div class="scale-right"><div><strong>31.8 kB of weights.</strong><small>Small enough to fit within the memory of an ESP32-class controller, the kind used in small connected devices and robots.</small></div><div><strong>Toward local control.</strong><small>A path toward compact learned behaviors running close to the sensors and motors they control.</small></div><div><a class="quiet" href="https://documentation.espressif.com/esp32_datasheet_en.html">ESP32 hardware reference ↗</a></div></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="research">
+    <div class="section-head">
+      <div class="mono">07 / Research</div>
+      <div><h2>Can a tiny learner combine<br>what it already knows?</h2><p>Can a tiny neural system learn skills separately, retain them as new skills arrive, and recombine them to solve situations never trained together? Controlled comparisons test whether learned modular routing helps beyond a similarly sized monolithic network and simpler routing controls.</p></div>
+    </div>
+    <div class="research">
+      <div><div class="mono">Where Muse fits</div><h2>Learning is everything.</h2><p>Meta Muse helps shape the curriculum and learning challenges. Tiny Learner learns through interaction, building the skills whose retention and combination are at the heart of this research.</p><a class="quiet" href="https://github.com/mira-takeda/tiny-learner">View GitHub project ↗</a></div>
+      <div>
+        <div class="research-item"><div class="mono">01 / Acquisition</div><strong>What did the system learn?</strong><p>New behavior acquired through experience.</p></div>
+        <div class="research-item"><div class="mono">02 / Retention</div><strong>What did it preserve?</strong><p>Earlier abilities after additional learning.</p></div>
+        <div class="research-item"><div class="mono">03 / Transfer</div><strong>What carries over?</strong><p>Use of experience in held-out situations.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="bottom wrap">
+  <div><div class="mark">tiny learner.</div><div class="mono">Learn. Remember. Adapt.</div></div>
+  <div class="right">An independent experimental project for the Meta Global AI Developer Hackathon 2026.<br><a href="https://github.com/mira-takeda">Research profile</a> &nbsp; / &nbsp; <a href="https://github.com/mira-takeda/tiny-learner">Repository</a></div>
+</footer>
+<script>
+(function(){
+  'use strict';
+  const stages=[
+    {label:'01 / Experience',title:'Learning from feedback.',copy:'A learner encounters a task, acts, receives feedback, and changes its internal state through experience.',example:'Example: acquiring a grasping behavior across different object orientations.',state:'Acquisition'},
+    {label:'02 / Continuity',title:'The same learner continues.',copy:'New tasks arrive after earlier learning. The system must update without needlessly disrupting what it already knows.',example:'Example: adding sorting and placement after grasping, while preserving earlier behavior.',state:'Retention'},
+    {label:'03 / Transfer',title:'Experience meets the unfamiliar.',copy:'Previously acquired behaviors face new contexts and novel combinations rather than a single rehearsed solution.',example:'Example: object types, destinations, and task order all change together.',state:'Transfer'},
+    {label:'04 / Evaluation',title:'What actually carries over?',copy:'Controlled evaluations separate newly learned behavior, retained skills, and performance under unseen conditions.',example:'Example: compare earlier-task performance before and after later training, then test held-out combinations.',state:'Controlled tests'}
+  ];
+  const lab=document.getElementById('lab');
+  const buttons=Array.from(document.querySelectorAll('[data-stage-button]'));
+  function selectStage(index){
+    const s=stages[index];if(!s)return;
+    lab.dataset.stage=String(index);
+    document.getElementById('story-label').textContent=s.label;
+    document.getElementById('story-title').textContent=s.title;
+    document.getElementById('story-copy').textContent=s.copy;
+    document.getElementById('story-example').textContent=s.example;
+    document.getElementById('lab-state').textContent=s.state;
+    document.getElementById('lab-counter').textContent='0'+(index+1)+' — 04';
+    buttons.forEach(function(button,i){button.setAttribute('aria-pressed',String(i===index));});
+  }
+  buttons.forEach(function(button){button.addEventListener('click',function(){selectStage(Number(button.dataset.stageButton));});});
+  selectStage(0);
+})();
+</script>
+
+<script>
+(function(){
+"use strict";
+const futures={
+  arms:{skills:["Sense","Approach","Grasp","Place","Sort","Avoid","Recover","Verify"],contexts:[
+    {title:"Standard workshop",description:"Move familiar parts between known stations.",needs:[0,2]},
+    {title:"Fragile material",description:"Now the object becomes delicate and must be placed with care. Can previously acquired sensing and handling skills be reused?",needs:[0,2,3]},
+    {title:"Crowded workspace",description:"An unexpected obstacle appears while moving the part. The task now needs avoidance as well as manipulation.",needs:[0,1,2,5]}]},
+  inspection:{skills:["Detect","Navigate","Avoid","Inspect","Measure","Report","Return","Verify"],contexts:[
+    {title:"Routine inspection",description:"Visit known checkpoints and inspect equipment.",needs:[0,1]},
+    {title:"Blocked passage",description:"A planned corridor is obstructed. Find another route and still inspect the target.",needs:[0,1,2,3]},
+    {title:"New fault pattern",description:"A novel anomaly requires detection, measurement, documentation and a safe return.",needs:[0,3,4,5,6]}]},
+  network:{skills:["Observe","Classify","Plan","Act","Coordinate","Report","Review","Adapt"],contexts:[
+    {title:"Shared routine",description:"Two small specialists handle a familiar observation and classification task.",needs:[0,1]},
+    {title:"New goal",description:"A new assignment requires observation, planning and coordinated action across specialists.",needs:[0,2,3,4]},
+    {title:"Unexpected outcome",description:"The environment changes after an action. Specialists must observe, coordinate, review and adapt.",needs:[0,3,4,6,7]}]}
+};
+const $=id=>document.getElementById(id);
+const ns="http://www.w3.org/2000/svg";
+let kind="arms",count=3,contextIndex=0,chosenMask=0;
+const popcount=n=>{let c=0;while(n){n&=n-1;c++}return c};
+const current=()=>futures[kind];
+function spawnSvg(tag,attributes){
+ const node=document.createElementNS(ns,tag);
+ Object.keys(attributes).forEach(k=>node.setAttribute(k,String(attributes[k])));
+ return node;
+}
+function render(){
+ const data=current(),required=data.contexts[contextIndex].needs;
+ const all=(1<<count)-1;
+ const requiredMask=required.reduce((m,i)=>m|(1<<i),0);
+ const supported=(requiredMask & all)===requiredMask;
+ const matches=supported?Math.pow(2,count-required.length):0;
+ document.querySelectorAll("[data-vision]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.vision===kind)));
+ $("vision-skills").replaceChildren();
+ data.skills.slice(0,count).forEach((skill,i)=>{
+   const item=document.createElement("div");item.className="vision-skill";
+   item.textContent=String(i+1).padStart(2,"0")+"  /  "+skill;
+   $("vision-skills").appendChild(item);
+ });
+ $("vision-count").textContent=String(count).padStart(2,"0")+" / 08 skills retained";
+ $("vision-total").textContent=all.toLocaleString("en-US");
+ $("vision-math").textContent="= 2"+"⁰¹²³⁴⁵⁶⁷⁸⁹"[count]+" − 1";
+ $("vision-condition-title").textContent=data.contexts[contextIndex].title;
+ $("vision-condition-text").textContent=data.contexts[contextIndex].description;
+ const missing=required.filter(i=>i>=count).map(i=>data.skills[i]);
+ $("vision-required").textContent="Required here: "+required.map(i=>data.skills[i]).join(" + ");
+ $("vision-matches").textContent=String(matches);
+ $("vision-fit").textContent=missing.length?
+   "Missing from the retained set: "+missing.join(", ")+". Add capabilities to explore this situation.":
+   matches+" skill combinations include everything this situation requires.";
+ $("vision-add").disabled=count>=8;
+ $("vision-add").textContent=count>=8?"All 8 added":"+ Add capability";
+ $("vision-change").textContent="Change conditions ↻ ("+(contextIndex+1)+"/3)";
+ const lineLayer=$("vision-links"),nodeLayer=$("vision-nodes");
+ lineLayer.replaceChildren();nodeLayer.replaceChildren();
+ const pts=new Map();
+ const num=all;
+ for(let idx=0;idx<num;idx++){
+   const mask=idx+1;
+   const angle=idx*2.399963229728653+count*.17;
+   const radius=Math.sqrt((idx+.6)/num);
+   const x=330+radius*307*Math.cos(angle);
+   const y=170+radius*148*Math.sin(angle);
+   pts.set(mask,[x,y]);
+ }
+ for(let mask=1;mask<=all;mask++){
+   const subset=mask&(mask-1);
+   if(subset && pts.has(subset)){
+     const [x1,y1]=pts.get(subset),[x2,y2]=pts.get(mask);
+     lineLayer.appendChild(spawnSvg("line",{x1,y1,x2,y2,stroke:"#7893a0","stroke-width":".7",opacity:count>=7?".12":".22"}));
+   }
+ }
+ if(!chosenMask || chosenMask>all)chosenMask=supported?requiredMask:all;
+ for(let mask=1;mask<=all;mask++){
+   const [cx,cy]=pts.get(mask);
+   const fits=supported && ((mask & requiredMask)===requiredMask);
+   const isSelected=chosenMask===mask;
+   const r=count>=7? (isSelected?6.6:fits?4.4:2.5):(isSelected?7.2:fits?5.4:3.6);
+   const dot=spawnSvg("circle",{cx,cy,r,fill:isSelected?"#f5f5ed":fits?"#c7d7d9":"#587482",opacity:fits||isSelected?"1":".73",stroke:isSelected?"#f5f5ed":"none","stroke-width":1,role:"button",tabindex:"0","aria-label":data.skills.filter((_,i)=>Boolean(mask&(1<<i))).join(" + ")});
+   const choose=()=>{chosenMask=mask;renderSelected()};
+   dot.addEventListener("click",choose);
+   dot.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();choose()}});
+   nodeLayer.appendChild(dot);
+ }
+ renderSelected();
+}
+function renderSelected(){
+ const data=current(),mask=chosenMask;
+ const names=data.skills.filter((_,i)=>Boolean(mask&(1<<i)));
+ $("vision-picked").textContent=names.join(" + ");
+ const all=(1<<count)-1;
+ const req=data.contexts[contextIndex].needs.reduce((m,i)=>m|(1<<i),0);
+ const supported=(req&all)===req;
+ const dots=$("vision-nodes").children;
+ for(let i=0;i<dots.length;i++){
+   const m=i+1, fits=supported && ((m&req)===req);
+   dots[i].setAttribute("stroke",m===mask?"#f8f8f1":"none");
+   dots[i].setAttribute("stroke-width",m===mask?"2.5":"0");
+   dots[i].setAttribute("r",m===mask?"7.2":count>=7?(fits?"4.4":"2.5"):(fits?"5.4":"3.6"));
+ }
+}
+document.querySelectorAll("[data-vision]").forEach(b=>b.addEventListener("click",()=>{kind=b.dataset.vision;count=3;contextIndex=0;chosenMask=0;render()}));
+$("vision-add").addEventListener("click",()=>{count=Math.min(8,count+1);chosenMask=0;render()});
+$("vision-change").addEventListener("click",()=>{contextIndex=(contextIndex+1)%3;chosenMask=0;render()});
+$("vision-reset").addEventListener("click",()=>{count=3;contextIndex=0;chosenMask=0;render()});
+render();
+})();
+</script>
+
+</body>
+</html>
