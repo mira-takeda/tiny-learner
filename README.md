@@ -13,6 +13,8 @@ retained, and reused as conditions change.**
 
 <sub>META GLOBAL AI DEVELOPER HACKATHON 2026</sub>
 
+<sub>CREATED BY SATORU TAKEDA &nbsp; / &nbsp; INDEPENDENT RESEARCHER</sub>
+
 [Explore the learning process](#explore-the-learning-process) &nbsp; · &nbsp; [Applications](#where-it-could-matter) &nbsp; · &nbsp; [If it scales](#if-it-scales)
 
 </div>
@@ -182,6 +184,8 @@ Experiments use defined controls, separate checks for retention and transfer, an
 The research README records measured results and their limitations. The site presents the research direction and possible future applications. Existing experimental code, tests, and saved artifacts are retained for provenance; integration runs no new experiments.
 
 ## License and commercial use
+
+**Author:** Satoru Takeda, Independent Researcher.
 
 **Free for noncommercial education, research, and personal experimentation, with attribution.** Tiny Learner is source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). Noncommercial redistribution and modifications are permitted under that license; preserve the required author attribution and original project link in [NOTICE](NOTICE).
 
