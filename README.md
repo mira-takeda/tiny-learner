@@ -148,6 +148,12 @@ Scaling might mean more than increasing the number of parameters. It could also 
 
 Tiny Learner follows a **CPU-first, small-footprint** approach. This keeps experiments accessible on ordinary computers and opens up possibilities for resource-constrained devices.
 
+## Technical Stack
+
+- **Language:** Python 3.14
+- **Numerical computing:** NumPy
+- **Architecture:** CPU-first, modular learning system
+
 ## Muse and the curriculum
 
 Meta Muse contributes to the development of learning challenges and experimental curricula. Tiny Learner is the system whose skill acquisition, retention, and transfer are studied.
