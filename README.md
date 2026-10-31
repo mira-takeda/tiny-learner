@@ -180,3 +180,11 @@ Experiments use defined controls, separate checks for retention and transfer, an
 - [Frozen source and checks](src/) and [datasets](data/)
 
 The research README records measured results and their limitations. The site presents the research direction and possible future applications. Existing experimental code, tests, and saved artifacts are retained for provenance; integration runs no new experiments.
+
+## License and commercial use
+
+**Free for noncommercial education, research, and personal experimentation, with attribution.** Tiny Learner is source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). Noncommercial redistribution and modifications are permitted under that license; preserve the required author attribution and original project link in [NOTICE](NOTICE).
+
+**Commercial use requires a separate written commercial license.** If you want to incorporate Tiny Learner into a commercial product or service, or otherwise use it commercially, please [contact the maintainers through a GitHub issue](https://github.com/mira-takeda/tiny-learner/issues) to discuss permission and licensing fees. Please do not include confidential business details in public issues.
+
+This project does not grant rights to third-party components or materials that are covered by separate terms. This is a source-available license, **not an OSI-approved open-source license**.
